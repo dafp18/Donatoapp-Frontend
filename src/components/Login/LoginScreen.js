@@ -1,23 +1,34 @@
 import React from 'react';
-import {View,Text,Button,Pressable} from 'react-native';
+import { Container, Header, Content, Tab, Tabs, Text,} from 'native-base';
+import { StyleSheet,View } from 'react-native';
 
 class LoginScreen extends React.Component{
   
-  handlePress = () => {
-    console.log("hola", this.props);
-    this.props.navigation.navigate('Home')
-  }
-
   render(){
     return(
-        <View>
-          <Text>Login screen</Text>
-          <Pressable onPress={this.handlePress}>
-            <Text>Ir a detalle</Text>  
-          </Pressable>
-        </View>
-    );
+            <Container style={styles.container}>
+              <Tabs>
+                <Tab heading="Iniciar sesión">
+                  <Content>
+                    <Text>Tab 1 inicio de sesion</Text>
+                  </Content>
+                </Tab>
+                <Tab heading="Registrarse">
+                  <Content>
+                    <Text>Tab 2 registro</Text>
+                  </Content>
+                </Tab>
+              </Tabs>
+            </Container>
+          );
   }
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  }
+});
+
 
 export default LoginScreen;

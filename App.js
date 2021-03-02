@@ -1,13 +1,14 @@
 import React from 'react';
+import 'react-native-gesture-handler';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginStack from 'donatonApp/src/components/Login/LoginStack';
+import LoginScreen from './src/components/Login/LoginScreen';
+
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <LoginStack/>
-    </NavigationContainer>
+    <LoginScreen/>      
   );
 };
+
 
 export default App;
