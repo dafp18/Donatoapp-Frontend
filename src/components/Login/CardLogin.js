@@ -5,7 +5,7 @@ import { Form, Item, Input, Label, Card, CardItem, Content,Icon,Button, Text } f
 class CardLogin extends Component {
     render(){
         return(
-            <Content>
+            <Content padder>
                     <Form>
                         <Item floatingLabel>
                             <Icon active name='home' />
