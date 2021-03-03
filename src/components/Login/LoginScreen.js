@@ -1,6 +1,10 @@
 import React from 'react';
 import { Container, Header, Content, Tab, Tabs, Text,} from 'native-base';
 import { StyleSheet,View } from 'react-native';
+import CardLogin from './CardLogin';
+//import RolRegister from './RolRegister';
+import CardRegister from './CardRegister';
+
 
 class LoginScreen extends React.Component{
   
@@ -10,12 +14,12 @@ class LoginScreen extends React.Component{
               <Tabs>
                 <Tab heading="Iniciar sesión">
                   <Content>
-                    <Text>Tab 1 inicio de sesion</Text>
+                    <CardLogin/>
                   </Content>
                 </Tab>
                 <Tab heading="Registrarse">
                   <Content>
-                    <Text>Tab 2 registro</Text>
+                    <CardRegister/>
                   </Content>
                 </Tab>
               </Tabs>
@@ -27,8 +31,14 @@ class LoginScreen extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1
+  },
+  card: {
+    flex: 1,
   }
 });
+
+
+
 
 
 export default LoginScreen;
