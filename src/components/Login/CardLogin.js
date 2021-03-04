@@ -3,22 +3,35 @@ import { StyleSheet } from 'react-native';
 import { Form, Item, Input, Label, Card, CardItem, Content,Icon,Button, Text } from 'native-base';
 
 class CardLogin extends Component {
+    state = {
+        isLoggin:false,
+        email: '',
+        password: '',
+        userTemp: 'diegoa',
+        pwdTemp: '12345'
+    }
+
+    handleStartSession = () => {
+        alert('Bienvenido!!')
+        this.props.navigation.navigate('HomeDonante')
+    }
     render(){
+        console.log(this.props, 'props en el card login')
         return(
             <Content padder>
                     <Form>
                         <Item floatingLabel>
-                            <Icon active name='home' />
+                            <Icon active name='person' />
                             <Label>Correo electrónico</Label>
-                            <Input />
+                            <Input/>
                         </Item>
-                        <Item floatingLabel last>
+                        <Item floatingLabel>
                             <Icon active name='home' />
                             <Label>Contraseña</Label>
-                            <Input />
+                            <Input/>
                         </Item>
-                        <Button block style={{marginLeft:10, marginRight:10, marginTop:10}}>
-                            <Text>Primary</Text>
+                        <Button block style={{marginLeft:10, marginRight:10, marginTop:10}} onPress={this.handleStartSession}>
+                            <Text>Iniciar sesión</Text>
                         </Button>
                         <Button transparent>
                             <Text>Olvide mi contraseña</Text>

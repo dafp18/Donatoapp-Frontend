@@ -8,13 +8,15 @@ import CardRegister from './CardRegister';
 
 class LoginScreen extends React.Component{
   
+  
   render(){
+    
     return(
             <Container style={styles.container}>
               <Tabs>
                 <Tab heading="Iniciar sesión">
                   <Content>
-                    <CardLogin/>
+                    <CardLogin {...this.props} />
                   </Content>
                 </Tab>
                 <Tab heading="Registrarse">
@@ -31,9 +33,6 @@ class LoginScreen extends React.Component{
 const styles = StyleSheet.create({
   container: {
     flex: 1
-  },
-  card: {
-    flex: 1,
   }
 });
 

@@ -21,7 +21,7 @@ class CardRegister extends Component {
                             <Input />
                         </Item>
                         <Item floatingLabel last>
-                            <Icon active name='home' />
+                            <Icon active name='person' />
                             <Label>Nombres</Label>
                             <Input />
                         </Item>
@@ -59,8 +59,8 @@ class CardRegister extends Component {
                             <Text>Registrarse</Text>
                         </Button>
                     </Form>
-             
             </Content>
+            
         )
     }
 }

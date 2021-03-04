@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, Card, CardItem, Text, Left, Button, Right, Icon, Body, Title } from "native-base";
-import {Image,Pressable} from 'react-native';
+import {Image,Pressable, StyleSheet} from 'react-native';
 
 class CardDonante extends Component {
     getprops = () => {
@@ -10,6 +10,19 @@ class CardDonante extends Component {
         const { title, body } = this.props
         return(
             <Container>
+                <Header transparent>
+                    <Body>
+                        <Title style = {{color:'black'}}>Bienvenido!</Title>
+                    </Body>
+                    <Right>
+                        <Button transparent>
+                        <Icon name="home" style={{color:'black'}} />
+                        </Button>
+                    </Right>
+                </Header>                   
+                <Text>Hola!</Text>
+                <Text>Diego Alejandro Forero Pinzón</Text>
+                
                 <Content padder>
                 <Card>
                 {/* <Pressable onPress={this.getprops}> */}
@@ -42,5 +55,12 @@ class CardDonante extends Component {
         )
     }
 }
+
+const styles = StyleSheet.create({
+    header:{
+        backgroundColor: 'red'
+    }
+
+})
 
 export default CardDonante;

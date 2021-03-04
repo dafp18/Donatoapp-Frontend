@@ -1,40 +1,59 @@
 import React, { Component } from 'react';
-import { Container, Header, Content, Card, CardItem, Text, Left, Button, Right, Icon, Body, Title } from "native-base";
+import { Container, Header, Content, Card, CardItem, Text, Spinner, Button, Footer } from "native-base";
 import {Image} from 'react-native';
 
 class SelectedCategoryScreen extends Component {
+    handleContinue = () =>{
+        this.props.navigation.navigate('DataDonation')
+    }
     render(){
-        console.log(this.props,'las props')
-        const { title, body } = this.props
+        console.log(this.props, 'categorias')
         return(
             <Container>
                 <Content padder>
+                <Spinner />
                 <Card>
-                    <CardItem button onPress={() => alert("This is Card Header")}>
-                    <Text>{title}</Text>
+                    <CardItem button onPress={this.handleContinue}>
+                    <Text>Alimentos</Text>
                     </CardItem>
                 </Card>
                 <Card>
                     <CardItem header button onPress={() => alert("This is Card Header")}>
-                    <Text>{title}</Text>
-                    </CardItem>
-                    <CardItem footer button onPress={() => alert("This is Card Footer")}>
-                    <Text>{body}</Text>
+                    <Text>Juguetes</Text>
                     </CardItem>
                 </Card>
                 <Card>
                     <CardItem header button onPress={() => alert("This is Card Header")}>
-                    <Text>{title}</Text>
-                    </CardItem>
-                    <CardItem footer button onPress={() => alert("This is Card Footer")}>
-                    <Text>{body}</Text>
+                    <Text>Ortopedicos</Text>
                     </CardItem>
                 </Card>
-                
+                <Card>
+                    <CardItem header button onPress={() => alert("This is Card Header")}>
+                    <Text>Medicinas</Text>
+                    </CardItem>
+                </Card>
+                <Card>
+                    <CardItem header button onPress={() => alert("This is Card Header")}>
+                    <Text>Electrodomesticos</Text>
+                    </CardItem>
+                </Card>
+                <Card>
+                    <CardItem header button onPress={() => alert("This is Card Header")}>
+                    <Text>Electrodomesticos</Text>
+                    </CardItem>
+                </Card>
+                <Card>
+                    <CardItem header button onPress={() => alert("This is Card Header")}>
+                    <Text>Electrodomesticos</Text>
+                    </CardItem>
+                </Card>
+                <Card>
+                    
+                    <CardItem header button onPress={() => alert("This is Card Header")}>
+                    <Text>Electrodomesticos</Text>
+                    </CardItem>
+                </Card>
                 </Content>
-                <Button block style={{marginLeft:10, marginRight:10, marginTop:10}}>
-                    <Text>Continuar</Text>
-                </Button>
             </Container>
         )
     }

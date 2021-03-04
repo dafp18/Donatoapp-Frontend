@@ -1,0 +1,49 @@
+import React, { Component } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
+import LoginScreen from '../Login/LoginScreen';
+import HomeDonanteScreen from '../Home/Donante/HomeDonanteScreen';
+import SelectCategory from '../Donations/SelectedCategoryScreen';
+import DataDonation from '../Donations/DataDonationScreen';
+import SelectImageDonation from '../Donations/SelectImageDonationScreen';
+import selectLocation from '../Donations/selectLocationDonationScreen';
+const Stack = createStackNavigator();
+
+const RouteStack = () => {
+  return (
+      <Stack.Navigator>
+        <Stack.Screen
+          name="Login"
+          component={LoginScreen}
+          options={{ headerShown:false }}
+        />
+        <Stack.Screen
+          name="HomeDonante"
+          component={HomeDonanteScreen}
+          options={{ title: 'Bienvenido', headerShown:false }}
+        />
+        <Stack.Screen
+          name="SelectCategory"
+          component={SelectCategory}
+          options={{ title: 'Selecionar categoria' }}
+        />
+        <Stack.Screen
+          name="DataDonation"
+          component={DataDonation}
+          options={{ title: 'Detalles de la donación' }}
+        />
+        <Stack.Screen
+          name="SelectImageDonation"
+          component={SelectImageDonation}
+          options={{ title: 'Seleccionar fotos' }}
+        />
+        <Stack.Screen
+          name="selectLocation"
+          component={selectLocation}
+          options={{ title: 'Elegir ubicación' }}
+        />
+      </Stack.Navigator>
+    
+  );
+};
+
+export default RouteStack;
