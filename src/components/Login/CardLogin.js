@@ -13,7 +13,7 @@ class CardLogin extends Component {
 
     handleStartSession = () => {
         alert('Bienvenido!!')
-        this.props.navigation.navigate('HomeDonante')
+        this.props.navigation.navigate('HomeFundacion')
     }
     render(){
         console.log(this.props, 'props en el card login')
