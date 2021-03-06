@@ -10,35 +10,28 @@ class CardLogin extends Component {
         userTemp: 'diegoa',
         pwdTemp: '12345',
         textBtnInciarSesion:'Iniciar sesión',
-        loading: false 
+        loading: false
     }
 
     startSession = () => {
-
-        this.setState({textBtnInciarSesion:'Iniciando sesión...', loading:true})
         const {email, password, userTemp, pwdTemp} = this.state
+        if(email === '' || password === ''){
+            return
+        }
+        this.setState({textBtnInciarSesion:'Iniciando sesión . . .', loading:true})
         setTimeout(() =>{
-            if(email === '' && password === ''){
-                alert('Debe ingresar un email y una constraseña')
-                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
-            }
-            if(email === ''){
-                alert('El email no puede estar vacio')
-                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
-            }
-            if(password === ''){
-                alert('Debe ingresar una contraseña')
-                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
-            }
             if(email === userTemp && password === pwdTemp){
                 this.props.navigation.navigate('HomeFundacion')
+                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
+            }else{
+                alert('Email y contraseña inválidos')
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
             }
         },3000)
          
     }
     render(){
-        const {textBtnInciarSesion,loading} = this.state
+        const {email, password,textBtnInciarSesion,loading,handleDisabled,colorbtn} = this.state
         return(
                 <Content padder>
                     <Title style={styles.title}>Iniciar sesión</Title>
@@ -62,10 +55,12 @@ class CardLogin extends Component {
                     </Card>
 
                     <Form>
-                        <Button block style={styles.btn} onPress={this.startSession}>
+                        <Button block style={{ marginLeft:10, marginRight:10, marginTop:10, 
+                                                                         backgroundColor: (email !== '' || password !== '' ) ? '#243949' : '#667580'
+                                                                      }}  
+                                                                      onPress={this.startSession}>
                             <Text>{textBtnInciarSesion}</Text>
                             {   loading && <ActivityIndicator size="large" color="#08e5d2" />  }
-                            
                         </Button>
 
                         <Button block style={styles.btn} onPress={this.startSession}>
@@ -76,27 +71,6 @@ class CardLogin extends Component {
                             <Title style={styles.titleForgotPwd}>¿ ÓLVIDO SU CONTRASEÑA ?</Title>
                         </Pressable>
                     </Form>
-
-                    {/* <Form>
-                        <Item floatingLabel>
-                            <Icon active name='person' />
-                            <Label>Correo electrónico</Label>
-                            <Input onChangeText={email => this.setState({email})} />
-                        </Item>
-                        <Item floatingLabel>
-                            <Icon active name='home' />
-                            <Label>Contraseña</Label>
-                            <Input onChangeText={password => this.setState({password})} />
-                        </Item>
-                        <Button block disabled style={{marginLeft:10, marginRight:10, marginTop:10}} onPress={this.startSession}>
-                            <Text>{textBtnInciarSesion}</Text>
-                            {   loading && <ActivityIndicator size="large" color="#08e5d2" />  }
-                            
-                        </Button>
-                        <Button transparent style={styles.btnforgotpwd}>
-                            <Text>¿ Ólvido su contraseña ?</Text>
-                        </Button>
-                    </Form> */}
                 </Content>
         )
     }
@@ -138,8 +112,7 @@ const styles = StyleSheet.create({
         marginLeft:10,
         marginRight:10,
         marginTop:10
-    }
-
+    },
     
 });
 
