@@ -21,7 +21,7 @@ class CardLogin extends Component {
         this.setState({textBtnInciarSesion:'Iniciando sesión . . .', loading:true})
         setTimeout(() =>{
             if(email === userTemp && password === pwdTemp){
-                this.props.navigation.navigate('HomeFundacion')
+                this.props.navigation.navigate('HomeDonante')
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
             }else{
                 alert('Email y contraseña inválidos')
@@ -33,8 +33,10 @@ class CardLogin extends Component {
     render(){
         const {email, password,textBtnInciarSesion,loading,handleDisabled,colorbtn} = this.state
         return(
-                <Content padder>
+                <Content padder style={{marginTop:50}}>
+                    
                     <Title style={styles.title}>Iniciar sesión</Title>
+                    
                     <Card style={styles.cardEmail}>
                         <Form>
                             <Item floatingLabel last>
@@ -44,6 +46,7 @@ class CardLogin extends Component {
                             </Item>
                         </Form>    
                     </Card>
+
                     <Card style={styles.cardPwd}>
                         <Form>
                             <Item floatingLabel last>
@@ -79,7 +82,7 @@ class CardLogin extends Component {
 const styles = StyleSheet.create({
 
     title:{
-        paddingTop:40,
+        marginTop:10,
         color: 'black',
         textAlign : 'center',
         fontWeight: "bold",

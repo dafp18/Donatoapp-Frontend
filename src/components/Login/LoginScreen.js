@@ -13,30 +13,14 @@ class LoginScreen extends React.Component{
   render(){
     
     return(
-      <LinearGradient colors={['#243949','#517fa4']} style={styles.linearGradient}>
-            <View style={styles.container}>
-              
-            <Title style={styles.textD}>Donatón<Title style={styles.textA}>App</Title></Title>
-            <Icon active name='home' style={styles.icon} />
-        
-              <Card style={styles.cardTop}>
-              <CardLogin {...this.props} />
-              </Card>
-              
-                {/* <Tabs>
-                  <Tab heading="Iniciar sesión">
-                    <Content>
-                      <CardLogin {...this.props} />
-                    </Content>
-                  </Tab>
-                  <Tab heading="Registrarse">
-                    <Content>
-                      <CardRegister/>
-                    </Content>  
-                  </Tab>
-                </Tabs> */}
-               
-            </View>
+            <LinearGradient colors={['#243949','#517fa4']} style={styles.linearGradient}>
+              <View style={styles.container}>
+                <Title style={styles.textD}>Donatón<Title style={styles.textA}>App</Title></Title>
+                {/* <Icon active name='home' style={styles.icon} /> */}
+                <Card style={styles.cardTop}>
+                  <CardLogin {...this.props} />
+                </Card>
+              </View>
             </LinearGradient>
           );
   }
@@ -44,10 +28,7 @@ class LoginScreen extends React.Component{
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    
-    
-    
+    flex: 1, 
   },
   cardTop: {
     flex: 2,
@@ -81,9 +62,5 @@ const styles = StyleSheet.create({
     textAlign: "center"
   }
 });
-
-
-
-
 
 export default LoginScreen;
