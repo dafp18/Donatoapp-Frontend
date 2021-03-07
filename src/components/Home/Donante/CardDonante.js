@@ -16,7 +16,7 @@ class CardDonante extends Component {
                 <Title style={styles.title}>Diego Alejandro Forero Pinzón</Title>
                 <Text note style={styles.textNote}>Último ingreso: 2021/05/31 03:00:05 pm</Text>
                 
-                <Card style={styles.cardFirst}>
+                <Card style={styles.cardFirst} button onPress={this.getprops}>
                     <LinearGradient colors={['#243949','#08e5d2']} style={styles.linearGradient}>
                         <ImageBackground source={require('../../../assets/img/circles.png')} style={styles.image}>
                             <Text style={styles.text}>Donar</Text>

@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import SplashScreen from '../Screens/Splash';
 
 import LoginScreen from '../Login/LoginScreen';
+import SelectRol from '../Screens/RolRegisterScreen';
 
 import HomeDonanteScreen from '../Home/Donante/HomeDonanteScreen';
 import SelectCategory from '../Donations/SelectedCategoryScreen';
@@ -29,6 +30,12 @@ const RouteStack = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown:false }}
+        />
+
+        <Stack.Screen
+          name="SelectRol"
+          component={SelectRol}
           options={{ headerShown:false }}
         />
 

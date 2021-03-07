@@ -28,7 +28,6 @@ class CardLogin extends Component {
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
             }
         },3000)
-         
     }
     render(){
         const {email, password,textBtnInciarSesion,loading,handleDisabled,colorbtn} = this.state
@@ -50,7 +49,7 @@ class CardLogin extends Component {
                     <Card style={styles.cardPwd}>
                         <Form>
                             <Item floatingLabel last>
-                            <Icon active name='home' />
+                            <Icon active name='key' />
                             <Label>Contraseña</Label>
                             <Input onChangeText={password => this.setState({password})} />
                             </Item>
@@ -59,14 +58,14 @@ class CardLogin extends Component {
 
                     <Form>
                         <Button block style={{ marginLeft:10, marginRight:10, marginTop:10, 
-                                                                         backgroundColor: (email !== '' || password !== '' ) ? '#243949' : '#667580'
-                                                                      }}  
-                                                                      onPress={this.startSession}>
+                                                backgroundColor: (email !== '' || password !== '' ) ? '#243949' : '#667580'
+                                            }}  
+                                            onPress={this.startSession}>
                             <Text>{textBtnInciarSesion}</Text>
                             {   loading && <ActivityIndicator size="large" color="#08e5d2" />  }
                         </Button>
 
-                        <Button block style={styles.btn} onPress={this.startSession}>
+                        <Button block style={styles.btn} onPress={()=>{this.props.navigation.navigate('SelectRol')}}>
                             <Text>Registrarse</Text>                            
                         </Button>
 
