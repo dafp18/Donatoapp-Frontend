@@ -5,6 +5,7 @@ import SplashScreen from '../Screens/Splash';
 
 import LoginScreen from '../Login/LoginScreen';
 import SelectRol from '../Screens/RolRegisterScreen';
+import RegisterScreen from '../Screens/RegisterScreen';
 
 import HomeDonanteScreen from '../Home/Donante/HomeDonanteScreen';
 import SelectCategory from '../Donations/SelectedCategoryScreen';
@@ -38,7 +39,11 @@ const RouteStack = () => {
           component={SelectRol}
           options={{ headerShown:false }}
         />
-
+        <Stack.Screen
+          name="Register"
+          component={RegisterScreen}
+          options={{ headerShown:false }}
+        />
         <Stack.Screen
           name="HomeDonante"
           component={HomeDonanteScreen}

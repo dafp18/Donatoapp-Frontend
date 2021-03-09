@@ -22,7 +22,7 @@ class HomeDonanteScreen extends Component {
                             </Body>
                             <Right>
                                 <Button transparent>
-                                <Icon name="home" style={{color:'#08e5d2'}} />
+                                <Icon name="settings" style={{color:'#08e5d2'}} />
                                 </Button>
                             </Right>
                         </Header>

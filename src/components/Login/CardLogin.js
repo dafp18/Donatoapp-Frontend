@@ -23,6 +23,9 @@ class CardLogin extends Component {
             if(email === userTemp && password === pwdTemp){
                 this.props.navigation.navigate('HomeDonante')
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
+            }else if(email === 'diegoafun' && password === pwdTemp){
+                this.props.navigation.navigate('HomeFundacion')
+                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })    
             }else{
                 alert('Email y contraseña inválidos')
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
@@ -37,23 +40,23 @@ class CardLogin extends Component {
                     <Title style={styles.title}>Iniciar sesión</Title>
                     
                     <Card style={styles.cardEmail}>
-                        <Form>
+                        
                             <Item floatingLabel last>
                                 <Icon active name='person' />
                                 <Label>Correo electrónico</Label>
                                 <Input onChangeText={email => this.setState({email})} />
                             </Item>
-                        </Form>    
+                        
                     </Card>
 
                     <Card style={styles.cardPwd}>
-                        <Form>
+                        
                             <Item floatingLabel last>
                             <Icon active name='key' />
                             <Label>Contraseña</Label>
                             <Input onChangeText={password => this.setState({password})} />
                             </Item>
-                        </Form>    
+                        
                     </Card>
 
                     <Form>

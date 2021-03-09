@@ -5,9 +5,11 @@ import LinearGradient from 'react-native-linear-gradient';
 
 class CardDonante extends Component {
     getprops = () => {
+        console.log('upaleeeee')
         this.props.navigation.navigate('SelectCategory')
     }
     render(){
+        console.log('props homeDonation')
         const { title, body } = this.props
         return(
             <Content padder style={{marginTop:50}}>
@@ -16,13 +18,15 @@ class CardDonante extends Component {
                 <Title style={styles.title}>Diego Alejandro Forero Pinzón</Title>
                 <Text note style={styles.textNote}>Último ingreso: 2021/05/31 03:00:05 pm</Text>
                 
-                <Card style={styles.cardFirst} button onPress={this.getprops}>
+                <Pressable onPress={this.getprops}>
+                <Card style={styles.cardFirst} >
                     <LinearGradient colors={['#243949','#08e5d2']} style={styles.linearGradient}>
                         <ImageBackground source={require('../../../assets/img/circles.png')} style={styles.image}>
                             <Text style={styles.text}>Donar</Text>
                         </ImageBackground>                   
                     </LinearGradient>  
                 </Card>
+                </Pressable>
 
                 <Card >
                     <LinearGradient colors={['#243949','#000000']} style={styles.linearGradient}>
