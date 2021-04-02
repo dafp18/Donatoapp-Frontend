@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import {Header, Card, Text, Button,Body,Left,Icon} from "native-base";
-import {Image,StyleSheet,View,FlatList} from 'react-native';
+import {Header, Card, Text, Button, Left, Icon, Container,Body,Title, Right} from "native-base";
+import {StyleSheet,View,FlatList,Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CardSelectedCategory from './CardSelectedCategory';
 
-const DATA = [
-    {
-      id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+const dataCategories = [
+    { id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
       title: 'Alimentos',
     },
     {
@@ -22,22 +21,6 @@ const DATA = [
         title: 'Fourth Item',
     },
     {
-        id: '58694a0f-3da1-471f-bd96-145571e29d89',
-        title: 'Fourth Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29',
-        title: 'Fourth Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e2',
-        title: 'Fourth Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e',
-        title: 'Fourth Item',
-    },
-    {
         id: '58694a0f-3da1-471f-bd96-1455',
         title: 'Electrodomesticos',
     },
@@ -50,61 +33,67 @@ const DATA = [
 
 let numColumns = 2
 class SelectedCategoryScreen extends Component {
-    handleContinue = () =>{
+    goDataDonation = () =>{
         this.props.navigation.navigate('DataDonation')
     }
+    goHome = () =>{
+        this.props.navigation.navigate('HomeDonante')
+    }
     render(){
-        console.log(this.props, 'categorias')
         return(
-                
-                    <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
-                        <View style={styles.container}>
-                            <Header transparent style={{backgroundColor:'#243949', justifyContent:'center', flexDirection:'row'}}>
-                                <Left>
-                                    <Button transparent style={{color:'#08e5d2'}}>
-                                    <Icon name='arrow-back' />
-                                    </Button>
-                                    
-                                </Left>
-                                <Body>
-                                    <Text style={styles.text}>Seleccionar categoria</Text>
-                                </Body>
-                            </Header>
-                            <Card style={styles.cardTop}>
+                <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
+                    <View style={styles.container}>
+                        <Header transparent style={{backgroundColor:'#243949'}}>
+                        <Left>
+                            <Button transparent onPress={this.goHome}>
+                            <Icon name='arrow-back' style={styles.iconHeader}/>
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Title style={styles.textHeader}>Seleccionar categoría</Title>
+                        </Body>
+                        </Header>
+                        <View style={styles.cardBackground}>
                             <FlatList
                                 style={{margin:20}}
-                                data={DATA}
+                                data={dataCategories}
                                 renderItem={({item}) =>{
                                     return <CardSelectedCategory title={item.title}
-                                                                 handleContinue = {this.handleContinue}
+                                                                 id={item.id}
+                                                                 handleContinue = {this.goDataDonation}
                                     />
                                 }} 
                                 keyExtractor={item => item.id}
                                 numColumns={numColumns}
-                            />
-                                
-                            </Card>
+                            />  
                         </View>
-                    </LinearGradient>
-                  
-        )
+                    </View>
+                </LinearGradient>  
+              )
     }
 }
 
 const styles = StyleSheet.create({
-    container: {
-      flex: 1, 
-    },
     linearGradient: {
         flex: 1,
         justifyContent:'center'
     },
-    cardTop: {
+    container: {
+      flex: 1, 
+    },
+    textHeader:{
+        fontSize:20,
+        marginTop:20
+    },
+    iconHeader:{
+        marginTop:20
+    },
+    cardBackground: {
         flex: 1,
-        backgroundColor: "#fff",
-        marginTop:20,
-        borderTopLeftRadius:15,
-        borderTopRightRadius:15       
+        backgroundColor: "#f7f8fa",
+        marginTop:40,
+        borderTopColor:'#517fa4',
+        borderTopWidth:3
     },
     text: {
         color: "white",

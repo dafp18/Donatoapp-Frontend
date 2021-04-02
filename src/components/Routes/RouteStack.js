@@ -52,7 +52,7 @@ const RouteStack = () => {
         <Stack.Screen
           name="SelectCategory"
           component={SelectCategory}
-          options={{ headerShown:false }}
+          options={{ headerShown:false}}
         />
         <Stack.Screen
           name="DataDonation"

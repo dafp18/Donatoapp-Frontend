@@ -5,18 +5,17 @@ import LinearGradient from 'react-native-linear-gradient';
 
 class CardSelectedCategory extends Component{
     render(){
-        const {title,handleContinue} = this.props
+        const {title,id,handleContinue} = this.props
         return (
-                
-                <View style={styles.viewContainer}>
+                <View style={styles.container}>
                     <Pressable onPress={handleContinue}>
-                        <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
+                        <Card style={styles.cardCategory} key={id}>
                             <Image
                                 source={require('../../assets/img/undraw_city_life.png')} 
-                                style={styles.imgstyle}
+                                style={styles.imgCard}
                             />
-                            <Text style={styles.textCard}>{title}</Text>
-                        </LinearGradient>
+                            <Text style={styles.titleCard}>{title}</Text>
+                        </Card>                       
                     </Pressable>        
                 </View>                
         )
@@ -24,29 +23,41 @@ class CardSelectedCategory extends Component{
 }
 
 const styles = StyleSheet.create({
-    viewContainer: {
+    container: {
         flex: 1
     },
-    linearGradient: {
-        flex: 1,
-        padding:15,
-        borderRadius: 20,
-        margin:10,
-        justifyContent:'center',
+    cardCategory:{
+        flex:1,
         flexDirection:'column',
-        alignItems:'center'  
+        justifyContent: 'center',
+        alignItems:'center',
+        marginTop:8,
+        marginLeft:8,
+        marginRight:8,
+        borderRadius:5,
+        borderTopColor:'#243949',
+        borderTopWidth:3,
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 12,
+        },
+        shadowOpacity: 0.58,
+        shadowRadius: 16.00,
     },
-    imgstyle:{
+    imgCard:{
         height: 100,
         width: 100,
         borderRadius:50
     },
-    textCard: {
-        color: "white",
-        fontSize: 18,
+    titleCard: {
+        color: "#243949",
+        fontSize: 22,
         fontWeight: "bold",
-        marginTop: 6   
+        textAlign: "center",
+        marginBottom:5
     }
+    
 })
 
 export default CardSelectedCategory;
