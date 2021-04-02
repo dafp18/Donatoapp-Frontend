@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
-import {Header, Card, Text, Button, Left, Icon, Container,Body,Title, Right} from "native-base";
+import {Header, Card, Text, Button, Left,Body,Title} from "native-base";
 import {StyleSheet,View,FlatList,Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import CardSelectedCategory from './CardSelectedCategory';
 
 const dataCategories = [
@@ -46,7 +48,7 @@ class SelectedCategoryScreen extends Component {
                         <Header transparent style={{backgroundColor:'#243949'}}>
                         <Left>
                             <Button transparent onPress={this.goHome}>
-                            <Icon name='arrow-back' style={styles.iconHeader}/>
+                            <Icon name='chevron-left' color="#fff" size={20} style={styles.iconHeader}/>
                             </Button>
                         </Left>
                         <Body>

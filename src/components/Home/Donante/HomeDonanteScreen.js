@@ -1,11 +1,19 @@
-import React, { Component } from 'react';
+import React, { Component,createRef  } from 'react';
 import {View,StyleSheet,Image} from 'react-native';
-import {Header,Card,Text,Right,Button,Icon,Title,Body} from 'native-base';
+import {Header,Card,Text,Right,Button,Title,Body,ListItem,Left,List} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
+import ActionSheet from "react-native-actions-sheet";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import CardDonante from './CardDonante';
 
+const actionSheetRef = createRef();
+const listItems = [
+    { id: 'opt000001',title: 'Mi cuenta', subTitle: 'Información de tu cuenta', icon:'user-circle', iconColor:'#243949', sizeIcon:25},
+    { id: 'opt000002',title: 'Cerrar sesión', subTitle: 'Salida segura de la aplicación', icon:'times-circle', iconColor:'red', sizeIcon:28},
+    { id: 'opt000003',title: 'Acerca de', subTitle: 'Versión 1.0.0', icon:'info-circle', iconColor:'#517fa4', sizeIcon:28}
+]
 class HomeDonanteScreen extends Component {
-    state={}
     render(){
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
@@ -15,8 +23,8 @@ class HomeDonanteScreen extends Component {
                                 <Title style={styles.textHeader}>Inicio</Title>
                             </Body>
                             <Right>
-                                <Button transparent>
-                                    <Icon name='menu' style={styles.iconHeader} />
+                                <Button transparent onPress={() => { actionSheetRef.current?.show()}}>
+                                    <Icon name='bars' color="#fff" size={25} style={styles.iconHeader} />
                                 </Button>
                             </Right>
                         </Header>
@@ -30,6 +38,33 @@ class HomeDonanteScreen extends Component {
                                 {...this.props}
                             />
                         </View>
+                    </View>
+                    <View>
+                        <ActionSheet ref={actionSheetRef} 
+                                        gestureEnabled={true}  
+                                        containerStyle={styles.containerActionSheet} 
+                                        indicatorColor="#243949"
+                                    >
+                            <View>
+                                <List>
+                                    {listItems?.map(itm =>{
+                                        return (
+                                            <ListItem thumbnail key={itm.id}>
+                                                <Left>
+                                                    <Button transparent>
+                                                        <Icon active name={itm.icon} size={itm.sizeIcon} color={itm.iconColor} />
+                                                    </Button>
+                                                </Left>
+                                                <Body>
+                                                    <Text>{itm.title}</Text>
+                                                    <Text note numberOfLines={1}>{itm.subTitle}</Text>
+                                                </Body>
+                                            </ListItem> 
+                                        )
+                                    })}     
+                                </List>
+                            </View>
+                        </ActionSheet>
                     </View>
                 </LinearGradient>
         )
@@ -50,8 +85,7 @@ const styles = StyleSheet.create({
         marginLeft:145
     },
     iconHeader:{
-        marginTop:20,
-        fontSize:30
+        marginTop:20
     },
     cardBackground: {
         flex: 1,
@@ -75,6 +109,15 @@ const styles = StyleSheet.create({
     textNoteCardFirst:{
         textAlign : 'center',
         marginBottom:5
+    },
+    containerActionSheet:{
+        flex: 1,
+        backgroundColor:"#fff",
+        borderTopLeftRadius:10,
+        borderTopRightRadius:10,
+        borderTopColor:'#243949',
+        borderTopWidth:3,
+        padding:8       
     }
 });
 
