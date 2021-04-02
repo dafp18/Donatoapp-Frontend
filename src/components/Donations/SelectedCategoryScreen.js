@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Header, Card, Text, Button, Left,Body,Title} from "native-base";
+import {Header, Footer, Text, Button, Left,Body,Title} from "native-base";
 import {StyleSheet,View,FlatList,Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -69,6 +69,11 @@ class SelectedCategoryScreen extends Component {
                                 numColumns={numColumns}
                             />  
                         </View>
+                        {/* <Footer style={styles.footerContainer}>
+                            <Button block onPress={this.handleContinue} >
+                                <Text>Continuar</Text>
+                            </Button>
+                        </Footer> */}
                     </View>
                 </LinearGradient>  
               )
@@ -97,8 +102,10 @@ const styles = StyleSheet.create({
         borderTopColor:'#517fa4',
         borderTopWidth:3
     },
-    text: {
-        color: "white",
+    footerContainer: {
+        backgroundColor: "#f7f8fa",
+        borderTopColor:'#517fa4',
+        borderTopWidth:3,
         fontSize: 20
     }
 });

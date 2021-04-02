@@ -47,7 +47,7 @@ const RouteStack = () => {
         <Stack.Screen
           name="HomeDonante"
           component={HomeDonanteScreen}
-          options={{ title: 'Bienvenido', headerShown:false }}
+          options={{ headerShown:false }}
         />
         <Stack.Screen
           name="SelectCategory"
@@ -57,7 +57,7 @@ const RouteStack = () => {
         <Stack.Screen
           name="DataDonation"
           component={DataDonation}
-          options={{ title: 'Detalles de la donación' }}
+          options={{ headerShown:false }}
         />
         <Stack.Screen
           name="SelectImageDonation"
