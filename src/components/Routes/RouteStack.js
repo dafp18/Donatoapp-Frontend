@@ -17,6 +17,10 @@ import HomeFundacion from '../Home/Fundacion/HomeFundacionScreen';
 import ListaDonaciones from '../Home/Fundacion/ListDonacionesScreen';
 import DetalleDonacion from '../Home/Fundacion/DatalleDonacionScreen';
 
+import HistorialDonaciones from '../History/HistoryDonationsScreen';
+import FundationsList from '../Fundations/FundationsScreen';
+import TipsToDonate from '../TipsToDonate/TipsToDonateScreen';
+
 const Stack = createStackNavigator();
 
 const RouteStack = () => {
@@ -67,6 +71,22 @@ const RouteStack = () => {
         <Stack.Screen
           name="selectLocation"
           component={selectLocation}
+          options={{ headerShown:false }}
+        />
+
+        <Stack.Screen
+          name="DonationsHistory"
+          component={HistorialDonaciones}
+          options={{ headerShown:false }}
+        />
+        <Stack.Screen
+          name="FundationsList"
+          component={FundationsList}
+          options={{ headerShown:false }}
+        />
+        <Stack.Screen
+          name="TipsToDonate"
+          component={TipsToDonate}
           options={{ headerShown:false }}
         />
 
