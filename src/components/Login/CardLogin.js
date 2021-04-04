@@ -54,7 +54,7 @@ class CardLogin extends Component {
                             <Item floatingLabel last>
                             <Icon active name='key' />
                             <Label>Contraseña</Label>
-                            <Input onChangeText={password => this.setState({password})} />
+                            <Input secureTextEntry={true} onChangeText={password => this.setState({password})} />
                             </Item>
                         
                     </Card>

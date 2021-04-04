@@ -69,14 +69,9 @@ class SelectedCategoryScreen extends Component {
                                 numColumns={numColumns}
                             />  
                         </View>
-                        {/* <Footer style={styles.footerContainer}>
-                            <Button block onPress={this.handleContinue} >
-                                <Text>Continuar</Text>
-                            </Button>
-                        </Footer> */}
                     </View>
                 </LinearGradient>  
-              )
+        )
     }
 }
 
@@ -101,12 +96,6 @@ const styles = StyleSheet.create({
         marginTop:40,
         borderTopColor:'#517fa4',
         borderTopWidth:3
-    },
-    footerContainer: {
-        backgroundColor: "#f7f8fa",
-        borderTopColor:'#517fa4',
-        borderTopWidth:3,
-        fontSize: 20
     }
 });
 

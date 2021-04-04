@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import SplashScreen from '../Screens/Splash';
 
-import LoginScreen from '../Login/LoginScreen';
+import LoginScreen from '../Screens/LoginScreen';
 import SelectRol from '../Screens/RolRegisterScreen';
 import RegisterScreen from '../Screens/RegisterScreen';
 
@@ -62,18 +62,18 @@ const RouteStack = () => {
         <Stack.Screen
           name="SelectImageDonation"
           component={SelectImageDonation}
-          options={{ title: 'Seleccionar fotos' }}
+          options={{ headerShown:false }}
         />
         <Stack.Screen
           name="selectLocation"
           component={selectLocation}
-          options={{ title: 'Elegir ubicación' }}
+          options={{ headerShown:false }}
         />
 
         <Stack.Screen
           name="HomeFundacion"
           component={HomeFundacion}
-          options={{ title: 'Bienvenido', headerShown:false }}
+          options={{ headerShown:false }}
         />
         <Stack.Screen
           name="ListDonaciones"

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Container, Content, Tab, Tabs, Card, CardItem,Title, Icon} from 'native-base';
-import { StyleSheet,Text, View } from 'react-native';
+import { Title } from 'native-base';
+import { StyleSheet, View } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import CardLogin from './CardLogin';
+import CardLogin from '../Login/CardLogin';
 
 class LoginScreen extends React.Component{
   
@@ -12,10 +12,9 @@ class LoginScreen extends React.Component{
             <LinearGradient colors={['#243949','#517fa4']} style={styles.linearGradient}>
               <View style={styles.container}>
                 <Title style={styles.textD}>Donatón<Title style={styles.textA}>App</Title></Title>
-                {/* <Icon active name='home' style={styles.icon} /> */}
-                <Card style={styles.cardTop}>
+                <View style={styles.cardBackground}>
                   <CardLogin {...this.props} />
-                </Card>
+                </View>  
               </View>
             </LinearGradient>
           );
@@ -26,13 +25,13 @@ const styles = StyleSheet.create({
   container: {
     flex: 1, 
   },
-  cardTop: {
-    flex: 2,
-    backgroundColor: "#fff",
-    /* borderWidth: 20, */
-    marginTop:20,
+  cardBackground: {
+    flex: 1,
+    backgroundColor: "white",
     borderTopLeftRadius: 100,
-    
+    marginTop:40,
+    borderTopColor:'#517fa4',
+    borderTopWidth:3
   },
   linearGradient: {
     flex: 1,

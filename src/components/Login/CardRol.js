@@ -1,33 +1,29 @@
 import React, { Component } from 'react';
-import { StyleSheet, View, Pressable, Image, Text } from 'react-native';
-import { Content, Item, Icon, Label, Input, Button } from 'native-base';
+import { StyleSheet, Pressable, Image, Text } from 'react-native';
+import { Content } from 'native-base';
 
 class CardRol extends Component {
-    sendRegisterScreen =(type) => {
-        console.log(type)
+    goRegister = () => {
         this.props.navigation.navigate('Register')
     }   
     render(){
-        console.log(this.props)
         return(
-                <Content padder style={{marginTop:30}}>
-                    
-                    <Pressable onPress={this.sendRegisterScreen}> 
-                            <Image
-                                style={{ height:170, width:170, marginBottom:15 }}
-                                source={require('../../assets/img/user.png')}
-                            />
-                            <Text style={styles.textOpt} >Donante</Text>
-                            </Pressable>
+                <Content padder style={{marginTop:50}}>
+                    <Pressable onPress={this.goRegister}> 
+                        <Image
+                            style={{ height:170, width:170, marginBottom:15 }}
+                            source={require('../../assets/img/user.png')}
+                        />
+                        <Text style={styles.textOpt} >Donante</Text>
+                    </Pressable>
 
-                            <Pressable onPress={this.sendRegisterScreen}> 
-                            <Image
-                                style={{ height:170, width:170, marginTop:10 }}
-                                source={require('../../assets/img/fundation.png')}
-                            />
-                            <Text style={styles.textOpt}>Fundación</Text>
-                            </Pressable>
-                    
+                    <Pressable onPress={this.goRegister}> 
+                        <Image
+                            style={{ height:170, width:170, marginTop:10 }}
+                            source={require('../../assets/img/fundation.png')}
+                        />
+                        <Text style={styles.textOpt}>Fundación</Text>
+                    </Pressable> 
                 </Content>
         )
     }

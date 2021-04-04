@@ -1,24 +1,34 @@
 import React, { Component } from 'react';
-import { Text, Header, Body, Card, Title } from 'native-base';
+import { Text, Header, Body, Card, Title, Left, Button } from 'native-base';
 import { View, StyleSheet, Image, Pressable } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 import CardRol from '../Login/CardRol';
 
 class RolRegister extends Component {
+
+    goLogin =() =>{
+        this.props.navigation.navigate('Login')
+    }
     
     render(){
         return(
-                <LinearGradient colors={['#243949','#517fa4']} style={styles.linearGradient}>
+                <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
                     <View style={styles.container}>
                         <Header transparent style={{backgroundColor:'#243949'}}>
+                            <Left>
+                                <Button transparent onPress={this.goLogin}>
+                                <Icon name='chevron-left' color="#fff" size={20} style={styles.iconHeader}/>
+                                </Button>
+                            </Left>
                             <Body>
-                                <Text style={styles.text}> Seleccione su perfil</Text>
+                                <Title style={styles.textHeader}>Seleccionar usuario</Title>
                             </Body>
                         </Header>
-                        <Title style={styles.textD}>Donatón<Title style={styles.textA}>App</Title></Title>
-                        <Card style={styles.cardTop}>
-                            <CardRol {...this.props} />                            
-                        </Card>
+                        <View style={styles.cardBackground}>
+                            <CardRol {...this.props} />
+                        </View>
                     </View>        
                 </LinearGradient>      
         )
@@ -26,42 +36,28 @@ class RolRegister extends Component {
 }
 
 const styles = StyleSheet.create({
-    container:{
-        flex : 1  
-    },
     linearGradient: {
         flex: 1,
         justifyContent:'center'
     },
-    text: {
-        color: "white",
-        fontSize: 20,
-        fontWeight: "bold",
-        textAlign: "center"    
+    container:{
+        flex : 1  
     },
-    cardTop: {
-        flex: 2,
-        backgroundColor: "#fff",
-        marginTop:20,
-        borderTopLeftRadius: 100,
-        justifyContent: 'center',
-        alignItems: 'center'
-        
+    textHeader:{
+        fontSize:20,
+        marginTop:20
     },
-    textD: {
-        marginTop:20,
-        color: "white",
-        fontSize: 25,
-        fontWeight: "bold",
-        textAlign: "center",
-        
+    iconHeader:{
+        marginTop:20
     },
-    textA: {
-        marginTop:20,
-        color: "#08e5d2",
-        fontSize: 28,
-        fontWeight: "bold",
-        textAlign: "center"
+    cardBackground: {
+        flex: 1,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor: "white",
+        marginTop:40,
+        borderTopColor:'#517fa4',
+        borderTopWidth:3
     }
 })
 

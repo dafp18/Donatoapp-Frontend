@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet, Image, View } from 'react-native';
-import { Container, Header, Content, Form, Item, Icon, Label, Input, Button,Text } from 'native-base';
+import { Content, Item, Icon, Label, Input, Button,Text } from 'native-base';
 
 class CardRegister extends Component {
     
@@ -11,18 +11,19 @@ class CardRegister extends Component {
     render(){
                   
         return(
-            <Content padder style={{marginTop:50}}>
+            <Content padder style={{marginTop:10}}>
                         <View style={styles.containerImg} >
                             <Image
-                                style={{ height:100, width:350, marginBottom:15 }}
-                                source={require('../../assets/img/undraw_Relaxing.png')}
+                                style={{ height:100, width:100, marginBottom:10 }}
+                                source={require('../../assets/img/donanteRegister.png')}
+                                //source={require('../../assets/img/fundacionRegister.png')}
                             />
                         </View>
                 
                         <Item floatingLabel last style={styles.labels}>
                             <Icon active name='card' style={styles.icon} />
                             <Label >Nit</Label>
-                            <Input />
+                            <Input style={{color:'green'}} />
                         </Item>
                         
                         <Item floatingLabel last style={styles.labels}>
@@ -63,12 +64,12 @@ class CardRegister extends Component {
                         <Item floatingLabel last style={styles.labels}>
                             <Icon active name='key' style={styles.icon}/>
                             <Label>Contraseña</Label>
-                            <Input />
+                            <Input secureTextEntry={true}/>
                         </Item>
                         <Item floatingLabel last style={styles.labels}>
                             <Icon active name='key' style={styles.icon}/>
                             <Label>Confirmar contraseña</Label>
-                            <Input />
+                            <Input secureTextEntry={true}/>
                         </Item>
                         
                         <Button block style={styles.btn} onPress={this.registerNewUSer} >
@@ -83,25 +84,12 @@ class CardRegister extends Component {
 }
 
 const styles = StyleSheet.create({
-    textD: {    
-        color: "#243949",
-        fontSize: 25,
-        fontWeight: "bold",
-        textAlign: "center",
-        
-    },
-    textA: {    
-        color: "#08e5d2",
-        fontSize: 28,
-        fontWeight: "bold",
-        textAlign: "center"
-    },
     icon:{
         color: "#08e5d2",
         textAlign: "center"
-      },
+    },
     btn:{
-        backgroundColor: '#243949',
+        backgroundColor: '#667580',//'#243949',
         marginLeft:15,
         marginRight:15,
         marginTop:20

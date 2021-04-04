@@ -3,10 +3,10 @@ import { Content, Card, Text} from "native-base";
 import {Image, Pressable, StyleSheet} from 'react-native';
 
 const MenusHomeDonante = [
-    { title: 'Nueva donación',img: require('../../../assets/img/MenuDonar_.png')},
-    { title: 'Historial donaciones',img: require('../../../assets/img/MenuHistorial_.png')},
-    { title: 'Fundaciones',img: require('../../../assets/img/MenuFundaciones_.png')},
-    { title: 'Tips para donar',img: require('../../../assets/img/TipsDonar_.png')},
+    { id:'optHD_0001', title: 'Nueva donación',img: require('../../../assets/img/MenuDonar_.png')},
+    { id:'optHD_0002', title: 'Historial donaciones',img: require('../../../assets/img/MenuHistorial_.png')},
+    { id:'optHD_0003', title: 'Fundaciones',img: require('../../../assets/img/MenuFundaciones_.png')},
+    { id:'optHD_0004', title: 'Tips para donar',img: require('../../../assets/img/TipsDonar_.png')},
 ]
 class CardDonante extends Component {
     getprops = () => {
@@ -20,7 +20,7 @@ class CardDonante extends Component {
             <Content padder>
                 { MenusHomeDonante.map( (menu,i) =>{
                     return (
-                        <Pressable onPress={this.getprops}>
+                        <Pressable onPress={this.getprops} key={menu.id}>
                             <Card style={styles.cards} key={`menu_${i}`}>
                                 <Image source={menu.img} style={styles.image}/>
                                 <Text style={styles.titleCard}>{menu.title}</Text>                                           
