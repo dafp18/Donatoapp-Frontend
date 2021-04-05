@@ -8,18 +8,17 @@ import SelectRol from '../Screens/RolRegisterScreen';
 import RegisterScreen from '../Screens/RegisterScreen';
 
 import HomeDonanteScreen from '../Home/Donante/HomeDonanteScreen';
-import SelectCategory from '../Donations/SelectedCategoryScreen';
-import DataDonation from '../Donations/DataDonationScreen';
-import SelectImageDonation from '../Donations/SelectImageDonationScreen';
-import selectLocation from '../Donations/selectLocationDonationScreen';
+import SelectCategory from '../Donations/NewDonate/SelectedCategoryScreen';
+import DataDonation from '../Donations/NewDonate/DataDonationScreen';
+import SelectImageDonation from '../Donations/NewDonate/SelectImageDonationScreen';
+import selectLocation from '../Donations/NewDonate/selectLocationDonationScreen';
+import HistorialDonaciones from '../Donations/History/HistoryDonationsScreen';
+import FundationsList from '../Donations/FundationsList/FundationsScreen';
+import TipsToDonate from '../Donations/TipsToDonate/TipsToDonateScreen';
 
 import HomeFundacion from '../Home/Fundacion/HomeFundacionScreen';
 import ListaDonaciones from '../Home/Fundacion/ListDonacionesScreen';
 import DetalleDonacion from '../Home/Fundacion/DatalleDonacionScreen';
-
-import HistorialDonaciones from '../History/HistoryDonationsScreen';
-import FundationsList from '../Fundations/FundationsScreen';
-import TipsToDonate from '../TipsToDonate/TipsToDonateScreen';
 
 const Stack = createStackNavigator();
 

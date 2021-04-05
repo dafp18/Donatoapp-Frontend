@@ -33,7 +33,7 @@ class DataDonationScreen extends Component {
                             </Body>
                         </Header>
                         <View style={styles.cardBackground}>
-                            <Image source={require('../../assets/img/undraw_moments.png')} style={{height: 300, width: 300}}/>
+                            <Image source={require('../../../assets/img/undraw_moments.png')} style={{height: 300, width: 300}}/>
                         </View>
                         <Footer style={styles.footerContainer}>
                             <Button transparent onPress={this.selectPhotos} disabled={false}>

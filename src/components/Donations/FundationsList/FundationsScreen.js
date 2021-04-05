@@ -1,8 +1,10 @@
 import React,{Component} from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, ScrollView } from 'react-native';
 import { Header, Left, Button, Body, Title } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+import CardFundation from './CardFundation';
 
 class FundationsScreen extends Component {
     goHome = () => {
@@ -23,7 +25,12 @@ class FundationsScreen extends Component {
                             </Body>
                         </Header>
                         <View style={styles.cardBackground}>
-                            
+                            <ScrollView>
+                                <CardFundation/>
+                                <CardFundation/>
+                                <CardFundation/>
+                                <CardFundation/>
+                            </ScrollView>
                         </View>
                     </View>
                 </LinearGradient>
@@ -48,8 +55,6 @@ const styles = StyleSheet.create({
     },
     cardBackground: {
         flex: 1,
-        justifyContent:'center',
-        alignItems:'center',
         backgroundColor: "white",
         marginTop:40,
         borderTopColor:'#517fa4',

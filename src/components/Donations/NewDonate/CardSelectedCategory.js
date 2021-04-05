@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Card,Text} from 'native-base';
 import {View,Image,StyleSheet, Pressable} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 
 class CardSelectedCategory extends Component{
     render(){
@@ -11,7 +10,7 @@ class CardSelectedCategory extends Component{
                     <Pressable onPress={handleContinue}>
                         <Card style={styles.cardCategory} key={id}>
                             <Image
-                                source={require('../../assets/img/undraw_city_life.png')} 
+                                source={require('../../../assets/img/undraw_city_life.png')} 
                                 style={styles.imgCard}
                             />
                             <Text style={styles.titleCard}>{title}</Text>
