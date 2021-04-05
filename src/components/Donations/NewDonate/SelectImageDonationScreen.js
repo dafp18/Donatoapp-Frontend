@@ -10,7 +10,7 @@ class DataDonationScreen extends Component {
     }
 
     finishDonate = () =>{
-        this.props.navigation.navigate('HomeDonante')
+        this.props.navigation.navigate('Home')
         alert('Donación publicada correctamente!')
     }
 

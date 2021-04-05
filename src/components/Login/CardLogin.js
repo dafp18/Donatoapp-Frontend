@@ -10,7 +10,19 @@ class CardLogin extends Component {
         userTemp: 'diegoa',
         pwdTemp: '12345',
         textBtnInciarSesion:'Iniciar sesión',
-        loading: false
+        loading: false,
+        menusDonante: [
+            { id:'optHD_0001', title: 'Nueva donación',img: require('../../assets/img/MenuDonar_.png'), goScreen:'SelectCategory'},
+            { id:'optHD_0002', title: 'Historial donaciones',img: require('../../assets/img/MenuHistorial_.png'), goScreen:'DonationsHistory'},
+            { id:'optHD_0003', title: 'Fundaciones',img: require('../../assets/img/MenuFundaciones_.png'),  goScreen:'FundationsList'},
+            { id:'optHD_0004', title: 'Tips para donar',img: require('../../assets/img/TipsDonar_.png'),  goScreen:'TipsToDonate'}
+        ],
+        menusFundacion: [
+            { id:'optHF_0001', title: 'Donaciones disponibles',img: require('../../assets/img/MenuFunDonacionesBus.png'), goScreen:'SelectCategory'},
+            { id:'optHF_0002', title: 'Donaciones en trámite',img: require('../../assets/img/MenuFunDonacionesTra.png'), goScreen:'DonationsHistory'},
+            { id:'optHF_0003', title: 'Donaciones aceptadas',img: require('../../assets/img/MenuFunDonacionesAcp.png'),  goScreen:'FundationsList'},
+            { id:'optHF_0004', title: 'Tips donaciones',img: require('../../assets/img/MenuFunDonacionesPre.png'),  goScreen:'TipsToDonate'}
+        ]
     }
 
     startSession = () => {
@@ -21,10 +33,10 @@ class CardLogin extends Component {
         this.setState({textBtnInciarSesion:'Iniciando sesión . . .', loading:true})
         setTimeout(() =>{
             if(email === userTemp && password === pwdTemp){
-                this.props.navigation.navigate('HomeDonante')
+                this.props.navigation.navigate('Home', {menus:this.state.menusDonante, imgPrincipaly: require('../../assets/img/undraw_city_life.png')})
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
             }else if(email === 'diegoafun' && password === pwdTemp){
-                this.props.navigation.navigate('HomeFundacion')
+                this.props.navigation.navigate('Home',{menus:this.state.menusFundacion,imgPrincipaly: require('../../assets/img/undraw_suburbs.png')})
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })    
             }else{
                 alert('Email y contraseña inválidos')

@@ -8,7 +8,7 @@ import CardDonation from './CardDonation';
 
 class HistoryDonationsScreen extends Component {
     goHome = () => {
-        this.props.navigation.navigate('HomeDonante')
+        this.props.navigation.navigate('Home')
     }
     render(){
         return(

@@ -7,7 +7,7 @@ import LoginScreen from '../Screens/LoginScreen';
 import SelectRol from '../Screens/RolRegisterScreen';
 import RegisterScreen from '../Screens/RegisterScreen';
 
-import HomeDonanteScreen from '../Home/Donante/HomeDonanteScreen';
+import HomeScreen from '../Home/HomeScreen';
 import SelectCategory from '../Donations/NewDonate/SelectedCategoryScreen';
 import DataDonation from '../Donations/NewDonate/DataDonationScreen';
 import SelectImageDonation from '../Donations/NewDonate/SelectImageDonationScreen';
@@ -16,9 +16,8 @@ import HistorialDonaciones from '../Donations/History/HistoryDonationsScreen';
 import FundationsList from '../Donations/FundationsList/FundationsScreen';
 import TipsToDonate from '../Donations/TipsToDonate/TipsToDonateScreen';
 
-import HomeFundacion from '../Home/Fundacion/HomeFundacionScreen';
-import ListaDonaciones from '../Home/Fundacion/ListDonacionesScreen';
-import DetalleDonacion from '../Home/Fundacion/DatalleDonacionScreen';
+import ListaDonaciones from '../Fundations/ListDonacionesScreen';
+import DetalleDonacion from '../Fundations/DatalleDonacionScreen';
 
 const Stack = createStackNavigator();
 
@@ -48,8 +47,8 @@ const RouteStack = () => {
           options={{ headerShown:false }}
         />
         <Stack.Screen
-          name="HomeDonante"
-          component={HomeDonanteScreen}
+          name="Home"
+          component={HomeScreen}
           options={{ headerShown:false }}
         />
         <Stack.Screen
@@ -89,11 +88,6 @@ const RouteStack = () => {
           options={{ headerShown:false }}
         />
 
-        <Stack.Screen
-          name="HomeFundacion"
-          component={HomeFundacion}
-          options={{ headerShown:false }}
-        />
         <Stack.Screen
           name="ListDonaciones"
           component={ListaDonaciones}

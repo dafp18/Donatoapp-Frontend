@@ -39,7 +39,7 @@ class SelectedCategoryScreen extends Component {
         this.props.navigation.navigate('DataDonation')
     }
     goHome = () =>{
-        this.props.navigation.navigate('HomeDonante')
+        this.props.navigation.navigate('Home')
     }
     render(){
         return(

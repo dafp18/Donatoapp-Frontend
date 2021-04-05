@@ -6,7 +6,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 class TipsToDonateScreen extends Component {
     goHome = () => {
-        this.props.navigation.navigate('HomeDonante')
+        this.props.navigation.navigate('Home')
     }
     render(){
         return(
