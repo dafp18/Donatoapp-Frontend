@@ -3,6 +3,7 @@ import {Header, Footer, Text, Button, Left,Body,Title} from "native-base";
 import {StyleSheet,View,FlatList,Pressable} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Http from '../../../helpers/http';
 
 import CardSelectedCategory from './CardSelectedCategory';
 
@@ -41,6 +42,28 @@ class SelectedCategoryScreen extends Component {
     goHome = () =>{
         this.props.navigation.navigate('Home')
     }
+
+    state={
+        CategoriesList:[]
+    }
+
+    componentDidMount () {
+        this.getCategoriesList()
+    } 
+
+    getCategoriesList = async () =>{
+        const resource = '/categories'
+        const categoriesList = await Http.instance.get(resource)
+        this.setState({categoriesList})
+         /* try {
+            let req = await fetch('http://192.168.1.62:8000/api/v1/categories')
+            let json = await req.json()
+            console.log(json)
+        } catch (error) {
+            console.log(error)
+        }     */
+    }
+
     render(){
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
@@ -60,8 +83,7 @@ class SelectedCategoryScreen extends Component {
                                 style={{margin:20}}
                                 data={dataCategories}
                                 renderItem={({item}) =>{
-                                    return <CardSelectedCategory title={item.title}
-                                                                 id={item.id}
+                                    return <CardSelectedCategory categories={this.state.categoriesList}
                                                                  handleContinue = {this.goDataDonation}
                                     />
                                 }} 
