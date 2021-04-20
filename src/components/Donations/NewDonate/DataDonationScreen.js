@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
-import { View,StyleSheet,ScrollView } from 'react-native';
-import { Form, Item, Input, Label, Title, Header,Button, Text, Body,Footer,Left, Textarea} from 'native-base';
+import { View,StyleSheet,ScrollView} from 'react-native';
+import { Form, Item, Input, Label, Title, Header,Button, Text, Body,Footer,Left, Textarea, Icon } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon_ from 'react-native-vector-icons/FontAwesome';
 
 class DataDonationScreen extends Component {
+    state={
+        iconStatusSuccess: 'none',
+        iconStatusError: 'none',
+        iconTitleSuccess: 'none',
+        iconTitleError: 'none',
+        iconQuantitySuccess: 'none',
+        iconQuantityError: 'none',
+        borderColorStatus:'#d9d5dc',
+        borderColorTitle:'#d9d5dc',
+        borderColorQuantity:'#d9d5dc',
+        titulo:null,
+        cantidad:0,
+        color:false
+
+    }
     
     goSelectLocation = () =>{
         this.props.navigation.navigate('selectLocation')
@@ -12,8 +27,32 @@ class DataDonationScreen extends Component {
     goBackSelectCategory = () =>{
         this.props.navigation.navigate('SelectCategory')
     }
+
+    validaForm = (text,label) => {
+        if((label === 'titulo') && (text.length === 0 )){
+            this.setState({iconTitleSuccess:'none',iconTitleError:'none', borderColorTitle:'#d9d5dc'})            
+        }
+        if((label === 'titulo') && text.length > 0 && text.length < 3 ){
+            this.setState({iconTitleSuccess:'none',iconTitleError:'flex', borderColorTitle:'red'})            
+        }
+        if(label === 'titulo' && text.length > 3 ){
+            this.setState({iconTitleSuccess:'flex',iconTitleError:'none', borderColorTitle:'green', titulo:text})
+        }
+
+        if((label === 'cantidad') && (text.length === 0 )){
+            this.setState({iconQuantitySuccess:'none',iconQuantityError:'none', borderColorQuantity:'#d9d5dc'})            
+        }
+        if((label === 'cantidad') && text.length > 0 ){
+            if(/^([1-9])*$/.test(Number(text))){
+                this.setState({iconQuantitySuccess:'flex',iconQuantityError:'none', borderColorQuantity:'green', cantidad:Number(text)})    
+            }else{
+                this.setState({iconQuantitySuccess:'none',iconQuantityError:'flex', borderColorQuantity:'red'})            
+            }   
+        }
+         
+    }
     render(){
-        console.log(this.props)
+        const { iconStatusSuccess,iconStatusError,iconTitleSuccess,iconTitleError,iconQuantitySuccess,iconQuantityError,borderColorStatus,borderColorTitle,borderColorQuantity} = this.state
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
                     <View style={styles.container}>
@@ -30,25 +69,29 @@ class DataDonationScreen extends Component {
                         <View style={styles.cardBackground}>
                             <Form style={{marginTop:20}}>
                             <ScrollView>
+                                
                                 <Label style={{marginLeft:15}}>Estado</Label>
-                                <Item success={false} style={{marginRight:15}}>
-                                    <Icon active name='thumbs-up' size={25} color="#243949" />
-                                    <Input style={{marginLeft:10}}/>
-                                    <Icon name='check-circle' color="green" size={25} style={{marginRight:15}} />
+                                <Item style={{marginRight:15, borderColor:borderColorStatus}}>
+                                    <Icon_ active name='thumbs-up' size={25} color="#243949" />
+                                    <Input style={{marginLeft:10}} onChangeText={ status => { this.validaForm(status, 'estado' )} } disabled />
+                                    <Icon name='checkmark-circle' style={{color:'green', display:iconStatusSuccess}} />
+                                    <Icon name='close-circle' style={{color:'red', display:iconStatusError}}/>
                                 </Item>
-
+                                
                                 <Label style={{marginLeft:15, marginTop:20}}>Título</Label>
-                                <Item success={false} style={{marginRight:15}}>
-                                    <Icon active name='edit' size={25} color="#243949" />
-                                    <Input style={{marginLeft:10}} />
-                                    <Icon name='check-circle' color="green" size={25} style={{marginRight:15}} />
+                                <Item success={false} style={{marginRight:15, borderColor:borderColorTitle}}>
+                                    <Icon_ active name='edit' size={25} color="#243949" />
+                                    <Input style={{marginLeft:10}} onChangeText={ title => {this.validaForm(title, 'titulo' )} }/>
+                                    <Icon name='checkmark-circle' style={{color:'green', display:iconTitleSuccess}} />
+                                    <Icon name='close-circle' style={{color:'red', display:iconTitleError}}/>
                                 </Item>
 
                                 <Label style={{marginLeft:15, marginTop:20}}>Cantidad</Label>
-                                <Item success={false} style={{marginRight:15}}>
-                                    <Icon active name='list-alt' size={25} color="#243949" />
-                                    <Input style={{marginLeft:10}}/>
-                                    <Icon name='check-circle' color="green" size={25} style={{marginRight:15}} />
+                                <Item success={false} style={{marginRight:15, borderColor:borderColorQuantity}}>
+                                    <Icon_ active name='list-alt' size={25} color="#243949" />
+                                    <Input style={{marginLeft:10}} onChangeText={ quantity => {this.validaForm(quantity, 'cantidad' )} }/>
+                                    <Icon name='checkmark-circle' style={{color:'green', display:iconQuantitySuccess}} />
+                                    <Icon name='close-circle' style={{color:'red', display:iconQuantityError}}/>
                                 </Item>
 
                                 <Label style={{marginLeft:15, marginTop:20}}>Observaciones</Label>
@@ -62,6 +105,7 @@ class DataDonationScreen extends Component {
                             </Button>
                         </Footer>    
                     </View>
+
                 </LinearGradient>  
         )
     }
@@ -94,7 +138,8 @@ const styles = StyleSheet.create({
         borderTopColor:'#517fa4',
         borderTopWidth:3,
         fontSize: 20
-    }
+    },
+    
 });
 
 export default DataDonationScreen;

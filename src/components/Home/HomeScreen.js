@@ -30,15 +30,13 @@ class HomeScreen extends Component {
                                 </Button>
                             </Right>
                         </Header>
+                        <Card style={styles.cardFirst}>
+                            <Image source={this.props.route.params.imgPrincipaly} style={{height: 100, width: 300, marginTop:5, marginLeft:15}}/>
+                            <Title style={styles.titleCardFirst}>Diego Alejandro Forero Pinzón</Title>
+                            <Text note style={styles.textNoteCardFirst}>Último ingreso: 2021/05/31 03:00:05 pm</Text>
+                        </Card>
                         <View style={styles.cardBackground}>
-                            <Card style={styles.cardFirst}>
-                                <Image source={this.props.route.params.imgPrincipaly} style={{height: 100, width: 350, marginTop:5, marginLeft:30}}/>
-                                <Title style={styles.titleCardFirst}>Diego Alejandro Forero Pinzón</Title>
-                                <Text note style={styles.textNoteCardFirst}>Último ingreso: 2021/05/31 03:00:05 pm</Text>
-                            </Card>
-                            <CardHome
-                                {...this.props}
-                            />
+                            <CardHome {...this.props} />  
                         </View>
                     </View>
                     <View>
@@ -92,16 +90,20 @@ const styles = StyleSheet.create({
     cardBackground: {
         flex: 1,
         backgroundColor: "#f7f8fa",
-        marginTop:40,
+        marginTop:70,
         borderTopColor:'#517fa4',
         borderTopWidth:3
     },
     cardFirst:{
-        borderRadius:5,
+        marginTop:90,
+        marginLeft:40,
+        marginRight:40,
+        height:160,
+        borderRadius:10,
         borderColor:'#fff',
-        borderTopColor:'#517fa4',
+        borderTopColor:'#243949',
         borderTopWidth:3,
-        borderTopColor:'#517fa4'
+        ...StyleSheet.absoluteFill,
     },
     titleCardFirst:{
         color: 'black',

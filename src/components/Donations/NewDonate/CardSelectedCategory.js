@@ -4,23 +4,19 @@ import {View,Image,StyleSheet, Pressable} from 'react-native';
 
 class CardSelectedCategory extends Component{
     render(){
-        const {categories, handleContinue} = this.props
+        const {id,name, handleContinue} = this.props
         return (
                 <View style={styles.container}>
-                    { categories?.map(cat =>{
-                        return (
-                            <Pressable onPress={handleContinue} key={`cat_00_${cat.id}`}>
+                           <Pressable onPress={handleContinue} key={`cat_00_${id}`}>
                                 <Card style={styles.cardCategory}>
                                     <Image
                                         source={require('../../../assets/img/undraw_city_life.png')} 
                                         style={styles.imgCard}
                                     />
-                                    <Text style={styles.titleCard}>{cat.name}</Text>
+                                    <Text style={styles.titleCard}>{name}</Text>
                                 </Card>                       
                             </Pressable> 
-                        )
-                      })
-                    }
+                 
                            
                 </View>                
         )

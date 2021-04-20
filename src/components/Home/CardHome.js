@@ -11,7 +11,7 @@ class CardHome extends Component {
         console.log('props homeDonation')
         const { title, body } = this.props
         return(
-            <Content padder>
+            <Content padder style={{marginTop:95 ,backgroundColor:'#dadbdd', borderRadius:80}}>
                 { this.props.route.params.menus.map( (menu,i) =>{
                     return (
                         <Pressable onPress={ () => this.goScreen(menu.goScreen)} key={menu.id}>

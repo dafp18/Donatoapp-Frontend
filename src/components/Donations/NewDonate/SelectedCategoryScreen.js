@@ -7,33 +7,6 @@ import Http from '../../../helpers/http';
 
 import CardSelectedCategory from './CardSelectedCategory';
 
-const dataCategories = [
-    { id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-      title: 'Alimentos',
-    },
-    {
-      id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
-      title: 'Juguetes',
-    },
-    {
-      id: '58694a0f-3da1-471f-bd96-145571e29d72',
-      title: 'Ortopedicos',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e29d67',
-        title: 'Fourth Item',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-1455',
-        title: 'Electrodomesticos',
-    },
-    {
-        id: '58694a0f-3da1-471f-bd96-145571e2',
-        title: 'Electrodomesticos',
-    },
-    
-];
-
 let numColumns = 2
 class SelectedCategoryScreen extends Component {
     goDataDonation = () =>{
@@ -44,7 +17,7 @@ class SelectedCategoryScreen extends Component {
     }
 
     state={
-        CategoriesList:[]
+        categoriesList:[]
     }
 
     componentDidMount () {
@@ -54,7 +27,7 @@ class SelectedCategoryScreen extends Component {
     getCategoriesList = async () =>{
         const resource = '/categories'
         const categoriesList = await Http.instance.get(resource)
-        this.setState({categoriesList})
+        this.setState({categoriesList:categoriesList})
          /* try {
             let req = await fetch('http://192.168.1.62:8000/api/v1/categories')
             let json = await req.json()
@@ -81,9 +54,10 @@ class SelectedCategoryScreen extends Component {
                         <View style={styles.cardBackground}>
                             <FlatList
                                 style={{margin:20}}
-                                data={dataCategories}
+                                data={this.state.categoriesList}
                                 renderItem={({item}) =>{
-                                    return <CardSelectedCategory categories={this.state.categoriesList}
+                                    return <CardSelectedCategory id={item.id}
+                                                                 name={item.name}
                                                                  handleContinue = {this.goDataDonation}
                                     />
                                 }} 
