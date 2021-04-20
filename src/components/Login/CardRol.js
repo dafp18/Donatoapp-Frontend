@@ -3,13 +3,13 @@ import { StyleSheet, Pressable, Image, Text } from 'react-native';
 import { Content } from 'native-base';
 
 class CardRol extends Component {
-    goRegister = () => {
-        this.props.navigation.navigate('Register')
+    goRegister = rol => {
+        this.props.navigation.navigate('Register', { rol })
     }   
     render(){
         return(
                 <Content padder style={{marginTop:50}}>
-                    <Pressable onPress={this.goRegister}> 
+                    <Pressable onPress={ () => this.goRegister('Donante')}> 
                         <Image
                             style={{ height:170, width:170, marginBottom:15 }}
                             source={require('../../assets/img/user.png')}
@@ -17,7 +17,7 @@ class CardRol extends Component {
                         <Text style={styles.textOpt} >Donante</Text>
                     </Pressable>
 
-                    <Pressable onPress={this.goRegister}> 
+                    <Pressable onPress={ () => this.goRegister('Fundacion')}> 
                         <Image
                             style={{ height:170, width:170, marginTop:10 }}
                             source={require('../../assets/img/fundation.png')}

@@ -6,10 +6,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import CardRegister from '../Login/CardRegister';
 
 class RegisterScreen extends React.Component{
+    state={}
+
     goSelectRol = () => {
       this.props.navigation.navigate('SelectRol')
     }
     render(){
+        const { navigation } = this.props;
         return(
               <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
                   <View style={styles.container}>
@@ -24,7 +27,9 @@ class RegisterScreen extends React.Component{
                           </Body>
                       </Header>
                       <View style={styles.cardBackground}>
-                          <CardRegister {...this.props} />           
+                          <CardRegister navigation={navigation} 
+                                        rolSelected= {this.props.route.params.rol}
+                          />           
                       </View>
                   </View>     
               </LinearGradient>
