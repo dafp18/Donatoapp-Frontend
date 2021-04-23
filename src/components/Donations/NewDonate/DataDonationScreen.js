@@ -17,7 +17,8 @@ class DataDonationScreen extends Component {
         borderColorQuantity:'#d9d5dc',
         titulo:null,
         cantidad:0,
-        color:false
+        bgColorFooter: false,
+        btnContinuar:true   
 
     }
     
@@ -29,37 +30,44 @@ class DataDonationScreen extends Component {
     }
 
     validaForm = (text,label) => {
+        console.log(text.length+' | '+label)
+        
         if((label === 'titulo') && (text.length === 0 )){
             this.setState({iconTitleSuccess:'none',iconTitleError:'none', borderColorTitle:'#d9d5dc'})            
         }
-        if((label === 'titulo') && text.length > 0 && text.length < 3 ){
-            this.setState({iconTitleSuccess:'none',iconTitleError:'flex', borderColorTitle:'red'})            
+        if((label === 'titulo') && text.length > 0 && text.length <= 3 ){
+            this.setState({iconTitleSuccess:'none',iconTitleError:'flex', borderColorTitle:'red', bgColorFooter:false})            
         }
         if(label === 'titulo' && text.length > 3 ){
-            this.setState({iconTitleSuccess:'flex',iconTitleError:'none', borderColorTitle:'green', titulo:text})
+            this.setState({iconTitleSuccess:'flex',iconTitleError:'none', borderColorTitle:'green', titulo:text })
         }
 
         if((label === 'cantidad') && (text.length === 0 )){
-            this.setState({iconQuantitySuccess:'none',iconQuantityError:'none', borderColorQuantity:'#d9d5dc'})            
+            this.setState({iconQuantitySuccess:'none',iconQuantityError:'none', borderColorQuantity:'#d9d5dc', cantidad:0, bgColorFooter:false})            
         }
         if((label === 'cantidad') && text.length > 0 ){
             if(/^([1-9])*$/.test(Number(text))){
                 this.setState({iconQuantitySuccess:'flex',iconQuantityError:'none', borderColorQuantity:'green', cantidad:Number(text)})    
             }else{
-                this.setState({iconQuantitySuccess:'none',iconQuantityError:'flex', borderColorQuantity:'red'})            
+                this.setState({iconQuantitySuccess:'none',iconQuantityError:'flex', borderColorQuantity:'red', cantidad:0,bgColorFooter:false})            
             }   
         }
-         
+        setTimeout(() => {
+            console.log(this.state.cantidad, 'cantidaad')
+            if(this.state.titulo && this.state.cantidad){ this.setState({bgColorFooter:true,btnContinuar:false })} 
+        }, 2);
+                
     }
     render(){
-        const { iconStatusSuccess,iconStatusError,iconTitleSuccess,iconTitleError,iconQuantitySuccess,iconQuantityError,borderColorStatus,borderColorTitle,borderColorQuantity} = this.state
+        const { iconStatusSuccess,iconStatusError,iconTitleSuccess,iconTitleError,iconQuantitySuccess,iconQuantityError,borderColorStatus
+               ,borderColorTitle,borderColorQuantity, bgColorFooter, btnContinuar} = this.state
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
                     <View style={styles.container}>
                         <Header transparent style={{backgroundColor:'#243949'}}>
                         <Left>
                             <Button transparent onPress={this.goBackSelectCategory}>
-                                <Icon name='chevron-left' color="#fff" size={20} style={styles.iconHeader}/>
+                                <Icon_ name='chevron-left' color="#fff" size={20} style={styles.iconHeader}/>
                             </Button>
                         </Left>
                         <Body>
@@ -99,9 +107,9 @@ class DataDonationScreen extends Component {
                             </ScrollView>
                             </Form>
                         </View>
-                        <Footer style={styles.footerContainer}>
-                            <Button transparent onPress={this.goSelectLocation} disabled={false}>
-                                <Text style={{color:'#243949',fontWeight:'bold'}}>Continuar</Text>
+                        <Footer style={{backgroundColor: bgColorFooter ? "#f7f8fa" : "#ccc" , borderTopColor:"#517fa4",borderTopWidth:3}}>
+                            <Button transparent onPress={this.goSelectLocation} disabled={btnContinuar}>
+                                <Text style={{color:'#243949',fontWeight:'bold',fontSize: 15}}>Continuar</Text>
                             </Button>
                         </Footer>    
                     </View>
@@ -132,14 +140,7 @@ const styles = StyleSheet.create({
         marginTop:40,
         borderTopColor:'#517fa4',
         borderTopWidth:3
-    },
-    footerContainer: {
-        backgroundColor: "#f7f8fa",
-        borderTopColor:'#517fa4',
-        borderTopWidth:3,
-        fontSize: 20
-    },
-    
+    },    
 });
 
 export default DataDonationScreen;

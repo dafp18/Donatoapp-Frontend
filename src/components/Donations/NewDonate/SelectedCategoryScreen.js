@@ -28,13 +28,6 @@ class SelectedCategoryScreen extends Component {
         const resource = '/categories'
         const categoriesList = await Http.instance.get(resource)
         this.setState({categoriesList:categoriesList})
-         /* try {
-            let req = await fetch('http://192.168.1.62:8000/api/v1/categories')
-            let json = await req.json()
-            console.log(json)
-        } catch (error) {
-            console.log(error)
-        }     */
     }
 
     render(){

@@ -8,6 +8,7 @@ import SelectRol from '../Screens/RolRegisterScreen';
 import RegisterScreen from '../Screens/RegisterScreen';
 
 import HomeScreen from '../Home/HomeScreen';
+import ProfileScreen from '../Profile/ProfileScreen';
 import SelectCategory from '../Donations/NewDonate/SelectedCategoryScreen';
 import DataDonation from '../Donations/NewDonate/DataDonationScreen';
 import SelectImageDonation from '../Donations/NewDonate/SelectImageDonationScreen';
@@ -49,6 +50,11 @@ const RouteStack = () => {
         <Stack.Screen
           name="Home"
           component={HomeScreen}
+          options={{ headerShown:false }}
+        />
+        <Stack.Screen
+          name="Profile"
+          component={ProfileScreen}
           options={{ headerShown:false }}
         />
         <Stack.Screen

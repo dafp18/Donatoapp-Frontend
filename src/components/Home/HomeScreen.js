@@ -1,5 +1,5 @@
 import React, { Component,createRef  } from 'react';
-import {View,StyleSheet,Image} from 'react-native';
+import {View,StyleSheet,Image, Pressable} from 'react-native';
 import {Header,Card,Text,Right,Button,Title,Body,ListItem,Left,List} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import ActionSheet from "react-native-actions-sheet";
@@ -9,18 +9,22 @@ import CardHome from './CardHome';
 
 const actionSheetRef = createRef();
 const listItems = [
-    { id: 'opt_000001',title: 'Mi cuenta', subTitle: 'Información de tu cuenta', icon:'user-circle', iconColor:'#243949', sizeIcon:25},
-    { id: 'opt_000002',title: 'Cerrar sesión', subTitle: 'Salida segura de la aplicación', icon:'times-circle', iconColor:'red', sizeIcon:28},
-    { id: 'opt_000003',title: 'Acerca de', subTitle: 'Versión 1.0.0', icon:'info-circle', iconColor:'#517fa4', sizeIcon:28}
+    { id: 'opt_000001',title: 'Mi cuenta', subTitle: 'Información de tu cuenta', icon:'user-circle', iconColor:'#243949', sizeIcon:25, nextScreen:'Profile'},
+    { id: 'opt_000002',title: 'Cerrar sesión', subTitle: 'Salida segura de la aplicación', icon:'times-circle', iconColor:'red', sizeIcon:28, nextScreen:'Login'},
+    { id: 'opt_000003',title: 'Acerca de', subTitle: 'Versión 1.0.0', icon:'info-circle', iconColor:'#517fa4', sizeIcon:28, nextScreen:null}
 ]
 class HomeScreen extends Component {
-    
+    goScreen = (screen) => {
+        console.log(this.props.navigation)
+        console.log(screen)
+        actionSheetRef.current?.hide();
+        this.props.navigation.navigate(screen)
+    }
     render(){
-        console.log(this.props.route.params.imgPrincipaly)
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
                     <View style={styles.container}>
-                        <Header transparent style={{backgroundColor:'#243949'}}>
+                        <Header transparent style={{backgroundColor:'#243949'}}> 
                             <Body>
                                 <Title style={styles.textHeader}>Inicio</Title>
                             </Body>
@@ -49,17 +53,23 @@ class HomeScreen extends Component {
                                 <List>
                                     {listItems?.map(itm =>{
                                         return (
-                                            <ListItem thumbnail key={itm.id}>
-                                                <Left>
-                                                    <Button transparent>
-                                                        <Icon active name={itm.icon} size={itm.sizeIcon} color={itm.iconColor} />
-                                                    </Button>
-                                                </Left>
-                                                <Body>
-                                                    <Text>{itm.title}</Text>
-                                                    <Text note numberOfLines={1}>{itm.subTitle}</Text>
-                                                </Body>
-                                            </ListItem> 
+                                            
+                                                <ListItem thumbnail key={itm.id}>
+                                                    <Left>
+                                                        <Button transparent>
+                                                            <Icon active name={itm.icon} size={itm.sizeIcon} color={itm.iconColor} />
+                                                        </Button>
+                                                    </Left>
+                                                    
+                                                    <Body>
+                                                        <Pressable onPress={ () => this.goScreen(itm.nextScreen)} >
+                                                            <Text>{itm.title}</Text>
+                                                            <Text note numberOfLines={1}>{itm.subTitle}</Text>
+                                                        </Pressable>
+                                                    </Body>
+                                                    
+                                                </ListItem>
+                                                
                                         )
                                     })}     
                                 </List>
