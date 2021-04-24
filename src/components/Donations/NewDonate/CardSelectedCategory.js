@@ -32,7 +32,7 @@ const styles = StyleSheet.create({
         flexDirection:'column',
         justifyContent: 'center',
         alignItems:'center',
-        marginTop:8,
+        marginTop:10,
         marginLeft:8,
         marginRight:8,
         borderRadius:5,

@@ -35,14 +35,18 @@ class DataDonationScreen extends Component {
                         <View style={styles.cardBackground}>
                             <Image source={require('../../../assets/img/undraw_moments.png')} style={{height: 300, width: 300}}/>
                         </View>
-                        <Footer style={styles.footerContainer}>
-                            <Button transparent onPress={this.selectPhotos} disabled={false}>
-                                <Text style={{color:'#243949',fontWeight:'bold'}}>... Seleccionar fotos ...</Text>
-                            </Button>
-                            <Button transparent onPress={this.finishDonate} disabled={false} style={{display:'none'}}> 
-                                <Text style={{color:'#243949',fontWeight:'bold'}}>Donar ahora</Text>
-                            </Button>
-                        </Footer>  
+                        
+                            <Footer style={{backgroundColor: "#00bfa6" , borderTopColor:"#243949",borderTopWidth:3}}>
+                                <Button transparent onPress={this.selectPhotos} disabled={false}>
+                                    <Text style={{color:'#fff',fontWeight:'bold',fontSize: 15}}>... Seleccionar fotos ...</Text>
+                                </Button>
+                                <Button transparent onPress={this.finishDonate} disabled={false} style={{display:'none'}}> 
+                                    <Text style={{color:'#243949',fontWeight:'bold'}}>Donar ahora</Text>
+                                </Button>
+                            </Footer>  
+                           
+                            
+                        
                     </View>
                 </LinearGradient>
         )
@@ -72,12 +76,6 @@ const styles = StyleSheet.create({
         marginTop:40,
         borderTopColor:'#517fa4',
         borderTopWidth:3
-    },
-    footerContainer: {
-        backgroundColor: "#f7f8fa",
-        borderTopColor:'#517fa4',
-        borderTopWidth:3,
-        fontSize: 20
     }
 });
 
