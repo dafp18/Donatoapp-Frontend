@@ -5,21 +5,22 @@ import {Image,StyleSheet} from 'react-native';
 class CardDonation extends Component {
     
     render(){
+        const {id,title,image,created_at,category,state_product,locality} = this.props
         return(
-                <Card style={styles.cardContainer}>
+                <Card style={styles.cardContainer} key={`dona_000${id}`}>
                     <CardItem>        
                         <Body>
-                            <Text>Chaqueta azul talla 14</Text>
-                            <Text note>Categoria: Ropa</Text>
+                            <Text>{title}</Text>
+                            <Text note>Categoria: {category}</Text>
                         </Body>
                     </CardItem>
                     <CardItem cardBody style={styles.cardBody}>
-                        <Image source={{uri: 'https://dafitistaticco-a.akamaihd.net/p/frenezi-4816-840539-1-zoom.jpg'}} style={{height: 100, width: 100}}/>
+                        <Image source={{uri: image}} style={{height: 100, width: 100, marginLeft:10}}/>
                         <View style={{marginLeft:10}}>
-                            <Text>Estado: Nuevo</Text>
-                            <Text>Fecha: 2021-03-01 </Text>
-                            <Text>Fecha: 2021-03-01 </Text>
-                            <Text>Fecha: 2021-03-01 </Text>
+                            <Text>Estado: {state_product}</Text>
+                            <Text>Creado: {created_at.substring(0,19)} </Text>
+                            <Text>Entregado: </Text>
+                            <Text>Ubicación: {locality} </Text>
                         </View>   
                     </CardItem> 
                 </Card>    

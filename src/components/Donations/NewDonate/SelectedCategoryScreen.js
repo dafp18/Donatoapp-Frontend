@@ -9,15 +9,15 @@ import CardSelectedCategory from './CardSelectedCategory';
 
 let numColumns = 2
 class SelectedCategoryScreen extends Component {
+    state={
+        categoriesList:[]
+    }
+
     goDataDonation = () =>{
         this.props.navigation.navigate('DataDonation')
     }
     goHome = () =>{
         this.props.navigation.navigate('Home')
-    }
-
-    state={
-        categoriesList:[]
     }
 
     componentDidMount () {

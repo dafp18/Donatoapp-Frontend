@@ -3,17 +3,18 @@ import {Card,Text} from 'native-base';
 import {View,Image,StyleSheet, Pressable} from 'react-native';
 
 class CardSelectedCategory extends Component{
+   
     render(){
-        const {id,name, handleContinue} = this.props
+        const {selectedItem,id,name, handleContinue} = this.props
         return (
                 <View style={styles.container}>
                            <Pressable onPress={handleContinue} key={`cat_00_${id}`}>
-                                <Card style={styles.cardCategory}>
+                                <Card style={[styles.cardCategory, {backgroundColor: selectedItem == id ? "#517fa4" : "#fff"} ]}>
                                     <Image
                                         source={require('../../../assets/img/undraw_city_life.png')} 
                                         style={styles.imgCard}
                                     />
-                                    <Text style={styles.titleCard}>{name}</Text>
+                                    <Text style={[styles.titleCard, {color: "#243949"}] }>{name}</Text>
                                 </Card>                       
                             </Pressable> 
                  
@@ -47,12 +48,12 @@ const styles = StyleSheet.create({
         shadowRadius: 16.00,
     },
     imgCard:{
+        marginTop:5,
         height: 100,
         width: 100,
         borderRadius:50
     },
     titleCard: {
-        color: "#243949",
         fontSize: 22,
         fontWeight: "bold",
         textAlign: "center",
