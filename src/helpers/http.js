@@ -25,7 +25,7 @@ class Http {
                     },
                     body
                 }
-            let url = (resource === '/registerNewUser' || resource === '/login') ? this.BASE_URL_ : this.BASE_URL       
+            let url = (resource === '/registerNewUser' || resource === '/login' || resource === '/validateIfExistEmail' || resource === '/verifyCodeForgetPassword' || resource === '/changePassword') ? this.BASE_URL_ : this.BASE_URL       
             console.log(`${url}${resource}`, 'la urllllll')
             let req = await fetch(`${url}${resource}`,config)
             let json = await req.json()

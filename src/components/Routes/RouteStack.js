@@ -6,6 +6,7 @@ import SplashScreen from '../Screens/Splash';
 import LoginScreen from '../Screens/LoginScreen';
 import SelectRol from '../Screens/RolRegisterScreen';
 import RegisterScreen from '../Screens/RegisterScreen';
+import ForgotPasswordScreen  from '../Screens/ForgotPasswordScreen';
 
 import HomeScreen from '../Home/HomeScreen';
 import ProfileScreen from '../Profile/ProfileScreen';
@@ -34,6 +35,12 @@ const RouteStack = () => {
         <Stack.Screen
           name="Login"
           component={LoginScreen}
+          options={{ headerShown:false }}
+        />
+
+        <Stack.Screen
+          name="ForgotPassword"
+          component={ForgotPasswordScreen}
           options={{ headerShown:false }}
         />
 

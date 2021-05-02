@@ -44,6 +44,10 @@ class CardLogin extends Component {
             }
         },3000)
     }
+
+    goForgotPassword = () => {
+        this.props.navigation.navigate('ForgotPassword')
+    }
     render(){
         const {email, password,textBtnInciarSesion,loading,handleDisabled,colorbtn} = this.state
         return(
@@ -84,7 +88,7 @@ class CardLogin extends Component {
                             <Text>Registrarse</Text>                            
                         </Button>
 
-                        <Pressable>
+                        <Pressable onPress={ () => this.goForgotPassword() }>
                             <Title style={styles.titleForgotPwd}>¿ ÓLVIDO SU CONTRASEÑA ?</Title>
                         </Pressable>
                     </Form>
