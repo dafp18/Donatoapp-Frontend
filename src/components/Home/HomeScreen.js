@@ -1,9 +1,9 @@
 import React, { Component,createRef  } from 'react';
 import {View,StyleSheet,Image, Pressable} from 'react-native';
-import {Header,Card,Text,Right,Button,Title,Body,ListItem,Left,List} from 'native-base';
+import {Header,Card,Text,Right,Button,Title,Body,ListItem,Left,List, Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import ActionSheet from "react-native-actions-sheet";
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon_ from 'react-native-vector-icons/FontAwesome';
 
 import CardHome from './CardHome';
 
@@ -30,7 +30,7 @@ class HomeScreen extends Component {
                             </Body>
                             <Right>
                                 <Button transparent onPress={() => { actionSheetRef.current?.show()}}>
-                                    <Icon name='bars' color="#fff" size={25} style={styles.iconHeader} />
+                                    <Icon name='menu-outline' type="Ionicons" color="#fff" style={styles.iconHeader} />
                                 </Button>
                             </Right>
                         </Header>
@@ -57,7 +57,7 @@ class HomeScreen extends Component {
                                                 <ListItem thumbnail key={itm.id}>
                                                     <Left>
                                                         <Button transparent>
-                                                            <Icon active name={itm.icon} size={itm.sizeIcon} color={itm.iconColor} />
+                                                            <Icon_ active name={itm.icon} size={itm.sizeIcon} color={itm.iconColor} />
                                                         </Button>
                                                     </Left>
                                                     
@@ -95,7 +95,8 @@ const styles = StyleSheet.create({
         marginLeft:145
     },
     iconHeader:{
-        marginTop:20
+        marginTop:20,
+        fontSize:35
     },
     cardBackground: {
         flex: 1,

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { StyleSheet,ActivityIndicator,Pressable } from 'react-native';
-import { Form, Item, Input, Label, Card, CardItem, Content,Icon,Button, Text,Right, Title } from 'native-base';
+import { Form, Item, Input, Label, Card, Content,Icon,Button, Text, Title } from 'native-base';
 
 class CardLogin extends Component {
     state = {
@@ -58,7 +58,7 @@ class CardLogin extends Component {
                     <Card style={styles.cardEmail}>
                         
                             <Item floatingLabel last>
-                                <Icon active name='person' />
+                                <Icon name='mail-outline' type="Ionicons" />
                                 <Label>Correo electrónico</Label>
                                 <Input onChangeText={email => this.setState({email})} />
                             </Item>
@@ -68,7 +68,7 @@ class CardLogin extends Component {
                     <Card style={styles.cardPwd}>
                         
                             <Item floatingLabel last>
-                            <Icon active name='key' />
+                            <Icon name='lock-closed-outline' type="Ionicons" />
                             <Label>Contraseña</Label>
                             <Input secureTextEntry={true} onChangeText={password => this.setState({password})} />
                             </Item>

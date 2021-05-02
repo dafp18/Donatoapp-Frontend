@@ -127,14 +127,14 @@ class CardRegister extends Component {
                             }
                         </View>
                         { rolSelected === 'Fundacion' ? <Item floatingLabel last style={styles.labels}>
-                                                            <Icon active name='card' style={styles.icon} />
+                                                            <Icon active name='business-outline' type="Ionicons" style={styles.icon} />
                                                             <Label >Nit</Label>
                                                             <Input style={{borderColor:"blue"}} onChangeText={ nit => this.validateForm(nit, 'nit')}/>
                                                             <Icon name='checkmark-circle' style={{color:'green', display:iconDocumentSuccess}} />
                                                             <Icon name='close-circle' style={{color:'red', display:iconDocumentError}}/>
                                                         </Item>
                                                       : <Item floatingLabel last style={{ borderColor:this.state.borderColor, marginTop:10,marginLeft:20,}}>
-                                                            <Icon active name='card' style={styles.icon} />
+                                                            <Icon active name='person-circle-outline' type="Ionicons" style={styles.icon} />
                                                             <Label >Cédula</Label>
                                                             <Input onChangeText={ cedula => this.validateForm(cedula, 'cedula')}/>
                                                             <Icon name='checkmark-circle' style={{color:'green', display:iconDocumentSuccess}} />
@@ -142,49 +142,49 @@ class CardRegister extends Component {
                                                         </Item>
                         }                        
                         <Item floatingLabel last style={styles.labels}  >
-                            <Icon active name='person' style={styles.icon} />
+                            <Icon active name='person-outline' type="Ionicons" style={styles.icon} />
                             <Label>Nombres</Label>
                             <Input onChangeText={ nombre => this.validateForm(nombre, 'nombre')}/>
                             <Icon name='checkmark-circle' style={{color:'green', display:iconNombreSuccess}} />
                             <Icon name='close-circle' style={{color:'red', display:iconNombreError}}/>
                         </Item>
                         <Item floatingLabel last style={styles.labels}>
-                            <Icon active name='people' style={styles.icon}/>
+                            <Icon active name='people-outline' type="Ionicons" style={styles.icon}/>
                             <Label>Apellidos</Label>
                             <Input onChangeText={ apellido => this.validateForm(apellido, 'apellido')}/>
                             <Icon name='checkmark-circle' style={{color:'green', display:iconApellidoSuccess}} />
                             <Icon name='close-circle' style={{color:'red', display:iconApellidoError}}/>
                         </Item>
                         <Item floatingLabel last style={styles.labels}>
-                            <Icon active name='call' style={styles.icon}/>
+                            <Icon active name='call-outline' type="Ionicons" style={styles.icon}/>
                             <Label>Teléfono</Label>
                             <Input onChangeText={ telefono => this.validateForm(telefono,'telefono')}/>
                             <Icon name='checkmark-circle' style={{color:'green', display:'none'}} />
                             <Icon name='close-circle' style={{color:'red', display:'none'}}/>
                         </Item>
                         <Item floatingLabel last style={styles.labels}>
-                            <Icon active name='location' style={styles.icon}/>
+                            <Icon active name='location-outline' type="Ionicons" style={styles.icon}/>
                             <Label>Dirección</Label>
                             <Input onChangeText={ direccion => this.validateForm(direccion,'direccion')}/>
                             <Icon name='checkmark-circle' style={{color:'green', display:'none'}} />
                             <Icon name='close-circle' style={{color:'red', display:'none'}}/>
                         </Item>
                         <Item floatingLabel last style={styles.labels}>
-                            <Icon active name='at' style={styles.icon}/>
+                            <Icon active name='mail-outline' type="Ionicons" style={styles.icon}/>
                             <Label>Correo electrónico</Label>
                             <Input onChangeText={ email => this.validateForm(email,'email')}/>
                             <Icon name='checkmark-circle' style={{color:'green', display:'none'}} />
                             <Icon name='close-circle' style={{color:'red', display:'none'}}/>
                         </Item>
                         <Item floatingLabel last style={styles.labels}>
-                            <Icon active name='key' style={styles.icon}/>
+                            <Icon active name='lock-closed-outline' type="Ionicons" style={styles.icon}/>
                             <Label>Contraseña</Label>
                             <Input secureTextEntry={true} onChangeText={ password => this.validateForm(password,'password')}/>
                             <Icon name='checkmark-circle' style={{color:'green', display:'none'}} />
                             <Icon name='close-circle' style={{color:'red', display:'none'}}/>
                         </Item>
                         <Item floatingLabel last style={styles.labels}>
-                            <Icon active name='key' style={styles.icon}/>
+                            <Icon active name='lock-open-outline' type="Ionicons" style={styles.icon}/>
                             <Label>Confirmar contraseña</Label>
                             <Input secureTextEntry={true} onChangeText={ confirmpassword => this.validateForm(confirmpassword,'confirmpassword')}/>
                             <Icon name='checkmark-circle' style={{color:'green', display:'none'}} />

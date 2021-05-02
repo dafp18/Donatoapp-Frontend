@@ -189,8 +189,8 @@ class ForgotPasswordScreen extends Component {
                                                                 </View>
                                                             :  <Item floatingLabel style={{marginRight:15}}>
                                                                     <Icon name='mail-outline' type="Ionicons" color="black" size={20}/>
-                                                                    <Label style={{marginLeft:5}}>Correo electrónico</Label>
-                                                                    <Input onChangeText={email => this.onChangeInput(email, 'email')} />
+                                                                    <Label style={{marginLeft:10}}>Correo electrónico</Label>
+                                                                    <Input onChangeText={email => this.onChangeInput(email, 'email')} style={{marginTop:8}} />
                                                                 </Item> 
                                     }    
                                 </Form>
@@ -218,16 +218,16 @@ class ForgotPasswordScreen extends Component {
                                                                             <Form style={{marginTop:20}}>                                
                                                                                 <Item floatingLabel style={{marginRight:15, borderColor:this.state.borderColorInpNewPassword}}>
                                                                                     <Icon name='lock-closed-outline' type="Ionicons" color="black" size={20}/>
-                                                                                    <Label style={{marginLeft:5}}>Nueva contraseña</Label>
-                                                                                    <Input onChangeText={newPassword => this.onChangeInput(newPassword, 'newPassword')} secureTextEntry={true}/>
+                                                                                    <Label style={{marginLeft:10}}>Nueva contraseña</Label>
+                                                                                    <Input onChangeText={newPassword => this.onChangeInput(newPassword, 'newPassword')} secureTextEntry={true} style={{marginTop:8}}/>
                                                                                     <Icon name='checkmark-circle' style={{color:'green', display:this.state.iconNewPasswordSuccess}} />
                                                                                     <Icon name='close-circle' style={{color:'red', display:this.state.iconNewPasswordError}}/>
                                                                                 </Item> 
 
                                                                                 <Item floatingLabel style={{marginRight:15, borderColor:this.state.borderColorInpConfNewPassword}}>
                                                                                     <Icon name='lock-open-outline' type="Ionicons" color="black" size={20}/>
-                                                                                    <Label style={{marginLeft:5}}>Confirmar nueva contraseña</Label>
-                                                                                    <Input onChangeText={confirmNewPassword => this.onChangeInput(confirmNewPassword, 'confirmNewPassword')} secureTextEntry={true} />
+                                                                                    <Label style={{marginLeft:10}}>Confirmar nueva contraseña</Label>
+                                                                                    <Input onChangeText={confirmNewPassword => this.onChangeInput(confirmNewPassword, 'confirmNewPassword')} secureTextEntry={true} style={{marginTop:8}}/>
                                                                                     <Icon name='checkmark-circle' style={{color:'green', display:this.state.iconConfNewPasswordSuccess}} />
                                                                                     <Icon name='close-circle' style={{color:'red', display:this.state.iconConfNewPasswordError}}/>                                                                           
                                                                                 </Item>

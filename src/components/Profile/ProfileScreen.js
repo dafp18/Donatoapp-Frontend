@@ -1,6 +1,6 @@
 import React, { Component  } from 'react';
 import {View,StyleSheet,Image} from 'react-native';
-import {Header,Card,Text,Button,Title,Body,Left} from 'native-base';
+import {Header,Card,Text,Button,Title,Body,Left, Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 
@@ -31,24 +31,24 @@ class ProfileScreen extends Component {
                             <Title style={{color:'black', marginTop:90, textAlign:'center'}} >Diego Alejandro Forero Pinzón</Title>   
                             
                             <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30, marginTop:30}}>
-                                <Icon_ name='envelope' color="grey" size={20} style={{marginTop:2}} />
+                                <Icon name='mail-outline' type="Ionicons" style={{ color:"grey", fontSize:25}} />
                                 <Text style={{ marginLeft:15,fontSize:18}}>dafp18@hotmail.com</Text>
                             </View>
 
                             <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                <Icon_ name='phone' color="grey" size={20} style={{marginTop:2}} />
+                                <Icon name='call-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
                                 <Text style={styles.rowText}>777777777777</Text>
-                                <Icon_ name='edit' color="grey" size={25} style={{marginTop:2}} />
+                                <Icon name='create-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
                             </View>
 
                             <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                <Icon_ name='map-marker' color="grey" size={20} style={{marginTop:2}} />
+                                <Icon name='location-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
                                 <Text style={styles.rowText}>Calle fasla 1234 direccion</Text>
-                                <Icon_ name='edit' color="grey" size={25} style={{marginTop:2}} />
+                                <Icon name='create-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
                             </View>
 
                             <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                <Icon_ name='user' color="grey" size={20} style={{marginTop:2}} />
+                                <Icon name='person-circle-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
                                 <Text style={{ marginLeft:15,fontSize:18}}>Donante</Text>
                             </View>
                             
@@ -61,7 +61,7 @@ class ProfileScreen extends Component {
                         </Card>
                         <Card style={styles.cardImg}>
                             <Image source={require('../../assets/img/donanteRegister.png')} style={styles.img}/>
-                            <Icon_ name='edit' color="grey" size={35} style={styles.iconImg}/>
+                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg}/>
                         </Card>
                         <View style={styles.cardBackground}>
                             
@@ -124,6 +124,8 @@ const styles = StyleSheet.create({
     iconImg:{
         marginTop:90,
         marginLeft:90,
+        fontSize:35,
+        color:'grey',
         ...StyleSheet.absoluteFill
     },
     rowText: {
