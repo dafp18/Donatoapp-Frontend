@@ -27,6 +27,15 @@ class SelectedCategoryScreen extends Component {
     getCategoriesList = async () =>{
         const resource = '/categories'
         const categoriesList = await Http.instance.get(resource)
+        categoriesList?.map(cat => {
+            if(cat.name === 'Ropa'){ cat.image = require('../../../assets/img/imgCat_Ropa.png') }
+            if(cat.name === 'Muebles'){ cat.image = require('../../../assets/img/imgCat_Muebles.png') }
+            if(cat.name === 'Comida'){ cat.image = require('../../../assets/img/imgCat_Comida.png') }
+            if(cat.name === 'Juguetes'){ cat.image = require('../../../assets/img/imgCat_Juguetes.png') }
+            if(cat.name === 'Ortopedicos'){ cat.image = require('../../../assets/img/imgCat_Ortopedicos.png') }
+            if(cat.name === 'Libros'){ cat.image = require('../../../assets/img/imgCat_Libros.png') }
+            if(cat.name === 'Electrodomesticos'){ cat.image = require('../../../assets/img/imgCat_Electrodomesticos.png') }
+        })
         this.setState({categoriesList:categoriesList})
     }
 
@@ -51,6 +60,7 @@ class SelectedCategoryScreen extends Component {
                                 renderItem={({item}) =>{
                                     return <CardSelectedCategory id={item.id}
                                                                  name={item.name}
+                                                                 image={item.image} 
                                                                  handleContinue = {this.goDataDonation}
                                     />
                                 }} 

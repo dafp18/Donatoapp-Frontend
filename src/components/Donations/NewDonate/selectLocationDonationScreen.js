@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet,FlatList, TouchableOpacity, Pressable} from 'react-native';
-import { Header, Left, Body, Title, Card, CardItem, Button,Right, Text} from 'native-base';
+import { View, StyleSheet,FlatList} from 'react-native';
+import { Header, Left, Body, Title, Card, CardItem, Button, Icon, Text} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../../helpers/http';
@@ -64,11 +64,11 @@ class selectLocationDonationScreen extends Component {
                                     keyExtractor={item => item.id.toString()}
                                     renderItem={({item}) => (
                                         
-                                            <CardItem  key={`loc_00_${item.id}`} style={{justifyContent:'space-between', backgroundColor: this.state.selectedItem === item.id.toString() ? '#517fa4' : '#fff'  }}>
-                                                <Text onPress={() => this.onPressHandler(item.id.toString())} style={{fontSize:20,fontWeight:'bold',color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949', width:320, padding:5  }}>
-                                                    <Icon_ active name='map-marker' size={22} color={this.state.selectedItem === item.id.toString() ? '#fff' : '#243949'}  /> {item.name}
+                                            <CardItem footer={true} bordered={true} key={`loc_00_${item.id}`} style={{justifyContent:'space-between', backgroundColor: this.state.selectedItem === item.id.toString() ? '#517fa4' : '#fff'}}>
+                                                <Text onPress={() => this.onPressHandler(item.id.toString())} style={{fontSize:20,color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949', width:320, padding:5  }}>
+                                                    <Icon name='location-outline' type="Ionicons" style={{fontSize:20,  color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949'}} /> {item.name}
                                                 </Text>
-                                                <Icon_ active name='chevron-right' size={15} color= {this.state.selectedItem === item.id.toString() ? '#fff' : '#243949'}  style={{marginRight:15}} />
+                                                <Icon active name='chevron-forward-outline' type="Ionicons" style={{marginRight:15, fontSize:20, color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949'}} />
                                             </CardItem>
                                     )}
                                 />

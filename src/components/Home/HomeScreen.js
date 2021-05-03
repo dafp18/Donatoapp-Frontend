@@ -15,8 +15,6 @@ const listItems = [
 ]
 class HomeScreen extends Component {
     goScreen = (screen) => {
-        console.log(this.props.navigation)
-        console.log(screen)
         actionSheetRef.current?.hide();
         this.props.navigation.navigate(screen)
     }

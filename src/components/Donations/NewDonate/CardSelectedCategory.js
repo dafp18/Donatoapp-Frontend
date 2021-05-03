@@ -5,20 +5,18 @@ import {View,Image,StyleSheet, Pressable} from 'react-native';
 class CardSelectedCategory extends Component{
    
     render(){
-        const {selectedItem,id,name, handleContinue} = this.props
+        const {selectedItem,id,name,image, handleContinue} = this.props
         return (
                 <View style={styles.container}>
-                           <Pressable onPress={handleContinue} key={`cat_00_${id}`}>
-                                <Card style={[styles.cardCategory, {backgroundColor: selectedItem == id ? "#517fa4" : "#fff"} ]}>
-                                    <Image
-                                        source={require('../../../assets/img/undraw_city_life.png')} 
-                                        style={styles.imgCard}
-                                    />
-                                    <Text style={[styles.titleCard, {color: "#243949"}] }>{name}</Text>
-                                </Card>                       
-                            </Pressable> 
-                 
-                           
+                    <Pressable onPress={handleContinue} key={`cat_00_${id}`}>
+                        <Card style={[styles.cardCategory, {backgroundColor: selectedItem == id ? "#517fa4" : "#fff"} ]}>
+                            <Image
+                                source={image} 
+                                style={styles.imgCard}
+                            />
+                            <Text style={[styles.titleCard, {color: "#243949"}] }>{name}</Text>
+                        </Card>                       
+                    </Pressable>         
                 </View>                
         )
     }
@@ -51,7 +49,7 @@ const styles = StyleSheet.create({
         marginTop:5,
         height: 100,
         width: 100,
-        borderRadius:50
+        borderRadius:30
     },
     titleCard: {
         fontSize: 22,

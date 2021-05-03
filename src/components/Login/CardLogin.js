@@ -14,8 +14,8 @@ class CardLogin extends Component {
         menusDonante: [
             { id:'optHD_0001', title: 'Nueva donación',img: require('../../assets/img/MenuDonar_.png'), goScreen:'SelectCategory'},
             { id:'optHD_0002', title: 'Historial donaciones',img: require('../../assets/img/MenuHistorial_.png'), goScreen:'DonationsHistory'},
-            { id:'optHD_0003', title: 'Fundaciones',img: require('../../assets/img/MenuFundaciones_.png'),  goScreen:'FundationsList'},
-            { id:'optHD_0004', title: 'Tips para donar',img: require('../../assets/img/TipsDonar_.png'),  goScreen:'TipsToDonate'}
+            /* { id:'optHD_0003', title: 'Fundaciones',img: require('../../assets/img/MenuFundaciones_.png'),  goScreen:'FundationsList'}, */
+            { id:'optHD_0003', title: 'Tips para donar',img: require('../../assets/img/TipsDonar_.png'),  goScreen:'TipsToDonate'}
         ],
         menusFundacion: [
             { id:'optHF_0001', title: 'Donaciones disponibles',img: require('../../assets/img/MenuFunDonacionesBus.png'), goScreen:'SelectCategory'},
