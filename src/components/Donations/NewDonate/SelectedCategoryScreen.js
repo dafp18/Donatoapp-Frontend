@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Header, Footer, Text, Button, Left,Body,Title} from "native-base";
-import {StyleSheet,View,FlatList,Pressable} from 'react-native';
+import {Header, Button, Left,Body,Title} from "native-base";
+import {StyleSheet,View,FlatList} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Http from '../../../helpers/http';
@@ -13,8 +13,8 @@ class SelectedCategoryScreen extends Component {
         categoriesList:[]
     }
 
-    goDataDonation = () =>{
-        this.props.navigation.navigate('DataDonation')
+    goDataDonation = (category) =>{
+        this.props.navigation.navigate('DataDonation', {category})
     }
     goHome = () =>{
         this.props.navigation.navigate('Home')
@@ -61,7 +61,7 @@ class SelectedCategoryScreen extends Component {
                                     return <CardSelectedCategory id={item.id}
                                                                  name={item.name}
                                                                  image={item.image} 
-                                                                 handleContinue = {this.goDataDonation}
+                                                                 handleContinue = {() => this.goDataDonation(item.name)}
                                     />
                                 }} 
                                 keyExtractor={item => item.id}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View,StyleSheet,ScrollView,Pressable,Modal} from 'react-native';
-import { Form, Item, Input, Label, Title, Header,Button, Text, Body,Footer,Left, Textarea, Icon, List, ListItem, Right } from 'native-base';
+import { Form, Item, Input, Label, Title, Header,Button, Text, Body,Footer,Left, Textarea, Icon, Card, Right } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 
@@ -81,8 +81,12 @@ class DataDonationScreen extends Component {
                             <Title style={styles.textHeader}>Detalles de la donación</Title>
                         </Body>
                         </Header>
+                        <Card style={styles.cardFirst}>
+                            <Icon active name='happy-outline' color="#243949" style={{fontSize:25,}} />
+                            <Title style={{color:'#243949', fontSize:18, marginLeft:10}}>{this.props.route.params.category}</Title>
+                        </Card>
                         <View style={styles.cardBackground}>
-                            <Form style={{marginTop:20}}>
+                            <Form style={{marginTop:50}}>
                                 <ScrollView>
                                     
                                     <Label style={{marginLeft:15}}>Estado</Label>
@@ -107,7 +111,7 @@ class DataDonationScreen extends Component {
                                     <Label style={{marginLeft:15, marginTop:20}}>Cantidad</Label>
                                     <Item success={false} style={{marginRight:15, borderColor:borderColorQuantity}}>
                                         <Icon_ active name='list-alt' size={25} color="#243949" />
-                                        <Input style={{marginLeft:10}} onChangeText={ quantity => {this.validaForm(quantity, 'cantidad' )} }/>
+                                        <Input style={{marginLeft:10}} keyboardType="numeric" onChangeText={ quantity => {this.validaForm(quantity, 'cantidad' )} }/>
                                         <Icon name='checkmark-circle' style={{color:'green', display:iconQuantitySuccess}} />
                                         <Icon name='close-circle' style={{color:'red', display:iconQuantityError}}/>
                                     </Item>
@@ -175,6 +179,20 @@ const styles = StyleSheet.create({
     },
     iconHeader:{
         marginTop:20
+    },
+    cardFirst:{
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'row',
+        marginTop:95,
+        marginLeft:70,
+        marginRight:70,
+        height:50,
+        borderRadius:10,
+        borderColor:'#fff',
+        borderBottomWidth:3,
+        borderBottomColor:'#86cbbd',
+        ...StyleSheet.absoluteFill,
     },
     cardBackground: {
         flex: 1,

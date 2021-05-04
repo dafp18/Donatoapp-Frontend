@@ -28,7 +28,6 @@ class selectLocationDonationScreen extends Component {
     }
 
     onPressHandler(id) {
-        console.log(id,'este es el id')
         this.setState({selectedItem: id});
         this.goSelectImages()
     }

@@ -1,10 +1,21 @@
 import React, { Component } from 'react';
-import { View, StyleSheet, Image } from 'react-native';
+import { View, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import { Header, Left, Button, Body, Title, Text, Footer } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import ImagePicker from 'react-native-image-crop-picker';
+
+import SliderImages from './SliderImages';
 
 class DataDonationScreen extends Component {
+    state={
+        imagesLoad: false,
+        loadingBtnDonarAhora:false,
+        bntSelectPhotos:'flex',
+        bntDonarAhora:'none',
+        imagesDonate : []
+    }
+
     goSelectLocation = () =>{
         this.props.navigation.navigate('selectLocation')
     }
@@ -14,10 +25,18 @@ class DataDonationScreen extends Component {
         alert('Donación publicada correctamente!')
     }
 
-    selectPhotos = () =>{
-        console.log('elijo fotos')
+    selectImages = () => {
+        let imagesDonate = []
+        ImagePicker.openPicker({
+                    multiple: true
+                }).then(images => {
+                    images?.map(img => {
+                        imagesDonate.push(img.path)
+                    })
+                    this.setState({imagesDonate, bntDonarAhora:'flex', bntSelectPhotos:'none', imagesLoad:true})
+                });
     }
-    
+
     render(){
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
@@ -33,20 +52,21 @@ class DataDonationScreen extends Component {
                             </Body>
                         </Header>
                         <View style={styles.cardBackground}>
-                            <Image source={require('../../../assets/img/undraw_moments.png')} style={{height: 300, width: 300}}/>
+                            
+                            { !this.state.imagesLoad ? <Image source={require('../../../assets/img/undraw_moments.png')} style={{height: 300, width: 300}}/>
+                                                     : <SliderImages dataImages={this.state.imagesDonate}/>
+                            }   
                         </View>
                         
                             <Footer style={{backgroundColor: "#00bfa6" , borderTopColor:"#243949",borderTopWidth:3}}>
-                                <Button transparent onPress={this.selectPhotos} disabled={false}>
+                                <Button transparent onPress={() => this.selectImages()} disabled={false} style={{display:this.state.bntSelectPhotos}}>
                                     <Text style={{color:'#fff',fontWeight:'bold',fontSize: 15}}>... Seleccionar fotos ...</Text>
                                 </Button>
-                                <Button transparent onPress={this.finishDonate} disabled={false} style={{display:'none'}}> 
-                                    <Text style={{color:'#243949',fontWeight:'bold'}}>Donar ahora</Text>
+                                <Button transparent onPress={this.finishDonate} disabled={false} style={{display:this.state.bntDonarAhora}}> 
+                                    <Text style={{color:'#243949',fontWeight:'bold'}}>Donar ahora!</Text>
+                                    {   this.state.loadingBtnDonarAhora && <ActivityIndicator size="large" color="#243949" />  }
                                 </Button>
-                            </Footer>  
-                           
-                            
-                        
+                            </Footer>    
                     </View>
                 </LinearGradient>
         )
