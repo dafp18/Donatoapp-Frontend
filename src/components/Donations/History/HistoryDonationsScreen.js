@@ -5,36 +5,36 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../../helpers/http';
 
+import Filters from './Filters';
 import CardDonation from './CardDonation';
+
 
 class HistoryDonationsScreen extends Component {
     state={
         user:'dafp18@hotmail.com',
         statusDonations: [],
-        myDonations:[],
-        statusSelected : null
+        donations:[],
+        selected: null
     }
     componentDidMount ()  {
         this.getStatusDonations()
-        this.getMyDonations()
+        this.getDonations()
     }
 
     getStatusDonations = async () =>{
         const resource = '/state_donations'
-        const stateDonations = await Http.instance.get(resource)
-        console.log(stateDonations, 'estados')
-        this.setState({statusDonations:stateDonations})
+        const statusDonations = await Http.instance.get(resource)
+        this.setState({statusDonations})
     }
     
-    getMyDonations = async () =>{
+    getDonations = async () =>{
         const resource = '/getProductsByUser'
         let body = {
             user:this.state.user,
             estado: 'Pendiente'
         }
         const donations = await Http.instance.post(resource, JSON.stringify(body))
-        console.log(donations, 'donaciones')
-        this.setState({myDonations:donations})
+        this.setState({donations})
     }
 
     goHome = () => {
@@ -42,7 +42,8 @@ class HistoryDonationsScreen extends Component {
     }
 
     onPressHandler(id) {
-        this.setState({statusSelected: id});
+        console.log(id)
+        this.setState({selected: id});
     }
     render(){
         return(
@@ -60,41 +61,43 @@ class HistoryDonationsScreen extends Component {
                         </Header>
                         
                         <View style={styles.cardBackground}>
-                            <View>
+                            
                             <FlatList
                                 horizontal
                                 showsHorizontalScrollIndicator={false}
                                 extraData={this.state.statusDonations}
                                 data={this.state.statusDonations}
-                                keyExtractor={item => `status_${item.id}`}
+                                keyExtractor={item => `itmFilter_${item.id}`}
                                 renderItem={({item}) =>{
-                                    return      <Card style={ [styles.cardFirst, { borderBottomColor: this.state.statusSelected === `status_${item.id}` ? '#243949' :'#86cbbd'}] }>
-                                                    <Icon active name='happy-outline' style={{fontSize:20,marginLeft:5}} />
-                                                    <Text onPress={()=>this.onPressHandler(`status_${item.id}`)} 
-                                                          style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:this.state.statusSelected  === `status_${item.id}` ? 'bold': 'normal'}}>{item.name} </Text>
-                                                </Card>
-                                            
+                                    return      <Filters selected={this.state.selected}
+                                                         keyItem={`itmFilter_${item.id}`}
+                                                         onPressHandler={() => this.onPressHandler(`itmFilter_${item.id}`)}
+                                                         name={item.name}   
+                                                />                                            
                                 }}   
                                 
                             />
-                                
-                            </View>
-                            <ScrollView>
-                                { this.state.myDonations?.map( donation => {
-                                    return <CardDonation id={donation.id} 
-                                                         title={donation.title}
-                                                         image={donation.url_image}
-                                                         description={donation.description}
-                                                         quantity={donation.quantity}
-                                                         observation={donation.observation}
-                                                         created_at={donation.created_at}
-                                                         category = {donation.category}
-                                                         state_product={donation.state_product}
-                                                         locality={donation.locality} 
-                                                         />
-                                  })
-                                } 
-                            </ScrollView>
+
+                            <FlatList
+                                data={this.state.donations}
+                                keyExtractor={item => `item_${item.id}`}
+                                renderItem={({item}) =>{
+                                    return  <CardDonation   id={item.id} 
+                                                            title={item.title}
+                                                            image={item.url_image}
+                                                            description={item.description}
+                                                            quantity={item.quantity}
+                                                            observation={item.observation}
+                                                            created_at={item.created_at}
+                                                            category = {item.category}
+                                                            state_product={item.state_product}
+                                                            locality={item.locality} 
+                                                            cantidad={null}
+                                                            type={'HistorialDonaciones'}
+                                                            functions={null}
+                                            />       
+                                }}   
+                            />
                         </View>
                     </View>
                 </LinearGradient>
@@ -116,18 +119,6 @@ const styles = StyleSheet.create({
     },
     iconHeader:{
         marginTop:20
-    },
-    cardFirst:{
-        justifyContent:'center',
-        alignItems:'center',
-        flexDirection:'row',
-        marginTop:10,
-        marginLeft:10,
-        marginRight:5,
-        height:40,
-        borderRadius:10,
-        borderColor:'#86cbbd',
-        borderBottomWidth:3
     },
     cardBackground: {
         flex: 1,

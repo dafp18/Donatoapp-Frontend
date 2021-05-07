@@ -36,7 +36,7 @@ class SelectedCategoryScreen extends Component {
             if(cat.name === 'Libros'){ cat.image = require('../../../assets/img/imgCat_Libros.png') }
             if(cat.name === 'Electrodomesticos'){ cat.image = require('../../../assets/img/imgCat_Electrodomesticos.png') }
         })
-        this.setState({categoriesList:categoriesList})
+        this.setState({categoriesList})
     }
 
     render(){

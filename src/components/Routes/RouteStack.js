@@ -104,7 +104,7 @@ const RouteStack = () => {
         <Stack.Screen
           name="ListDonaciones"
           component={ListaDonaciones}
-          options={{ title: 'Donaciones' }}
+          options={{ headerShown:false }}
         />
         <Stack.Screen
           name="DetailDonacion"

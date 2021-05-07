@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardItem, Text, Body, Badge, View } from "native-base";
+import { Card, CardItem, Text, Body, Badge, View, Icon, Button } from "native-base";
 import {Image,StyleSheet} from 'react-native';
 
 class CardDonation extends Component {
     
     render(){
-        const {id,title,image,created_at,category,state_product,locality} = this.props
+        const {id,title,image,created_at,category,state_product,cantidad,locality,type,functions} = this.props
         return(
                 <Card style={styles.cardContainer} key={`dona_000${id+1}`}>
                     <CardItem>        
@@ -19,11 +19,23 @@ class CardDonation extends Component {
                         <View style={{marginLeft:10}}>
                             <Text>Estado: {state_product}</Text>
                             <Text>Creado: {created_at.substring(0,19)} </Text>
-                            <Text>Entregado: </Text>
+                            { type === 'HistorialDonaciones' ? <Text>Entregado: </Text> : null }
+                            { type === 'DonacionesDisponibles' ? <Text>Cantidad: {cantidad}</Text> : null}
+                            
                             <Text>Ubicación: {locality} </Text>
-                            <Badge style={{ backgroundColor: '#243949', height:22 }}>
-                                <Text style={{fontSize:13, color:'#fff'}}>Activo</Text>
-                            </Badge>
+                            { type === 'HistorialDonaciones' ? <Badge style={{ backgroundColor: '#243949', height:22 }}>
+                                                                    <Text style={{fontSize:13, color:'#fff'}}>Activo</Text>
+                                                                </Badge>
+                                                             :  null
+                            }
+
+                            { type === 'DonacionesDisponibles'  ?   <Card style={ [styles.cardFirst, { borderBottomColor: '#243949'}] }>
+                                                                        <Icon active name='eye-outline' style={{fontSize:20}} />
+                                                                        <Text onPress={functions}
+                                                                              style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Ver detalles</Text>
+                                                                    </Card>  
+                                                                :  null
+                            }                         
                         </View>   
                     </CardItem> 
                 </Card>    
@@ -41,6 +53,18 @@ const styles = StyleSheet.create({
     },
     cardBody:{
         marginBottom:15
+    },
+    cardFirst:{
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'row',
+        marginTop:5,
+        marginLeft:10,
+        marginRight:5,
+        height:35,
+        borderRadius:10,
+        borderColor:'#243949',
+        borderBottomWidth:3
     }
 })
 
