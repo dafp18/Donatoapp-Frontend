@@ -30,7 +30,7 @@ class SelectedCategoryScreen extends Component {
         categoriesList?.map(cat => {
             if(cat.name === 'Ropa'){ cat.image = require('../../../assets/img/imgCat_Ropa.png') }
             if(cat.name === 'Muebles'){ cat.image = require('../../../assets/img/imgCat_Muebles.png') }
-            if(cat.name === 'Comida'){ cat.image = require('../../../assets/img/imgCat_Comida.png') }
+            if(cat.name === 'Alimentos'){ cat.image = require('../../../assets/img/imgCat_Comida.png') }
             if(cat.name === 'Juguetes'){ cat.image = require('../../../assets/img/imgCat_Juguetes.png') }
             if(cat.name === 'Ortopedicos'){ cat.image = require('../../../assets/img/imgCat_Ortopedicos.png') }
             if(cat.name === 'Libros'){ cat.image = require('../../../assets/img/imgCat_Libros.png') }

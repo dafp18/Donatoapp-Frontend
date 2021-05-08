@@ -20,6 +20,9 @@ import TipsToDonate from '../Donations/TipsToDonate/TipsToDonateScreen';
 
 import ListaDonaciones from '../Fundations/ListDonacionesScreen';
 import DetalleDonacion from '../Fundations/DatalleDonacionScreen';
+import DonacionesEnTramiteScreen from '../Fundations/DonacionesEnTramiteScreen';
+import DonacionesAceptadasScreen from '../Fundations/DonacionesAceptadasScreen';
+
 
 const Stack = createStackNavigator();
 
@@ -109,7 +112,19 @@ const RouteStack = () => {
         <Stack.Screen
           name="DetailDonacion"
           component={DetalleDonacion}
-          options={{ title: 'Detalle de la donación' }}
+          options={{ headerShown:false }}
+        />
+
+        <Stack.Screen
+          name="DonacionesEnTramiteScreen"
+          component={DonacionesEnTramiteScreen}
+          options={{ headerShown:false }}
+        />
+
+        <Stack.Screen
+          name="DonacionesAceptadasScreen"
+          component={DonacionesAceptadasScreen}
+          options={{ headerShown:false }}
         />
 
       </Stack.Navigator>
