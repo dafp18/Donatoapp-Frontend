@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { View, StyleSheet,FlatList} from 'react-native';
-import { Header, Body, Button, Title, Card, Left} from 'native-base';
+import { View, StyleSheet,FlatList,ActivityIndicator} from 'react-native';
+import { Header, Body, Button, Title, Right, Left, Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
@@ -13,7 +13,8 @@ class ListDonacionesScreen extends Component {
     state={
         user:'dafp18@hotmail.com',
         donations:[],
-        categories:[]
+        categories:[],
+        loading:true
     }
     
     componentDidMount ()  {
@@ -22,19 +23,20 @@ class ListDonacionesScreen extends Component {
     }
 
     getDonations = async () =>{
+        this.setState({loading:true})
         const resource = '/getProductsByUser'
         let body = {
             user:this.state.user,
             estado: 'Pendiente'
         }
         const donations = await Http.instance.post(resource, JSON.stringify(body))
-        this.setState({donations})
+        this.setState({donations, loading:false})
     }
 
     getCategories = async () =>{
         const resource = '/categories'
         const categories = await Http.instance.get(resource)
-        this.setState({categories})
+        this.setState({categories, loading:false})
     }
 
     onPressHandler(id) {
@@ -62,8 +64,16 @@ class ListDonacionesScreen extends Component {
                             <Body>
                                 <Title style={styles.textHeader}>Donaciones disponibles</Title>
                             </Body>
+                            <Right>
+                                <Button transparent onPress={this.getDonations}>
+                                    <Icon name='refresh-outline' type="Ionicons" color="#fff" style={styles.iconHeader} />
+                                </Button>
+                            </Right>
                             </Header>
                             <View style={styles.cardBackground}>
+                            {   this.state.loading && <ActivityIndicator size="large" color="#08e5d2" />  }
+                                
+                            {   !this.state.loading &&     
                                 <FlatList
                                     horizontal
                                     showsHorizontalScrollIndicator={false}
@@ -79,7 +89,9 @@ class ListDonacionesScreen extends Component {
                                     }}   
                                     
                                 />
-
+                            }
+                            
+                            {   !this.state.loading &&    
                                 <FlatList
                                     data={this.state.donations}
                                     keyExtractor={item => `item_${item.id}`}
@@ -100,6 +112,7 @@ class ListDonacionesScreen extends Component {
                                                 />       
                                     }}   
                                 />
+                            }   
                             </View>        
                         </View>
                     </LinearGradient>      
