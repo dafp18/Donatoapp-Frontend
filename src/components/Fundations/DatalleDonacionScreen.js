@@ -8,27 +8,58 @@ import Http from '../../helpers/http';
 import SliderImages from '../Donations/NewDonate/SliderImages';
 
 class DetalleDonacionScreen extends Component {
-  state={
-      imagesDonate: [ 'https://sc01.alicdn.com/kf/HTB1x5WKRFXXXXcQXXXXq6xXFXXXN/230053908/HTB1x5WKRFXXXXcQXXXXq6xXFXXXN.jpg',
-                      'https://static.dafiti.com.co/p/frenezi-4819-840539-2-zoom.jpg',
-                      'https://dafitistaticco-a.akamaihd.net/p/frenezi-4816-840539-1-zoom.jpg',
-                      'https://cdn.wallapop.com/images/10420/ai/kj/__/c10420p635852912/i1995799071.jpg',
-                      'https://cdn.wallapop.com/images/10420/ag/t0/__/c10420p632889416/i1984800397.jpg'                
-      ]
-  }
-  goDonations = () =>{
-      this.props.navigation.goBack()
-  }
-
-  takeDonation = () => {
-      Alert.alert(
-        "FELICITACIONES!",
-        "Ponte en contacto con el donante para coodinar la entrega, revisa la sección donaciones en trámite para ver la información de contacto.!",
-        [ {text: "OK", onPress: () => this.goDonations() } ],
-        {cancelable: true}
-    );
+    state={
+        /* imagesDonate: [ 'https://sc01.alicdn.com/kf/HTB1x5WKRFXXXXcQXXXXq6xXFXXXN/230053908/HTB1x5WKRFXXXXcQXXXXq6xXFXXXN.jpg',
+                        'https://static.dafiti.com.co/p/frenezi-4819-840539-2-zoom.jpg',
+                        'https://dafitistaticco-a.akamaihd.net/p/frenezi-4816-840539-1-zoom.jpg',
+                        'https://cdn.wallapop.com/images/10420/ai/kj/__/c10420p635852912/i1995799071.jpg',
+                        'https://cdn.wallapop.com/images/10420/ag/t0/__/c10420p632889416/i1984800397.jpg'                
+        ] */
+        id:null,
+        imagesDonate:[],
+        title:null,
+        category:null,
+        description: null,
+        observation:null,
+        stateName:null,
+        quantity:null,
+        locality:null
+    }
     
-  }
+    componentDidMount (){
+        this.getDonationById()
+    }
+    
+    getDonationById = async () => {
+        let id = this.props.route.params,
+            imagesDonate = []
+        const resource = `/products/${id}`
+        const donation = await Http.instance.get(resource)
+        let handleStringImages = donation.url_image.split('|')
+        handleStringImages?.map(img_url =>{
+            if(img_url !== ''){ imagesDonate.push(Http.instance.BASE_URL_IMGS+img_url) }  
+        })
+        console.log(imagesDonate)
+        this.setState({imagesDonate, id:donation.id, title:donation.name, category:donation.id_category,
+                       description: donation.description, observation:donation.observation, stateName: donation.id_state_product,
+                       quantity:donation.quantity, locality: donation.id_locality  
+                    })
+                 
+    }
+    
+    goDonations = () =>{
+        this.props.navigation.goBack()
+    }
+
+    takeDonation = () => {
+        Alert.alert(
+            "FELICITACIONES!",
+            "Ponte en contacto con el donante para coodinar la entrega, revisa la sección donaciones en trámite para ver la información de contacto.!",
+            [ {text: "OK", onPress: () => this.goDonations() } ],
+            {cancelable: true}
+        );
+        
+    }
     render() {
         return (
                   <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
@@ -47,8 +78,8 @@ class DetalleDonacionScreen extends Component {
                               <ScrollView>
                                   <CardItem>
                                       <Body>
-                                        <Text>Chaqueta azul talla 14</Text>
-                                        <Text note>Categoria: Ropa</Text>
+                                        <Text>{this.state.title}</Text>
+                                        <Text note>Categoria: {this.state.category}</Text>
                                       </Body>
                                   </CardItem>
                                   <CardItem cardBody>
@@ -56,24 +87,19 @@ class DetalleDonacionScreen extends Component {
                                     {/* <Image source={{uri: 'https://dafitistaticco-a.akamaihd.net/p/frenezi-4816-840539-1-zoom.jpg'}} style={{height: 200, width: null, flex: 1}}/> */}
                                   </CardItem>
                                   <CardItem>
-                                      <Text>Chaqueta azul talla M poco uso de niño se regala porque ya se le quedó
-                                      Chaqueta azul talla M poco uso de niño se regala porque ya se le quedó
-                                      Chaqueta azul talla M poco uso de niño se regala porque ya se le quedó
-                                      Chaqueta azul talla M poco uso de niño se regala porque ya se le quedó
-                                      Chaqueta azul talla M poco uso de niño se regala porque ya se le quedó  
-                                      </Text>  
+                                      <Text>{this.state.description} {this.state.observation} </Text>  
                                   </CardItem>
                                   <CardItem>
                                       <Text style={{fontWeight:'bold'}}>Estado: </Text>
-                                      <Text>Usado</Text>
+                                      <Text>{ this.state.stateName }</Text>
                                   </CardItem>
                                   <CardItem>
                                       <Text style={{fontWeight:'bold'}}>Cantidad: </Text>
-                                      <Text>1</Text>
+                                      <Text>{ this.state.quantity }</Text>
                                   </CardItem>
                                   <CardItem>
                                       <Text style={{fontWeight:'bold'}}>Ubicación: </Text>
-                                      <Text>Suba</Text>
+                                      <Text>{ this.state.locality }</Text>
                                   </CardItem>
                                   <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20, backgroundColor:'#243949', borderRadius:5}} onPress={this.takeDonation}>
                                       <Text>Lo quiero!</Text>

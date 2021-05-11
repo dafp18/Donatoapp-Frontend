@@ -4,12 +4,11 @@ import { Header, Left, Body, Title, Card, CardItem, Button, Icon, Text} from 'na
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class selectLocationDonationScreen extends Component {
 
     state={
-        bgColorFooter:false,
-        btnContinuar: true,
         selectedItem: null,
         localitiesList: []
     }
@@ -18,28 +17,31 @@ class selectLocationDonationScreen extends Component {
     }
 
     componentDidMount () {
-        this.getCategoriesList()
+        this.getLocalitiesList()
     } 
 
-    getCategoriesList = async () =>{
+    getLocalitiesList = async () =>{
         const resource = '/localities'
         const localitiesList = await Http.instance.get(resource)
         this.setState({localitiesList:localitiesList})
     }
 
-    onPressHandler(id) {
-        this.setState({selectedItem: id});
-        this.goSelectImages()
+    onPressLocation = async idLocation => {
+        this.setState({selectedItem: idLocation});
+        try {
+            await AsyncStorage.setItem('idLocation', idLocation)
+        } catch (e) {
+            console.log(`error setItem idLocation: ${e}`)
+        }
+        this.props.navigation.navigate('SelectImageDonation')       
     }
 
     goDataDonation = () =>{
         this.props.navigation.navigate('DataDonation')
     }
-    goSelectImages = () =>{
-        this.props.navigation.navigate('SelectImageDonation')       
-    }
+    
     render(){
-        const {bgColorFooter,btnContinuar,localitiesList} = this.state
+        const {localitiesList} = this.state
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
                     <View style={styles.container}>
@@ -55,28 +57,24 @@ class selectLocationDonationScreen extends Component {
                         </Header>
                         <View style={styles.cardBackground}>
                             <Card style={styles.cardLocality}>
-
-                            <View>
-                                <FlatList
-                                    extraData={this.state.selectedItem} //Must implemented
-                                    data={localitiesList}
-                                    keyExtractor={item => item.id.toString()}
-                                    renderItem={({item}) => (
-                                        
-                                            <CardItem footer={true} bordered={true} key={`loc_00_${item.id}`} style={{justifyContent:'space-between', backgroundColor: this.state.selectedItem === item.id.toString() ? '#517fa4' : '#fff'}}>
-                                                <Text onPress={() => this.onPressHandler(item.id.toString())} style={{fontSize:20,color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949', width:320, padding:5  }}>
-                                                    <Icon name='location-outline' type="Ionicons" style={{fontSize:20,  color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949'}} /> {item.name}
-                                                </Text>
-                                                <Icon active name='chevron-forward-outline' type="Ionicons" style={{marginRight:15, fontSize:20, color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949'}} />
-                                            </CardItem>
-                                    )}
-                                />
-                            </View>
-
-                            
+                                <View>
+                                    <FlatList
+                                        extraData={this.state.selectedItem} //Must implemented
+                                        data={localitiesList}
+                                        keyExtractor={item => item.id.toString()}
+                                        renderItem={({item}) => (
+                                            
+                                                <CardItem footer={true} bordered={true} style={{justifyContent:'space-between', backgroundColor: this.state.selectedItem === item.id.toString() ? '#517fa4' : '#fff'}}>
+                                                    <Text onPress={() => this.onPressLocation(item.id.toString())} style={{fontSize:20,color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949', width:320, padding:5  }}>
+                                                        <Icon name='location-outline' type="Ionicons" style={{fontSize:20,  color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949'}} /> {item.name}
+                                                    </Text>
+                                                    <Icon active name='chevron-forward-outline' type="Ionicons" style={{marginRight:15, fontSize:20, color:this.state.selectedItem === item.id.toString() ? '#fff' : '#243949'}} />
+                                                </CardItem>
+                                        )}
+                                    />
+                                </View>
                             </Card>
                         </View>
-                              
                     </View>
                 </LinearGradient>      
         )

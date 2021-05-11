@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { StyleSheet,ActivityIndicator,Pressable } from 'react-native';
 import { Form, Item, Input, Label, Card, Content,Icon,Button, Text, Title } from 'native-base';
+import Http from '../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class CardLogin extends Component {
     state = {
@@ -25,7 +27,7 @@ class CardLogin extends Component {
         ]
     }
 
-    startSession = () => {
+    startSession = async () => {
         const {email, password, userTemp, pwdTemp} = this.state
         if(email === '' || password === ''){
             return
@@ -43,6 +45,12 @@ class CardLogin extends Component {
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
             }
         },3000)
+        try {
+            await AsyncStorage.setItem('token', 'jajajajajajajajajajajaj')
+            await AsyncStorage.setItem('idUser', '20')
+        } catch (e) {
+            console.log(`error setItem token: ${e}`)
+        }
     }
 
     goForgotPassword = () => {

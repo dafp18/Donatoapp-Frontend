@@ -37,7 +37,7 @@ class ProfileScreen extends Component {
     }
     
     goBackHome = () => {
-        this.props.navigation.navigate('Home')
+        this.props.navigation.goBack()
     }
 
     getDataUser = async () => {
@@ -171,7 +171,7 @@ class ProfileScreen extends Component {
                                                      :    
                                                      
                                                         <View>
-                                                            <Form >                                
+                                                            <Form style={{marginLeft:15, marginRight:15}}>                                
                                                                 <Item floatingLabel style={{marginRight:15, borderColor:this.state.borderColorInpNewPassword}}>
                                                                     <Icon name='lock-closed-outline' type="Ionicons" color="black" size={20}/>
                                                                     <Label style={{marginLeft:10}}>Nueva contraseña</Label>
@@ -188,7 +188,7 @@ class ProfileScreen extends Component {
                                                                     <Icon name='close-circle' style={{color:'red', display:this.state.iconConfNewPasswordError}}/>                                                                           
                                                                 </Item>
                                                             </Form>    
-                                                            <Button block style={{ marginLeft:10, marginRight:10, marginTop:25, 
+                                                            <Button block style={{ marginLeft:25, marginRight:25, marginTop:35, 
                                                                                     backgroundColor: ((this.state.newPassword === this.state.confirmNewPassword) && (this.state.newPassword !== '' && this.state.confirmNewPassword !== '')) ? '#243949' : '#667580'
                                                                                 }}  
                                                                                 onPress={this.changePassword}
@@ -245,7 +245,7 @@ const styles = StyleSheet.create({
         marginTop:150,
         marginLeft:15,
         marginRight:15,
-        height:580,
+        height:650,
         borderRadius:10,
         borderColor:'#fff',
         ...StyleSheet.absoluteFill
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#243949',
         marginLeft:30,
         marginRight:30,
-        marginTop:10
+        marginTop:35
     },
     btnSave:{
         backgroundColor: '#00bfa6',

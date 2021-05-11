@@ -4,6 +4,7 @@ import {StyleSheet,View,FlatList} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Http from '../../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CardSelectedCategory from './CardSelectedCategory';
 
@@ -13,11 +14,16 @@ class SelectedCategoryScreen extends Component {
         categoriesList:[]
     }
 
-    goDataDonation = (category) =>{
+    goDataDonation = async (category, idCategory) =>{
+        try {
+            await AsyncStorage.setItem('idCategory', idCategory.toString())
+        } catch (e) {
+            console.log(`error setItem idCategory: ${e}`)
+        }
         this.props.navigation.navigate('DataDonation', {category})
     }
     goHome = () =>{
-        this.props.navigation.navigate('Home')
+        this.props.navigation.goBack()
     }
 
     componentDidMount () {
@@ -61,7 +67,7 @@ class SelectedCategoryScreen extends Component {
                                     return <CardSelectedCategory id={item.id}
                                                                  name={item.name}
                                                                  image={item.image} 
-                                                                 handleContinue = {() => this.goDataDonation(item.name)}
+                                                                 handleContinue = {() => this.goDataDonation(item.name, item.id)}
                                     />
                                 }} 
                                 keyExtractor={item => item.id}

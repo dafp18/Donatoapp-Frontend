@@ -3,6 +3,7 @@ class Http {
     
     BASE_URL = 'http://192.168.1.22:8000/api/v1'
     BASE_URL_ = 'http://192.168.1.22:8000/api'
+    BASE_URL_IMGS = 'http://192.168.1.22:8000/imgsDonations/'
 
     get = async (resource) => {
         try {
@@ -20,14 +21,15 @@ class Http {
             let config={
                     method: 'POST',
                     headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
+                      'Accept': 'application/json',
+                      'Content-Type': (resource === '/products') ? 'multipart/form-data' : 'application/json'
                     },
                     body
                 }
+            
             let url = (resource === '/registerNewUser' || resource === '/login' || resource === '/validateIfExistEmail' || resource === '/verifyCodeForgetPassword' || resource === '/changePassword') ? this.BASE_URL_ : this.BASE_URL       
-            console.log(`${url}${resource}`, 'la urllllll')
             let req = await fetch(`${url}${resource}`,config)
+            console.log(req)
             let json = await req.json()
             return json
         } catch (err) {

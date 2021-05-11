@@ -5,7 +5,7 @@ import {Image,StyleSheet} from 'react-native';
 class CardDonation extends Component {
     
     render(){
-        const {id,title,image,created_at,category,state_product,quantity,locality,type,functions,textBadge} = this.props
+        const {id,title,image,created_at,category,state_product,quantity,locality,type,functions,textBadge,state_donation} = this.props
         return(
                 <Card style={styles.cardContainer} key={`dona_000${id+1}`}>
                     <CardItem>        
@@ -23,7 +23,7 @@ class CardDonation extends Component {
                             <Text>Cantidad: {quantity}</Text>
                             <Text>Ubicación: {locality} </Text>
                             {   type === 'HistorialDonaciones'  ?   <Badge style={{ backgroundColor: '#243949', height:22, marginTop:5 }}>
-                                                                        <Text style={{fontSize:13, color:'#fff'}}>Activa</Text>
+                                                                        <Text style={{fontSize:13, color:'#fff'}}>{state_donation}</Text>
                                                                     </Badge>
                                                                 :   null
                             }
@@ -40,7 +40,7 @@ class CardDonation extends Component {
                                                                 :   null
                             }
 
-                            {   type === 'DonacionesDisponibles'  ? <Card style={ [styles.cardFirst, { borderBottomColor: '#243949'}] }>
+                            {   type === 'DonacionesDisponibles'  ? <Card style={ [styles.btn, { borderBottomColor: '#243949'}] }>
                                                                         <Icon active name='eye-outline' style={{fontSize:20}} />
                                                                         <Text onPress={functions}
                                                                               style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Ver detalles</Text>
@@ -49,7 +49,7 @@ class CardDonation extends Component {
                             }
 
                             {   type === 'DonacionesTramite'    
-                              ||type === 'DonacionesAceptadas'  ?   <Card style={ [styles.cardFirst, { borderBottomColor: '#243949'}] }>
+                              ||type === 'DonacionesAceptadas'  ?   <Card style={ [styles.btn, { borderBottomColor: '#243949'}] }>
                                                                       <Icon active name='eye-outline' style={{fontSize:20}} />
                                                                         <Text onPress={functions}
                                                                               style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Datos donante</Text>
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
     cardBody:{
         marginBottom:15
     },
-    cardFirst:{
+    btn:{
         justifyContent:'center',
         alignItems:'center',
         flexDirection:'row',

@@ -1,12 +1,13 @@
 import React,{Component} from 'react';
-import { View, StyleSheet, ScrollView, Text, FlatList, Pressable } from 'react-native';
-import { Header, Left, Button, Body, Card, Title, Icon } from 'native-base';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { Header, Left, Button, Body, Title, Right, Icon } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../../helpers/http';
 
 import Filters from './Filters';
 import CardDonation from './CardDonation';
+import { set } from 'react-native-reanimated';
 
 
 class HistoryDonationsScreen extends Component {
@@ -14,37 +15,47 @@ class HistoryDonationsScreen extends Component {
         user:'dafp18@hotmail.com',
         statusDonations: [],
         donations:[],
-        selected: null
+        selected: null,
+        statusName: null,
+        loading:true
     }
     componentDidMount ()  {
-        this.getStatusDonations()
         this.getDonations()
+        this.getStatusDonations()
     }
 
     getStatusDonations = async () =>{
         const resource = '/state_donations'
         const statusDonations = await Http.instance.get(resource)
+        console.log(statusDonations,'estados')
         this.setState({statusDonations})
     }
     
     getDonations = async () =>{
+        this.setState({loading:true})
         const resource = '/getProductsByUser'
         let body = {
             user:this.state.user,
-            estado: 'Pendiente'
+            estado: this.state.statusName || '' 
         }
+        console.log(body, 'bodyyyyyyyyyyyy')
         const donations = await Http.instance.post(resource, JSON.stringify(body))
-        this.setState({donations})
+        this.setState({donations, loading:false})
     }
 
     goHome = () => {
         this.props.navigation.navigate('Home')
     }
 
-    onPressHandler(id) {
-        console.log(id)
-        this.setState({selected: id});
+    onPressHandler = id => {
+        let idItem = id.replace('itmFilter_', '')
+        const status = this.state.statusDonations.filter(el => el.id === Number(idItem))
+        console.log(status[0].name)
+        if(status){ 
+            this.setState({selected: id, statusName:status[0].name}, () => this.getDonations())  
+        }
     }
+
     render(){
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
@@ -58,6 +69,11 @@ class HistoryDonationsScreen extends Component {
                             <Body>
                                 <Title style={styles.textHeader}>Historial donaciones</Title>
                             </Body>
+                            <Right>
+                                <Button transparent onPress={this.getDonations}>
+                                    <Icon name='refresh-outline' type="Ionicons" color="#fff" style={styles.iconHeader} />
+                                </Button>
+                            </Right>
                         </Header>
                         
                         <View style={styles.cardBackground}>
@@ -78,26 +94,29 @@ class HistoryDonationsScreen extends Component {
                                 
                             />
 
-                            <FlatList
-                                data={this.state.donations}
-                                keyExtractor={item => `item_${item.id}`}
-                                renderItem={({item}) =>{
-                                    return  <CardDonation   id={item.id} 
-                                                            title={item.title}
-                                                            image={item.url_image}
-                                                            description={item.description}
-                                                            quantity={item.quantity}
-                                                            observation={item.observation}
-                                                            created_at={item.created_at}
-                                                            category = {item.category}
-                                                            state_product={item.state_product}
-                                                            locality={item.locality} 
-                                                            cantidad={null}
-                                                            type={'HistorialDonaciones'}
-                                                            functions={null}
-                                            />       
-                                }}   
-                            />
+                            {   this.state.loading  ?   <ActivityIndicator size="large" color="#243949" /> 
+                                                    :   <FlatList
+                                                            data={this.state.donations}
+                                                            keyExtractor={item => `item_${item.id}`}
+                                                            renderItem={({item}) =>{
+                                                                return  <CardDonation   id={item.id} 
+                                                                                        title={item.title}
+                                                                                        image={item.url_image}
+                                                                                        description={item.description}
+                                                                                        quantity={item.quantity}
+                                                                                        observation={item.observation}
+                                                                                        created_at={item.created_at}
+                                                                                        category = {item.category}
+                                                                                        state_product={item.state_product}
+                                                                                        locality={item.locality} 
+                                                                                        cantidad={null}
+                                                                                        type={'HistorialDonaciones'}
+                                                                                        state_donation={item.state_donation}
+                                                                                        functions={null}
+                                                                        />       
+                                                            }}   
+                                                        />
+                            }  
                         </View>
                     </View>
                 </LinearGradient>

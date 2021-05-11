@@ -24,12 +24,8 @@ class ListDonacionesScreen extends Component {
 
     getDonations = async () =>{
         this.setState({loading:true})
-        const resource = '/getProductsByUser'
-        let body = {
-            user:this.state.user,
-            estado: 'Pendiente'
-        }
-        const donations = await Http.instance.post(resource, JSON.stringify(body))
+        const resource = '/products'
+        const donations = await Http.instance.get(resource)
         this.setState({donations, loading:false})
     }
 
@@ -47,8 +43,8 @@ class ListDonacionesScreen extends Component {
         this.props.navigation.navigate('Home')
     }
 
-    goDetailDonation = () => {
-        this.props.navigation.navigate('DetailDonacion')
+    goDetailDonation = (idDonation) => {
+        this.props.navigation.navigate('DetailDonacion', idDonation)
     }
 
     render() {
@@ -108,7 +104,7 @@ class ListDonacionesScreen extends Component {
                                                                 locality={item.locality}
                                                                 cantidad={5}
                                                                 type={'DonacionesDisponibles'}
-                                                                functions={this.goDetailDonation} 
+                                                                functions={() => this.goDetailDonation(item.id)} 
                                                 />       
                                     }}   
                                 />

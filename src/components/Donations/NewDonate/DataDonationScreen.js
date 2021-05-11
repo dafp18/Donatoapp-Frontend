@@ -3,6 +3,7 @@ import { View,StyleSheet,ScrollView,Pressable,Modal} from 'react-native';
 import { Form, Item, Input, Label, Title, Header,Button, Text, Body,Footer,Left, Textarea, Icon, Card, Right } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 class DataDonationScreen extends Component {
     state={
@@ -20,7 +21,9 @@ class DataDonationScreen extends Component {
         bgColorFooter: false,
         btnContinuar:true,
         modalVisible: false,
-        estado:null
+        estado:null,
+        descripcion:null,
+        observaciones:null
     }
         
     setModalVisible = (visible, estado) => {
@@ -30,11 +33,23 @@ class DataDonationScreen extends Component {
         }       
     }
 
-    goSelectLocation = () =>{
+    goSelectLocation = async () =>{
+        let dataDonation = {
+            estado:this.state.estado,
+            titulo:this.state.titulo.toString(),
+            cantidad: this.state.cantidad.toString(),
+            descripcion: this.state.descripcion.toString() || '',
+            observaciones: this.state.observaciones.toString() || ''
+        }
+        try {
+            await AsyncStorage.setItem('dataDonation', JSON.stringify(dataDonation))
+        } catch (e) {
+            console.log(`error setItem dataDonation: ${e}`)
+        }       
         this.props.navigation.navigate('selectLocation')
     }
     goBackSelectCategory = () =>{
-        this.props.navigation.navigate('SelectCategory')
+        this.props.navigation.goBack()
     }
 
     validaForm = (text,label) => {
@@ -46,7 +61,7 @@ class DataDonationScreen extends Component {
             this.setState({iconTitleSuccess:'none',iconTitleError:'flex', borderColorTitle:'red', bgColorFooter:false, btnContinuar:true})            
         }
         if(label === 'titulo' && text.length > 3 ){
-            this.setState({iconTitleSuccess:'flex',iconTitleError:'none', borderColorTitle:'green', titulo:text, btnContinuar:false })
+            this.setState({iconTitleSuccess:'flex',iconTitleError:'none', borderColorTitle:'green', titulo:text, btnContinuar:true })
         }
 
         if((label === 'cantidad') && (text.length === 0 )){
@@ -54,14 +69,22 @@ class DataDonationScreen extends Component {
         }
         if((label === 'cantidad') && text.length > 0 ){
             if(/^([1-9])*$/.test(Number(text))){
-                this.setState({iconQuantitySuccess:'flex',iconQuantityError:'none', borderColorQuantity:'green', cantidad:Number(text), btnContinuar:false})    
+                this.setState({iconQuantitySuccess:'flex',iconQuantityError:'none', borderColorQuantity:'green', cantidad:Number(text), btnContinuar:true})    
             }else{
                 this.setState({iconQuantitySuccess:'none',iconQuantityError:'flex', borderColorQuantity:'red', cantidad:0,bgColorFooter:false, btnContinuar:true})            
             }   
         }
+
+        if(label === 'descripcion'){
+            this.setState({descripcion:text})
+        }
+
+        if(label === 'observaciones'){
+            this.setState({observaciones:text})
+        }
+
         setTimeout(() => {
-            console.log('no deberia')
-            if((this.state.estado && this.state.cantidad) && (this.state.titulo && this.state.titulo.length > 4) ){ this.setState({bgColorFooter:true,btnContinuar:false })} 
+            if((this.state.estado && this.state.cantidad && this.state.descripcion) && (this.state.titulo && this.state.titulo.length > 4) ){ this.setState({bgColorFooter:true,btnContinuar:false })} 
         }, 1);
                 
     }
@@ -116,8 +139,11 @@ class DataDonationScreen extends Component {
                                         <Icon name='close-circle' style={{color:'red', display:iconQuantityError}}/>
                                     </Item>
 
+                                    <Label style={{marginLeft:15, marginTop:20}}>Descripción</Label>
+                                    <Textarea rowSpan={3} bordered style={{marginRight:15, marginLeft:15}} onChangeText={ descripcion => {this.validaForm(descripcion, 'descripcion' )}} />
+
                                     <Label style={{marginLeft:15, marginTop:20}}>Observaciones</Label>
-                                    <Textarea rowSpan={5} bordered style={{marginRight:15, marginLeft:15}} />
+                                    <Textarea rowSpan={3} bordered style={{marginRight:15, marginLeft:15, marginBottom:15}} onChangeText={ observaciones => {this.validaForm(observaciones, 'observaciones' )}}/>
                                 </ScrollView>
                             </Form>
 
