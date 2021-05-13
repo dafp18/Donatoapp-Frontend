@@ -51,13 +51,30 @@ class DetalleDonacionScreen extends Component {
         this.props.navigation.goBack()
     }
 
-    takeDonation = () => {
-        Alert.alert(
-            "FELICITACIONES!",
-            "Ponte en contacto con el donante para coodinar la entrega, revisa la sección donaciones en trámite para ver la información de contacto.!",
-            [ {text: "OK", onPress: () => this.goDonations() } ],
-            {cancelable: true}
-        );
+    takeDonation = async (idProduct, idUser) => {
+        const resource = '/separateProduct'
+        const body = {
+            idProduct,
+            idUser
+        }
+        const separateDonation = await Http.instance.post(resource, JSON.stringify(body))
+        console.log(separateDonation,'separadooo')
+        if(separateDonation.Message === 'Actualizado'){
+            Alert.alert(
+                "FELICITACIONES!",
+                "Ponte en contacto con el donante para coodinar la entrega, revisa la sección donaciones en trámite para ver la información de contacto.!",
+                [ {text: "OK", onPress: () => this.goDonations() } ],
+                {cancelable: true}
+            );
+        }else{
+            Alert.alert(
+                "ERROR!",
+                "Ha ocurrido un error, por favor inténtelo nuevamente!",
+                [ {text: "OK", onPress: () => this.goDonations() } ],
+                {cancelable: true}
+            );
+        }
+        
         
     }
     render() {
@@ -101,7 +118,7 @@ class DetalleDonacionScreen extends Component {
                                       <Text style={{fontWeight:'bold'}}>Ubicación: </Text>
                                       <Text>{ this.state.locality }</Text>
                                   </CardItem>
-                                  <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20, backgroundColor:'#243949', borderRadius:5}} onPress={this.takeDonation}>
+                                  <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20, backgroundColor:'#243949', borderRadius:5}} onPress={() => this.takeDonation(this.state.id, 23)}>
                                       <Text>Lo quiero!</Text>
                                   </Button>    
                               </ScrollView>    

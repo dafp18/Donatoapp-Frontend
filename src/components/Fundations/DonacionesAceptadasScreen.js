@@ -1,4 +1,4 @@
-import React,{Component} from 'react';
+import React,{Component,createRef} from 'react';
 import { View, StyleSheet, ScrollView, Text, FlatList, Pressable } from 'react-native';
 import { Header, Left, Button, Body, Card, Title, Icon } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
@@ -6,8 +6,9 @@ import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
 
 import CardDonation from '../Donations/History/CardDonation';
+import ActionsSheetComponent from './ActionsSheetComponent';
 
-
+const actionSheetRef = createRef();
 class DonacionesAceptadasScreen extends Component {
     state={
         user:'dafp18@hotmail.com',
@@ -66,11 +67,12 @@ class DonacionesAceptadasScreen extends Component {
                                                             locality={item.locality} 
                                                             cantidad={null}
                                                             type={'DonacionesAceptadas'}
-                                                            functions={null}
+                                                            functions={() => { actionSheetRef.current?.show()}}
                                             />       
                                 }}   
                             />
                         </View>
+                        <ActionsSheetComponent actionSheetRef={actionSheetRef} />  
                     </View>
                 </LinearGradient>
         )
