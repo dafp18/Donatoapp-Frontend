@@ -1,6 +1,6 @@
 import React,{Component,createRef} from 'react';
-import { View, StyleSheet, ScrollView, Text, FlatList, Pressable } from 'react-native';
-import { Header, Left, Button, Body, Card, Title, Icon } from 'native-base';
+import { View, StyleSheet, ScrollView, Text, FlatList, ActivityIndicator } from 'react-native';
+import { Header, Left, Button, Body, Right, Title, Icon } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
@@ -11,9 +11,15 @@ import ActionsSheetComponent from './ActionsSheetComponent';
 const actionSheetRef = createRef();
 class DonacionesAceptadasScreen extends Component {
     state={
-        user:'dafp18@hotmail.com',
+        imageUserDonante:null,
+        nameUserDonante:null,
+        emailUserDonante:null,
+        phoneUserDonante:null,
+        user:'funprueba@gmail.com',
         donations:[],
-        selected: null
+        selected: null,
+        loading:true,
+        showDataUser:false
     }
     componentDidMount ()  {
         
@@ -21,17 +27,28 @@ class DonacionesAceptadasScreen extends Component {
     }
     
     getDonations = async () =>{
-        const resource = '/getProductsByUser'
+        const resource = '/getProductsAceptedAndProcessed'
         let body = {
-            user:this.state.user,
-            estado: 'Activa'
+            userTakeDonate:this.state.user,
+            estado: 2
         }
         const donations = await Http.instance.post(resource, JSON.stringify(body))
-        this.setState({donations})
+        this.setState({donations, loading:false})
     }
 
     goHome = () => {
-        this.props.navigation.navigate('Home')
+        this.props.navigation.goBack()
+    }
+
+    getDataUserDonante = async (idUser) => {
+        const resource = '/getDataUserDonation/'+idUser
+        const dataUserDonante = await Http.instance.get(resource)
+        let imageUserDonante = dataUserDonante[0].image_url,
+            nameUserDonante=`${dataUserDonante[0].name} ${dataUserDonante[0].lastname}`,
+            emailUserDonante=dataUserDonante[0].email,
+            phoneUserDonante=dataUserDonante[0].phone
+        this.setState({dataUserDonante, imageUserDonante, nameUserDonante, emailUserDonante, phoneUserDonante, showDataUser:true})
+        actionSheetRef.current?.show()
     }
 
     render(){
@@ -47,10 +64,13 @@ class DonacionesAceptadasScreen extends Component {
                             <Body>
                                 <Title style={styles.textHeader}>Donaciones aceptadas</Title>
                             </Body>
+                            <Icon name='refresh-outline' type="Ionicons" color="#fff" style={styles.iconHeader} onPress={this.getDonations}/>
                         </Header>
                         
                         <View style={styles.cardBackground}>
-                            
+                        {   this.state.loading && <ActivityIndicator size="large" color="#08e5d2" style={{marginTop:20}}/>  }
+
+                        {   this.state.loading ||
                             <FlatList
                                 data={this.state.donations}
                                 keyExtractor={item => `item_${item.id}`}
@@ -67,12 +87,19 @@ class DonacionesAceptadasScreen extends Component {
                                                             locality={item.locality} 
                                                             cantidad={null}
                                                             type={'DonacionesAceptadas'}
-                                                            functions={() => { actionSheetRef.current?.show()}}
+                                                            functions={() => this.getDataUserDonante(item.id_user)}
                                             />       
                                 }}   
                             />
+                        }
                         </View>
-                        <ActionsSheetComponent actionSheetRef={actionSheetRef} />  
+                        { this.state.showDataUser &&    <ActionsSheetComponent actionSheetRef={actionSheetRef} 
+                                                                               image={this.state.imageUserDonante}
+                                                                               name={this.state.nameUserDonante}
+                                                                               email={this.state.emailUserDonante}
+                                                                               phone={this.state.phoneUserDonante}
+                                                        />  
+                        }
                     </View>
                 </LinearGradient>
         )
@@ -92,7 +119,8 @@ const styles = StyleSheet.create({
         marginTop:20
     },
     iconHeader:{
-        marginTop:20
+        marginTop:20,
+        color:'#fff'
     },
     cardBackground: {
         flex: 1,

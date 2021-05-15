@@ -11,7 +11,7 @@ const actionSheetRef = createRef();
 const listItems = [
     { id: 'opt_000001',title: 'Mi cuenta', subTitle: 'Información de tu cuenta', icon:'user-circle', iconColor:'#243949', sizeIcon:25, nextScreen:'Profile'},
     { id: 'opt_000002',title: 'Cerrar sesión', subTitle: 'Salida segura de la aplicación', icon:'times-circle', iconColor:'red', sizeIcon:28, nextScreen:'Login'},
-    { id: 'opt_000003',title: 'Acerca de', subTitle: 'Versión 1.0.0', icon:'info-circle', iconColor:'#517fa4', sizeIcon:28, nextScreen:null}
+    { id: 'opt_000003',title: 'Acerca de', subTitle: 'Versión 1.0.0', icon:'info-circle', iconColor:'#517fa4', sizeIcon:28, nextScreen:'Home'}
 ]
 class HomeScreen extends Component {
     goScreen = (screen) => {

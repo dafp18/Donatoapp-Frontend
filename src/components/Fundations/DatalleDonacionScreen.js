@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Image, ScrollView, StyleSheet, Alert} from 'react-native';
+import { View, ActivityIndicator, ScrollView, StyleSheet, Alert} from 'react-native';
 import { Header, Content, Card, CardItem, Text, Button, Icon, Left, Body, Title } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
@@ -9,12 +9,8 @@ import SliderImages from '../Donations/NewDonate/SliderImages';
 
 class DetalleDonacionScreen extends Component {
     state={
-        /* imagesDonate: [ 'https://sc01.alicdn.com/kf/HTB1x5WKRFXXXXcQXXXXq6xXFXXXN/230053908/HTB1x5WKRFXXXXcQXXXXq6xXFXXXN.jpg',
-                        'https://static.dafiti.com.co/p/frenezi-4819-840539-2-zoom.jpg',
-                        'https://dafitistaticco-a.akamaihd.net/p/frenezi-4816-840539-1-zoom.jpg',
-                        'https://cdn.wallapop.com/images/10420/ai/kj/__/c10420p635852912/i1995799071.jpg',
-                        'https://cdn.wallapop.com/images/10420/ag/t0/__/c10420p632889416/i1984800397.jpg'                
-        ] */
+        disableBtnLoQuiero:false,
+        loading:false,
         id:null,
         imagesDonate:[],
         title:null,
@@ -51,25 +47,30 @@ class DetalleDonacionScreen extends Component {
         this.props.navigation.goBack()
     }
 
+    goHome = () =>{
+        this.props.navigation.navigate('Home')
+    }
+
     takeDonation = async (idProduct, idUser) => {
+        this.setState({disableBtnLoQuiero:true, loading:true})
         const resource = '/separateProduct'
         const body = {
             idProduct,
             idUser
         }
         const separateDonation = await Http.instance.post(resource, JSON.stringify(body))
-        console.log(separateDonation,'separadooo')
         if(separateDonation.Message === 'Actualizado'){
+            this.setState({loading:false})
             Alert.alert(
                 "FELICITACIONES!",
-                "Ponte en contacto con el donante para coodinar la entrega, revisa la sección donaciones en trámite para ver la información de contacto.!",
-                [ {text: "OK", onPress: () => this.goDonations() } ],
+                "Ponte en contacto con el donante para coodinar la entrega, revisa la sección donaciones en trámite para ver la información de contacto.",
+                [ {text: "OK", onPress: () => this.goHome() } ],
                 {cancelable: true}
             );
         }else{
             Alert.alert(
                 "ERROR!",
-                "Ha ocurrido un error, por favor inténtelo nuevamente!",
+                "Ha ocurrido un error, por favor inténtelo nuevamente",
                 [ {text: "OK", onPress: () => this.goDonations() } ],
                 {cancelable: true}
             );
@@ -118,8 +119,9 @@ class DetalleDonacionScreen extends Component {
                                       <Text style={{fontWeight:'bold'}}>Ubicación: </Text>
                                       <Text>{ this.state.locality }</Text>
                                   </CardItem>
-                                  <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20, backgroundColor:'#243949', borderRadius:5}} onPress={() => this.takeDonation(this.state.id, 23)}>
+                                  <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20,   backgroundColor: this.state.disableBtnLoQuiero ? '#667580' : '#243949', borderRadius:5}} disable={this.state.disableBtnLoQuiero} onPress={() => this.takeDonation(this.state.id, 23)}>
                                       <Text>Lo quiero!</Text>
+                                      {   this.state.loading && <ActivityIndicator size="large" color="#08e5d2" />  }
                                   </Button>    
                               </ScrollView>    
                           </View>        

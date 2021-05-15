@@ -6,7 +6,7 @@ import ActionSheet from "react-native-actions-sheet";
 const {width} = Dimensions.get('window');
 const height = width * 0.85; 
 class ActionsSheetComponent extends Component {
-    
+
     render(){
         return(
                 <View>
@@ -16,16 +16,16 @@ class ActionsSheetComponent extends Component {
                                     indicatorColor="#243949"
                     >
                         <View style={{width, height}}>
-                            <Image source={{uri:'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'}} style={styles.image}/>
-                            <Title style={{color:'#243949', marginTop:10, textAlign:'center', fontSize:25}} >Diego Alejandro Forero Pinzon</Title>
+                            <Image source={{uri:this.props?.image}} style={styles.image}/>
+                            <Title style={{color:'#243949', marginTop:10, textAlign:'center', fontSize:25}} > {this.props?.name} </Title>
                             <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30, marginTop:15}}>
                                 <Icon name='mail-outline' type="Ionicons" style={{ color:'#243949', fontSize:25}} />
-                                <Text style={styles.text} onPress={()=> Linking.openURL(`mailto:dafp18@hotmail.com`)}>dafpp18@hotmail.com</Text>
+                                <Text style={styles.text} onPress={()=> Linking.openURL(`mailto:${this.props?.email}`)}>{this.props?.email}</Text>
                             </View>
 
                             <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
                                 <Icon name='call-outline' type="Ionicons" style={{color:'#243949', fontSize:25}} />
-                                <Text style={styles.text} onPress={() => Linking.openURL(`tel:3134277958`)}>3134277958</Text>
+                                <Text style={styles.text} onPress={() => Linking.openURL(`tel:${this.props?.phone}`)}>{this.props?.phone}</Text>
                             </View>   
                         </View>
                     </ActionSheet>

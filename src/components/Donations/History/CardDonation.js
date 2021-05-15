@@ -5,7 +5,7 @@ import {Image,StyleSheet} from 'react-native';
 class CardDonation extends Component {
     
     render(){
-        const {id,title,image,created_at,category,state_product,quantity,locality,type,functions,textBadge,state_donation} = this.props
+        const {id,title,image,created_at,category,state_product,quantity,locality,type,functions,textBadge,state_donation,changeStatus} = this.props
         return(
                 <Card style={styles.cardContainer} key={`dona_000${id+1}`}>
                     <CardItem>        
@@ -28,12 +28,6 @@ class CardDonation extends Component {
                                                                 :   null
                             }
 
-                            {   type === 'DonacionesTramite'  ?   <Badge style={{ backgroundColor: '#243949', height:22, marginTop:5 }}>
-                                                                        <Text style={{fontSize:13, color:'#fff'}}>En proceso</Text>
-                                                                    </Badge>
-                                                                :   null
-                            }
-
                             {   type === 'DonacionesAceptadas'  ?   <Badge style={{ backgroundColor: '#08e5d2', height:22, marginTop:5 }}>
                                                                         <Text style={{fontSize:13, color:'#243949'}}>Recibida</Text>
                                                                     </Badge>
@@ -45,7 +39,15 @@ class CardDonation extends Component {
                                                                         <Text onPress={functions}
                                                                               style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Ver detalles</Text>
                                                                     </Card>  
-                                                                :  null
+                                                                :   null
+                            }
+
+                            {   type === 'DonacionesTramite'    ?   <Card style={ [styles.btnRecieve, { borderBottomColor: '#00bfa6', backgroundColor:'#08e5d2'}] }>
+                                                                        <Icon active name='checkmark-circle-outline' style={{fontSize:20}} />
+                                                                        <Text onPress={changeStatus}
+                                                                              style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Recibida</Text>
+                                                                    </Card>  
+                                                                :   null
                             }
 
                             {   type === 'DonacionesTramite'    
@@ -54,8 +56,9 @@ class CardDonation extends Component {
                                                                         <Text onPress={functions}
                                                                               style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Datos donante</Text>
                                                                     </Card>  
-                                                                :  null
-                            }                         
+                                                                :   null
+                            }
+                                                     
                         </View>   
                     </CardItem> 
                 </Card>    
@@ -85,7 +88,20 @@ const styles = StyleSheet.create({
         borderRadius:10,
         borderColor:'#243949',
         borderBottomWidth:3
+    },
+    btnRecieve:{
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'row',
+        marginTop:20,
+        marginLeft:10,
+        marginRight:5,
+        height:35,
+        borderRadius:10,
+        borderColor:'#243949',
+        borderBottomWidth:3
     }
+
 })
 
 export default CardDonation;

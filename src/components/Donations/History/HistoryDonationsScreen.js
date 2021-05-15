@@ -27,8 +27,17 @@ class HistoryDonationsScreen extends Component {
     getStatusDonations = async () =>{
         const resource = '/state_donations'
         const statusDonations = await Http.instance.get(resource)
-        console.log(statusDonations,'estados')
+        let obj = {
+            id:40,
+            name:'todas'
+        }
+        statusDonations.unshift(obj)
         this.setState({statusDonations})
+    }
+
+    reload = () => {
+        this.getDonations()
+        this.getStatusDonations()
     }
     
     getDonations = async () =>{
@@ -38,7 +47,6 @@ class HistoryDonationsScreen extends Component {
             user:this.state.user,
             estado: this.state.statusName || '' 
         }
-        console.log(body, 'bodyyyyyyyyyyyy')
         const donations = await Http.instance.post(resource, JSON.stringify(body))
         this.setState({donations, loading:false})
     }
@@ -47,12 +55,11 @@ class HistoryDonationsScreen extends Component {
         this.props.navigation.navigate('Home')
     }
 
-    onPressHandler = id => {
+    onPressHandler = (id, statusName_) => {
         let idItem = id.replace('itmFilter_', '')
         const status = this.state.statusDonations.filter(el => el.id === Number(idItem))
-        console.log(status[0].name)
         if(status){ 
-            this.setState({selected: id, statusName:status[0].name}, () => this.getDonations())  
+            this.setState({selected: id, statusName: statusName_ === 'todas' ? null : status[0].name}, () => this.getDonations())  
         }
     }
 
@@ -69,54 +76,51 @@ class HistoryDonationsScreen extends Component {
                             <Body>
                                 <Title style={styles.textHeader}>Historial donaciones</Title>
                             </Body>
-                            <Right>
-                                <Button transparent onPress={this.getDonations}>
-                                    <Icon name='refresh-outline' type="Ionicons" color="#fff" style={styles.iconHeader} />
-                                </Button>
-                            </Right>
+                            <Icon name='refresh-outline' type="Ionicons" style={styles.iconHeader} onPress={this.reload}/>
                         </Header>
                         
                         <View style={styles.cardBackground}>
+                        {   this.state.loading && <ActivityIndicator size="large" color="#08e5d2" style={{marginTop:20}} />  }
                             
-                            <FlatList
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                extraData={this.state.statusDonations}
-                                data={this.state.statusDonations}
-                                keyExtractor={item => `itmFilter_${item.id}`}
-                                renderItem={({item}) =>{
-                                    return      <Filters selected={this.state.selected}
-                                                         keyItem={`itmFilter_${item.id}`}
-                                                         onPressHandler={() => this.onPressHandler(`itmFilter_${item.id}`)}
-                                                         name={item.name}   
-                                                />                                            
-                                }}   
-                                
-                            />
+                        {   this.state.loading ||   <FlatList
+                                                        horizontal
+                                                        showsHorizontalScrollIndicator={false}
+                                                        extraData={this.state.statusDonations}
+                                                        data={this.state.statusDonations}
+                                                        keyExtractor={item => `itmFilter_${item.id}`}
+                                                        renderItem={({item}) =>{
+                                                            return      <Filters selected={this.state.selected}
+                                                                                keyItem={`itmFilter_${item.id}`}
+                                                                                onPressHandler={() => this.onPressHandler(`itmFilter_${item.id}`, item.name)}
+                                                                                name={item.name}   
+                                                                        />                                            
+                                                        }}   
+                                                        
+                                                    />
+                        }
 
-                            {   this.state.loading  ?   <ActivityIndicator size="large" color="#243949" /> 
-                                                    :   <FlatList
-                                                            data={this.state.donations}
-                                                            keyExtractor={item => `item_${item.id}`}
-                                                            renderItem={({item}) =>{
-                                                                return  <CardDonation   id={item.id} 
-                                                                                        title={item.title}
-                                                                                        image={item.url_image}
-                                                                                        description={item.description}
-                                                                                        quantity={item.quantity}
-                                                                                        observation={item.observation}
-                                                                                        created_at={item.created_at}
-                                                                                        category = {item.category}
-                                                                                        state_product={item.state_product}
-                                                                                        locality={item.locality} 
-                                                                                        cantidad={null}
-                                                                                        type={'HistorialDonaciones'}
-                                                                                        state_donation={item.state_donation}
-                                                                                        functions={null}
-                                                                        />       
-                                                            }}   
-                                                        />
-                            }  
+                        {   this.state.loading  ||  <FlatList
+                                                        data={this.state.donations}
+                                                        keyExtractor={item => `item_${item.id}`}
+                                                        renderItem={({item}) =>{
+                                                            return  <CardDonation   id={item.id} 
+                                                                                    title={item.title}
+                                                                                    image={item.url_image}
+                                                                                    description={item.description}
+                                                                                    quantity={item.quantity}
+                                                                                    observation={item.observation}
+                                                                                    created_at={item.created_at}
+                                                                                    category = {item.category}
+                                                                                    state_product={item.state_product}
+                                                                                    locality={item.locality} 
+                                                                                    cantidad={null}
+                                                                                    type={'HistorialDonaciones'}
+                                                                                    state_donation={item.state_donation}
+                                                                                    functions={null}
+                                                                    />       
+                                                        }}   
+                                                    />
+                        }  
                         </View>
                     </View>
                 </LinearGradient>
@@ -137,7 +141,8 @@ const styles = StyleSheet.create({
         marginTop:20
     },
     iconHeader:{
-        marginTop:20
+        marginTop:20,
+        color:'#fff'
     },
     cardBackground: {
         flex: 1,
