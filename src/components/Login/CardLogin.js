@@ -7,11 +7,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 class CardLogin extends Component {
     state = {
         isLoggin:false,
-        email: '',
-        password: '',
+        email: null,
+        password: null,
         userTemp: 'diegoa',
         pwdTemp: '12345',
         textBtnInciarSesion:'Iniciar sesión',
+        diabledBtnStartSession:true,
         loading: false,
         menusDonante: [
             { id:'optHD_0001', title: 'Nueva donación',img: require('../../assets/img/MenuDonar_.png'), goScreen:'SelectCategory'},
@@ -25,6 +26,27 @@ class CardLogin extends Component {
             { id:'optHF_0003', title: 'Donaciones aceptadas',img: require('../../assets/img/MenuFunDonacionesAcp.png'),  goScreen:'DonacionesAceptadasScreen'},
             { id:'optHF_0004', title: 'Tips donaciones',img: require('../../assets/img/MenuFunDonacionesPre.png'),  goScreen:'TipsToDonate'}
         ]
+    }
+
+    validateForm = (text, label) => {
+        if(label === 'email'){
+            this.setState({email:text})
+        }
+
+        if(label === 'password'){
+            this.setState({password:text})
+        }
+
+        setTimeout(() => {
+            if(this.state.email && this.state.password){
+                this.setState({diabledBtnStartSession:false})
+            }
+    
+            if(!this.state.email || !this.state.password){
+                this.setState({diabledBtnStartSession:true})
+            }   
+        }, 1);
+        
     }
 
     startSession = async () => {
@@ -57,36 +79,33 @@ class CardLogin extends Component {
         this.props.navigation.navigate('ForgotPassword')
     }
     render(){
-        const {email, password,textBtnInciarSesion,loading,handleDisabled,colorbtn} = this.state
+        const {textBtnInciarSesion,loading} = this.state
         return(
                 <Content padder style={{marginTop:50}}>
                     
                     <Title style={styles.title}>Iniciar sesión</Title>
                     
-                    <Card style={styles.cardEmail}>
-                        
-                            <Item floatingLabel last>
-                                <Icon name='mail-outline' type="Ionicons" />
-                                <Label>Correo electrónico</Label>
-                                <Input onChangeText={email => this.setState({email})} />
-                            </Item>
-                        
+                    <Card style={styles.cardEmail}>                       
+                        <Item floatingLabel last>
+                            <Icon name='mail-outline' type="Ionicons" />
+                            <Label>Correo electrónico</Label>
+                            <Input onChangeText={email => this.validateForm(email, 'email')} />
+                        </Item>    
                     </Card>
 
                     <Card style={styles.cardPwd}>
-                        
-                            <Item floatingLabel last>
-                            <Icon name='lock-closed-outline' type="Ionicons" />
-                            <Label>Contraseña</Label>
-                            <Input secureTextEntry={true} onChangeText={password => this.setState({password})} />
-                            </Item>
-                        
+                        <Item floatingLabel last>
+                        <Icon name='lock-closed-outline' type="Ionicons" />
+                        <Label>Contraseña</Label>
+                        <Input secureTextEntry={true} onChangeText={password => this.validateForm(password, 'password')} />
+                        </Item>
                     </Card>
 
                     <Form>
-                        <Button block style={{ marginLeft:10, marginRight:10, marginTop:10, 
-                                                backgroundColor: (email !== '' || password !== '' ) ? '#243949' : '#667580'
-                                            }}  
+                        <Button block style={{ marginLeft:10, marginRight:10, marginTop:10,
+                                                backgroundColor: !this.state.diabledBtnStartSession ? '#243949' : '#667580'
+                                            }} 
+                                            disabled={this.state.diabledBtnStartSession} 
                                             onPress={this.startSession}>
                             <Text>{textBtnInciarSesion}</Text>
                             {   loading && <ActivityIndicator size="large" color="#08e5d2" />  }
@@ -112,7 +131,7 @@ const styles = StyleSheet.create({
         color: 'black',
         textAlign : 'center',
         fontWeight: "bold",
-        
+        fontSize:25
     },
     btnforgotpwd:{
         marginTop: 40,
