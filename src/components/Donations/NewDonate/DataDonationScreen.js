@@ -84,7 +84,7 @@ class DataDonationScreen extends Component {
         }
 
         setTimeout(() => {
-            if((this.state.estado && this.state.cantidad && this.state.descripcion) && (this.state.titulo && this.state.titulo.length > 4) ){ this.setState({bgColorFooter:true,btnContinuar:false })} 
+            if((this.state.estado && this.state.cantidad && this.state.descripcion && this.state.observaciones) && (this.state.titulo && this.state.titulo.length > 4) ){ this.setState({bgColorFooter:true,btnContinuar:false })} 
         }, 1);
                 
     }

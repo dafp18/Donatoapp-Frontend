@@ -25,6 +25,7 @@ class DataDonationScreen extends Component {
     }
 
     finishDonate =  async () =>{
+        this.setState({loadingBtnDonarAhora:true, disableBtnDonarAhora:true})
         let data = await this.getDataToNewDonation()
             //data.url_image = this.state.ImagesToSendApi[0]
             //data.id_state_donation = 1
@@ -47,7 +48,8 @@ class DataDonationScreen extends Component {
         const resource = '/products'
         //const createDonation = await Http.instance.post(resource, JSON.stringify(data))
         const createDonation = await Http.instance.post(resource, frm)
-        if(createDonation.status === 201){
+        if(createDonation.Message === 'creado'){
+            this.setState({loadingBtnDonarAhora:false})
             this.props.navigation.navigate('Home')
             Alert.alert(
                 "FELICITACIONES!",
@@ -77,11 +79,10 @@ class DataDonationScreen extends Component {
             ImagesToSendApi = []
         ImagePicker.openCamera  ({
                     width: 300,
-                    height: 400,
-                    cropping: true,
+                    height: 400
                 }).then(image => {
                         imagesDonate.push(image.path)
-                        ImagesToSendApi.push(image.img)
+                        ImagesToSendApi.push(image)
                         this.setState({imagesDonate, ImagesToSendApi, imagesLoad:true, bgColorFooter:true, disableBtnDonarAhora:false, showBtnDeletePhotos:true})
                 });
     }

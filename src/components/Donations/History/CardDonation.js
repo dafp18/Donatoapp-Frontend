@@ -5,7 +5,7 @@ import {Image,StyleSheet} from 'react-native';
 class CardDonation extends Component {
     
     render(){
-        const {id,title,image,created_at,category,state_product,quantity,locality,type,functions,textBadge,state_donation,changeStatus} = this.props
+        const {id,title,image,updated_at,created_at,category,state_product,quantity,locality,type,functions,textBadge,state_donation,changeStatus} = this.props
         return(
                 <Card style={styles.cardContainer} key={`dona_000${id+1}`}>
                     <CardItem>        
@@ -19,7 +19,7 @@ class CardDonation extends Component {
                         <View style={{marginLeft:10}}>
                             <Text>Estado: {state_product}</Text>
                             <Text>Creado: {created_at.substring(0,19)} </Text>
-                            { type === 'HistorialDonaciones' || type === 'DonacionesAceptadas' ? <Text>Entregado: {created_at.substring(0,10)}</Text> : null }
+                            { ((type === 'HistorialDonaciones' || type === 'DonacionesAceptadas') && state_donation === 'Entregada') ? <Text>Entregado: {updated_at?.substring(0,10)}</Text> : null }
                             <Text>Cantidad: {quantity}</Text>
                             <Text>Ubicación: {locality} </Text>
                             {   type === 'HistorialDonaciones'  ?   <Badge style={{ backgroundColor: '#243949', height:22, marginTop:5 }}>
@@ -40,6 +40,14 @@ class CardDonation extends Component {
                                                                               style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Ver detalles</Text>
                                                                     </Card>  
                                                                 :   null
+                            }
+
+                            {   type === 'HistorialDonaciones' && state_donation === 'Activa'   ?   <Card style={ [styles.btn, { borderBottomColor: '#243949'}] }>
+                                                                                                        <Icon active name='close-circle-outline' type='Ionicons' style={{fontSize:22}} />
+                                                                                                        <Text onPress={functions}
+                                                                                                            style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Desactivar</Text>
+                                                                                                    </Card>  
+                                                                                                :   null
                             }
 
                             {   type === 'DonacionesTramite'    ?   <Card style={ [styles.btnRecieve, { borderBottomColor: '#00bfa6', backgroundColor:'#08e5d2'}] }>

@@ -15,6 +15,7 @@ class HistoryDonationsScreen extends Component {
         user:'dafp18@hotmail.com',
         statusDonations: [],
         donations:[],
+        donationsFilters:[],
         selected: null,
         statusName: null,
         loading:true
@@ -48,20 +49,32 @@ class HistoryDonationsScreen extends Component {
             estado: this.state.statusName || '' 
         }
         const donations = await Http.instance.post(resource, JSON.stringify(body))
-        this.setState({donations, loading:false})
+        this.setState({donations, donationsFilters:donations, loading:false})
     }
 
     goHome = () => {
         this.props.navigation.navigate('Home')
     }
 
-    onPressHandler = (id, statusName_) => {
-        let idItem = id.replace('itmFilter_', '')
-        const status = this.state.statusDonations.filter(el => el.id === Number(idItem))
-        if(status){ 
-            this.setState({selected: id, statusName: statusName_ === 'todas' ? null : status[0].name}, () => this.getDonations())  
+    onPressStatus = (id, statusName_) => {
+        this.setState({selected: id});
+        let donationsFilters = []
+        if(statusName_ === 'todas'){
+            donationsFilters = this.state.donations
+        }else{
+            donationsFilters = this.state.donations?.filter(d => d.state_donation === statusName_)
         }
+        this.setState({donationsFilters})
     }
+
+    changeStatusDonation = async (idDonation) => {
+        this.setState({loading:true})
+        const resource = '/changeStatusInactiveProduct/'+idDonation
+        const dataUserDonante = await Http.instance.get(resource)
+        if(dataUserDonante.Message === 'Actualizado'){
+            this.getDonations()
+        }
+    } 
 
     render(){
         return(
@@ -90,9 +103,9 @@ class HistoryDonationsScreen extends Component {
                                                         keyExtractor={item => `itmFilter_${item.id}`}
                                                         renderItem={({item}) =>{
                                                             return      <Filters selected={this.state.selected}
-                                                                                keyItem={`itmFilter_${item.id}`}
-                                                                                onPressHandler={() => this.onPressHandler(`itmFilter_${item.id}`, item.name)}
-                                                                                name={item.name}   
+                                                                                 keyItem={`itmFilter_${item.id}`}
+                                                                                 onPressHandler={() => this.onPressStatus(`itmFilter_${item.id}`, item.name)}
+                                                                                 name={item.name}   
                                                                         />                                            
                                                         }}   
                                                         
@@ -100,7 +113,7 @@ class HistoryDonationsScreen extends Component {
                         }
 
                         {   this.state.loading  ||  <FlatList
-                                                        data={this.state.donations}
+                                                        data={this.state.donationsFilters}
                                                         keyExtractor={item => `item_${item.id}`}
                                                         renderItem={({item}) =>{
                                                             return  <CardDonation   id={item.id} 
@@ -110,13 +123,14 @@ class HistoryDonationsScreen extends Component {
                                                                                     quantity={item.quantity}
                                                                                     observation={item.observation}
                                                                                     created_at={item.created_at}
+                                                                                    updated_at={item.updated_at}
                                                                                     category = {item.category}
                                                                                     state_product={item.state_product}
                                                                                     locality={item.locality} 
                                                                                     cantidad={null}
                                                                                     type={'HistorialDonaciones'}
                                                                                     state_donation={item.state_donation}
-                                                                                    functions={null}
+                                                                                    functions={() => this.changeStatusDonation(item.id)}
                                                                     />       
                                                         }}   
                                                     />

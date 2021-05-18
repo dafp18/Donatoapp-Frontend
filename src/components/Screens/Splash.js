@@ -32,14 +32,14 @@ var styles = StyleSheet.create({
   },
   textD: {
     color: "white",
-    fontSize: 30,
+    fontSize: 40,
     fontWeight: "bold",
     textAlign: "center",
     
   },
   textA: {
     color: "#08e5d2",
-    fontSize: 33,
+    fontSize: 43,
     fontWeight: "bold",
     textAlign: "center"
   },

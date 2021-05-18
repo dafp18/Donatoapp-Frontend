@@ -82,6 +82,7 @@ class DonacionesAceptadasScreen extends Component {
                                                             quantity={item.quantity}
                                                             observation={item.observation}
                                                             created_at={item.created_at}
+                                                            updated_at={item.updated_at}
                                                             category = {item.category}
                                                             state_product={item.state_product}
                                                             locality={item.locality} 

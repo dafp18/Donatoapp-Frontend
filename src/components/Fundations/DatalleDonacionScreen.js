@@ -11,6 +11,7 @@ class DetalleDonacionScreen extends Component {
     state={
         disableBtnLoQuiero:false,
         loading:false,
+        loadingData:true,
         id:null,
         imagesDonate:[],
         title:null,
@@ -27,6 +28,7 @@ class DetalleDonacionScreen extends Component {
     }
     
     getDonationById = async () => {
+
         let id = this.props.route.params,
             imagesDonate = []
         const resource = `/products/${id}`
@@ -35,10 +37,9 @@ class DetalleDonacionScreen extends Component {
         handleStringImages?.map(img_url =>{
             if(img_url !== ''){ imagesDonate.push(Http.instance.BASE_URL_IMGS+img_url) }  
         })
-        console.log(imagesDonate)
         this.setState({imagesDonate, id:donation.id, title:donation.name, category:donation.id_category,
                        description: donation.description, observation:donation.observation, stateName: donation.id_state_product,
-                       quantity:donation.quantity, locality: donation.id_locality  
+                       quantity:donation.quantity, locality: donation.id_locality, loadingData:false  
                     })
                  
     }
@@ -93,37 +94,41 @@ class DetalleDonacionScreen extends Component {
                           </Body>
                           </Header>
                           <View style={styles.cardBackground}>
-                              <ScrollView>
-                                  <CardItem>
-                                      <Body>
-                                        <Text>{this.state.title}</Text>
-                                        <Text note>Categoria: {this.state.category}</Text>
-                                      </Body>
-                                  </CardItem>
-                                  <CardItem cardBody>
-                                      <SliderImages dataImages={this.state.imagesDonate}/>
-                                    {/* <Image source={{uri: 'https://dafitistaticco-a.akamaihd.net/p/frenezi-4816-840539-1-zoom.jpg'}} style={{height: 200, width: null, flex: 1}}/> */}
-                                  </CardItem>
-                                  <CardItem>
-                                      <Text>{this.state.description} {this.state.observation} </Text>  
-                                  </CardItem>
-                                  <CardItem>
-                                      <Text style={{fontWeight:'bold'}}>Estado: </Text>
-                                      <Text>{ this.state.stateName }</Text>
-                                  </CardItem>
-                                  <CardItem>
-                                      <Text style={{fontWeight:'bold'}}>Cantidad: </Text>
-                                      <Text>{ this.state.quantity }</Text>
-                                  </CardItem>
-                                  <CardItem>
-                                      <Text style={{fontWeight:'bold'}}>Ubicación: </Text>
-                                      <Text>{ this.state.locality }</Text>
-                                  </CardItem>
-                                  <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20,   backgroundColor: this.state.disableBtnLoQuiero ? '#667580' : '#243949', borderRadius:5}} disable={this.state.disableBtnLoQuiero} onPress={() => this.takeDonation(this.state.id, 23)}>
-                                      <Text>Lo quiero!</Text>
-                                      {   this.state.loading && <ActivityIndicator size="large" color="#08e5d2" />  }
-                                  </Button>    
-                              </ScrollView>    
+                            {   this.state.loadingData && <ActivityIndicator size="large" color="#08e5d2" style={{marginTop:20}} />  }
+
+                            {  this.state.loadingData ||
+                                                        <ScrollView>
+                                                            <CardItem>
+                                                                <Body>
+                                                                    <Text>{this.state.title}</Text>
+                                                                    <Text note>Categoria: {this.state.category}</Text>
+                                                                </Body>
+                                                            </CardItem>
+                                                            <CardItem cardBody>
+                                                                <SliderImages dataImages={this.state.imagesDonate}/>
+                                                                {/* <Image source={{uri: 'https://dafitistaticco-a.akamaihd.net/p/frenezi-4816-840539-1-zoom.jpg'}} style={{height: 200, width: null, flex: 1}}/> */}
+                                                            </CardItem>
+                                                            <CardItem>
+                                                                <Text>{this.state.description} {this.state.observation} </Text>  
+                                                            </CardItem>
+                                                            <CardItem>
+                                                                <Text style={{fontWeight:'bold'}}>Estado: </Text>
+                                                                <Text>{ this.state.stateName }</Text>
+                                                            </CardItem>
+                                                            <CardItem>
+                                                                <Text style={{fontWeight:'bold'}}>Cantidad: </Text>
+                                                                <Text>{ this.state.quantity }</Text>
+                                                            </CardItem>
+                                                            <CardItem>
+                                                                <Text style={{fontWeight:'bold'}}>Ubicación: </Text>
+                                                                <Text>{ this.state.locality }</Text>
+                                                            </CardItem>
+                                                            <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20,   backgroundColor: this.state.disableBtnLoQuiero ? '#667580' : '#243949', borderRadius:5}} disable={this.state.disableBtnLoQuiero} onPress={() => this.takeDonation(this.state.id, 23)}>
+                                                                <Text>Lo quiero!</Text>
+                                                                {   this.state.loading && <ActivityIndicator size="large" color="#08e5d2" />  }
+                                                            </Button>    
+                                                        </ScrollView>    
+                            }
                           </View>        
                       </View>
                   </LinearGradient>

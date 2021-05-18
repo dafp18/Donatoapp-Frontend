@@ -51,20 +51,17 @@ class CardLogin extends Component {
 
     startSession = async () => {
         const {email, password, userTemp, pwdTemp} = this.state
-        if(email === '' || password === ''){
-            return
-        }
-        this.setState({textBtnInciarSesion:'Iniciando sesión . . .', loading:true})
+        this.setState({textBtnInciarSesion:'Iniciando sesión . . .', loading:true, diabledBtnStartSession:true})
         setTimeout(() =>{
             if(email === userTemp && password === pwdTemp){
                 this.props.navigation.navigate('Home', {menus:this.state.menusDonante, imgPrincipaly: require('../../assets/img/undraw_city_life.png')})
-                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
+                this.setState({textBtnInciarSesion:'Iniciar sesión',loading:false })
             }else if(email === 'diegoafun' && password === pwdTemp){
                 this.props.navigation.navigate('Home',{menus:this.state.menusFundacion,imgPrincipaly: require('../../assets/img/undraw_suburbs.png')})
                 this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })    
             }else{
                 alert('Email y contraseña inválidos')
-                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })
+                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false, diabledBtnStartSession:false })
             }
         },3000)
         try {
