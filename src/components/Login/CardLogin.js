@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { StyleSheet,ActivityIndicator,Pressable } from 'react-native';
+import { StyleSheet,ActivityIndicator,Pressable, Alert} from 'react-native';
 import { Form, Item, Input, Label, Card, Content,Icon,Button, Text, Title } from 'native-base';
 import Http from '../../helpers/http';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -9,8 +9,6 @@ class CardLogin extends Component {
         isLoggin:false,
         email: null,
         password: null,
-        userTemp: 'diegoa',
-        pwdTemp: '12345',
         textBtnInciarSesion:'Iniciar sesión',
         diabledBtnStartSession:true,
         loading: false,
@@ -50,26 +48,49 @@ class CardLogin extends Component {
     }
 
     startSession = async () => {
-        const {email, password, userTemp, pwdTemp} = this.state
-        this.setState({textBtnInciarSesion:'Iniciando sesión . . .', loading:true, diabledBtnStartSession:true})
-        setTimeout(() =>{
-            if(email === userTemp && password === pwdTemp){
-                this.props.navigation.navigate('Home', {menus:this.state.menusDonante, imgPrincipaly: require('../../assets/img/undraw_city_life.png')})
-                this.setState({textBtnInciarSesion:'Iniciar sesión',loading:false })
-            }else if(email === 'diegoafun' && password === pwdTemp){
-                this.props.navigation.navigate('Home',{menus:this.state.menusFundacion,imgPrincipaly: require('../../assets/img/undraw_suburbs.png')})
-                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false })    
-            }else{
-                alert('Email y contraseña inválidos')
-                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false, diabledBtnStartSession:false })
-            }
-        },3000)
-        try {
-            await AsyncStorage.setItem('token', 'jajajajajajajajajajajaj')
-            await AsyncStorage.setItem('idUser', '20')
-        } catch (e) {
-            console.log(`error setItem token: ${e}`)
+        this.setState({textBtnInciarSesion:'Iniciando sesión ...', loading:true, diabledBtnStartSession:true})
+        const resource = '/login'
+        let body = {
+            email:this.state.email,
+            password: this.state.password,
+            device_name: "mobile"
         }
+        const dataLogin = await Http.instance.post(resource, JSON.stringify(body))
+        console.log(dataLogin)
+        if(dataLogin.Message === 'emailFail' || dataLogin.Message === 'passwordFail' || dataLogin.Message === 'disabled'){
+            let msj = ''
+            if(dataLogin.Message === 'emailFail'){ msj = "El email ingresado no existe" }
+            if(dataLogin.Message === 'passwordFail'){ msj = "La contraseña es incorrecta" }
+            if(dataLogin.Message === 'disabled'){ msj = "Debe confirmar su cuenta para poder ingresar"}
+            this.setState({textBtnInciarSesion:'Iniciar sesión',loading:false, diabledBtnStartSession:false})
+            Alert.alert(
+                "ERROR!",
+                msj,
+                [ {text: "OK"} ],
+                {cancelable: true}
+            );
+            return
+        }
+
+        if(dataLogin.hasOwnProperty('token')){
+            let name = `${dataLogin.name} ${dataLogin.lastname}`,
+                ultimoIngreso = `${dataLogin.ultimoIngreso}`
+
+            if(dataLogin.rol === 3){
+                this.props.navigation.navigate('Home', {menus:this.state.menusDonante, imgPrincipaly: require('../../assets/img/undraw_city_life.png'), name, ultimoIngreso })
+                this.setState({textBtnInciarSesion:'Iniciar sesión',loading:false, diabledBtnStartSession:false })
+            }else{
+                this.props.navigation.navigate('Home',{menus:this.state.menusFundacion,imgPrincipaly: require('../../assets/img/undraw_suburbs.png'), name, ultimoIngreso})
+                this.setState({textBtnInciarSesion:'Iniciar sesión',loading: false, diabledBtnStartSession:false })       
+            }
+            try {
+                await AsyncStorage.setItem('idUser', dataLogin.userId.toString())
+                await AsyncStorage.setItem('user', dataLogin.user)
+                await AsyncStorage.setItem('token', dataLogin.token)
+            } catch (e) {
+                console.log(`error setItem token: ${e}`)
+            }
+        }       
     }
 
     goForgotPassword = () => {

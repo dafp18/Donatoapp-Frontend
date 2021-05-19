@@ -1,5 +1,5 @@
 import React, { Component,createRef  } from 'react';
-import {View,StyleSheet,Image, Pressable} from 'react-native';
+import {View,StyleSheet,Image, Pressable, BackHandler} from 'react-native';
 import {Header,Card,Text,Right,Button,Title,Body,ListItem,Left,List, Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import ActionSheet from "react-native-actions-sheet";
@@ -18,6 +18,22 @@ class HomeScreen extends Component {
         actionSheetRef.current?.hide();
         this.props.navigation.navigate(screen)
     }
+
+    backAction = () => {
+        BackHandler.exitApp()
+        return true;
+    }
+
+    componentDidMount() {
+        this.backHandler = BackHandler.addEventListener(
+          "hardwareBackPress",
+          this.backAction
+        );
+      }
+    
+    componentWillUnmount() {
+        this.backHandler.remove();
+    }
     render(){
         return(
                 <LinearGradient colors={['#243949','#243949']} style={styles.linearGradient}>
@@ -34,8 +50,8 @@ class HomeScreen extends Component {
                         </Header>
                         <Card style={styles.cardFirst}>
                             <Image source={this.props.route.params.imgPrincipaly} style={{height: 100, width: 300, marginTop:5, marginLeft:15}}/>
-                            <Title style={styles.titleCardFirst}>Diego Alejandro Forero Pinzón</Title>
-                            <Text note style={styles.textNoteCardFirst}>Último ingreso: 2021/05/31 03:00:05 pm</Text>
+                            <Title style={styles.titleCardFirst}>{this.props.route.params.name}</Title>
+                            <Text note style={styles.textNoteCardFirst}>Último ingreso: {this.props.route.params.ultimoIngreso?.substring(0,10)}</Text>
                         </Card>
                         <View style={styles.cardBackground}>
                             <CardHome {...this.props} />  

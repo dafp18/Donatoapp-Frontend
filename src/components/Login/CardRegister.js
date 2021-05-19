@@ -161,7 +161,7 @@ class CardRegister extends Component {
         this.setState({loading:true, disableBtnRegister:true})
         let obj = {
             name: this.state.nombre,
-            lastname: this.props.rolSelected === 'Fundacion' ? '.' : this.state.apellido,
+            lastname: this.props.rolSelected === 'Fundacion' ? '.' : this.state.apellidos,
             user: this.state.email,
             address: this.state.direccion,
             phone: this.state.telefono,
@@ -175,12 +175,13 @@ class CardRegister extends Component {
 
         const resource = '/registerNewUser'
         const registerUser = await Http.instance.post(resource,JSON.stringify(obj)) 
+        console.log(registerUser)
         if(registerUser.Message === 'Registrado'){
             this.setState({loading:false})
             Alert.alert(
                 "FELICITACIONES!",
                 "Se ha registrado en DonatonApp, por favor verifique su email y confirme la cuenta.",
-                [ {text: "OK", onPress: () => this.props.navigation.navigate('Home') } ],
+                [ {text: "OK", onPress: () => this.props.navigation.navigate('Login') } ],
                 {cancelable: true}
             );
         }     

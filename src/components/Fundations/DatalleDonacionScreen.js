@@ -4,6 +4,7 @@ import { Header, Content, Card, CardItem, Text, Button, Icon, Left, Body, Title 
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import SliderImages from '../Donations/NewDonate/SliderImages';
 
@@ -20,13 +21,24 @@ class DetalleDonacionScreen extends Component {
         observation:null,
         stateName:null,
         quantity:null,
-        locality:null
+        locality:null,
+        idUserLogged:null
     }
     
     componentDidMount (){
+        this.getIdUserLogged()
         this.getDonationById()
     }
     
+    getIdUserLogged = async () => {
+        try {
+            let idUserLogged = Number(await AsyncStorage.getItem('idUser'))
+            this.setState({idUserLogged})
+        } catch(e) {
+            console.log(`Error obteniendo la key idUser para el detalle donacion ${e}`)
+        }   
+    }
+
     getDonationById = async () => {
 
         let id = this.props.route.params,
@@ -52,12 +64,12 @@ class DetalleDonacionScreen extends Component {
         this.props.navigation.navigate('Home')
     }
 
-    takeDonation = async (idProduct, idUser) => {
+    takeDonation = async (idProduct) => {
         this.setState({disableBtnLoQuiero:true, loading:true})
         const resource = '/separateProduct'
         const body = {
             idProduct,
-            idUser
+            idUser:this.state.idUserLogged
         }
         const separateDonation = await Http.instance.post(resource, JSON.stringify(body))
         if(separateDonation.Message === 'Actualizado'){
@@ -123,7 +135,7 @@ class DetalleDonacionScreen extends Component {
                                                                 <Text style={{fontWeight:'bold'}}>Ubicación: </Text>
                                                                 <Text>{ this.state.locality }</Text>
                                                             </CardItem>
-                                                            <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20,   backgroundColor: this.state.disableBtnLoQuiero ? '#667580' : '#243949', borderRadius:5}} disable={this.state.disableBtnLoQuiero} onPress={() => this.takeDonation(this.state.id, 23)}>
+                                                            <Button block style={{ marginLeft:20, marginRight:20, marginTop:20, marginBottom:20,   backgroundColor: this.state.disableBtnLoQuiero ? '#667580' : '#243949', borderRadius:5}} disable={this.state.disableBtnLoQuiero} onPress={() => this.takeDonation(this.state.id)}>
                                                                 <Text>Lo quiero!</Text>
                                                                 {   this.state.loading && <ActivityIndicator size="large" color="#08e5d2" />  }
                                                             </Button>    

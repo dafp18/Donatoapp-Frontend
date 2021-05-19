@@ -97,7 +97,6 @@ class DataDonationScreen extends Component {
                 dataDonation = await AsyncStorage.getItem('dataDonation')
                 dataDonation = (dataDonation !== null) ? JSON.parse(dataDonation) : null,
                 idLocation = await AsyncStorage.getItem('idLocation'),
-                token= await AsyncStorage.getItem('token'),
                 idUser= await AsyncStorage.getItem('idUser')
                                    
             let objNewDonation = {
@@ -108,8 +107,7 @@ class DataDonationScreen extends Component {
                 id_category:Number(idCategory),
                 id_user:Number(idUser),
                 id_locality:Number(idLocation),
-                id_state_product: (dataDonation.estado === 'Nuevo') ? 1 : 2,
-                token 
+                id_state_product: (dataDonation.estado === 'Nuevo') ? 1 : 2
             }
             return objNewDonation
         } catch(e) {

@@ -1,10 +1,25 @@
 import React from 'react';
 import { Title } from 'native-base';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, BackHandler } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import CardLogin from '../Login/CardLogin';
 
 class LoginScreen extends React.Component{
+  backAction = () => {
+    BackHandler.exitApp()
+    return true;
+  }
+
+  componentDidMount() {
+    this.backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      this.backAction
+    );
+  }
+
+  componentWillUnmount() {
+    this.backHandler.remove();
+  }
   
   render(){
     

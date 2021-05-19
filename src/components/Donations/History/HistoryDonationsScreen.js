@@ -4,15 +4,14 @@ import { Header, Left, Button, Body, Title, Right, Icon } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Filters from './Filters';
 import CardDonation from './CardDonation';
-import { set } from 'react-native-reanimated';
-
 
 class HistoryDonationsScreen extends Component {
     state={
-        user:'dafp18@hotmail.com',
+        user:null,
         statusDonations: [],
         donations:[],
         donationsFilters:[],
@@ -21,8 +20,18 @@ class HistoryDonationsScreen extends Component {
         loading:true
     }
     componentDidMount ()  {
+        this.getUserLogged()
         this.getDonations()
         this.getStatusDonations()
+    }
+
+    getUserLogged = async () => {
+        try {
+            let user = await AsyncStorage.getItem('user')
+            this.setState({user})
+        } catch(e) {
+            console.log(`Error obteniendo la key user para el historial de donaciones ${e}`)
+        }   
     }
 
     getStatusDonations = async () =>{
@@ -48,6 +57,7 @@ class HistoryDonationsScreen extends Component {
             user:this.state.user,
             estado: this.state.statusName || '' 
         }
+        console.log(body)
         const donations = await Http.instance.post(resource, JSON.stringify(body))
         this.setState({donations, donationsFilters:donations, loading:false})
     }

@@ -15,7 +15,6 @@ import DataDonation from '../Donations/NewDonate/DataDonationScreen';
 import SelectImageDonation from '../Donations/NewDonate/SelectImageDonationScreen';
 import selectLocation from '../Donations/NewDonate/selectLocationDonationScreen';
 import HistorialDonaciones from '../Donations/History/HistoryDonationsScreen';
-import FundationsList from '../Donations/FundationsList/FundationsScreen';
 import TipsToDonate from '../Donations/TipsToDonate/TipsToDonateScreen';
 
 import ListaDonaciones from '../Fundations/ListDonacionesScreen';
@@ -93,11 +92,7 @@ const RouteStack = () => {
           component={HistorialDonaciones}
           options={{ headerShown:false }}
         />
-        <Stack.Screen
-          name="FundationsList"
-          component={FundationsList}
-          options={{ headerShown:false }}
-        />
+        
         <Stack.Screen
           name="TipsToDonate"
           component={TipsToDonate}

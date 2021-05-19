@@ -4,6 +4,7 @@ import { Header, Left, Button, Body, Right, Title, Icon, Thumbnail } from 'nativ
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CardDonation from '../Donations/History/CardDonation';
 import ActionsSheetComponent from './ActionsSheetComponent';
@@ -15,14 +16,24 @@ class DonacionesEnTramiteScreen extends Component {
         nameUserDonante:null,
         emailUserDonante:null,
         phoneUserDonante:null,
-        user:'funprueba@gmail.com',
+        user:null,
         donations:[],
         selected: null,
         loading:true,
         showDataUser:false
     }
     componentDidMount ()  {
+        this.getUserLogged()
         this.getDonations()
+    }
+
+    getUserLogged = async () => {
+        try {
+            let user = await AsyncStorage.getItem('user')
+            this.setState({user})
+        } catch(e) {
+            console.log(`Error obteniendo la key user para las donaciones en proceso ${e}`)
+        }   
     }
     
     getDonations = async () =>{

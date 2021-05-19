@@ -4,12 +4,12 @@ import {Header,Card,Text,Button,Title,Body,Left, Icon, Form, Item, Label, Input}
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 class ProfileScreen extends Component {
     state={
-        userLogged:'dafp18@hotmail.com',
-        //userLogged:'jagem88@gmail.com',
+        userLogged:null,
         idUser:null,
         nameUser:null,
         image_urlUser:null,
@@ -33,7 +33,17 @@ class ProfileScreen extends Component {
 
 
     componentDidMount () {
+        this.getUserLogged()
         this.getDataUser()
+    }
+
+    getUserLogged = async () => {
+        try {
+            let userLogged = await AsyncStorage.getItem('user')
+            this.setState({userLogged})
+        } catch(e) {
+            console.log(`Error obteniendo la key user para el profile ${e}`)
+        }   
     }
     
     goBackHome = () => {
@@ -53,7 +63,9 @@ class ProfileScreen extends Component {
         let body = {
             email:this.state.userLogged
         }
+        console.log(body)
         const user = await Http.instance.post(resource, JSON.stringify(body))
+        console.log(user)
         user?.map(el => {
             idUser = el.id
             nameUser = `${el.name} ${el.lastname}`

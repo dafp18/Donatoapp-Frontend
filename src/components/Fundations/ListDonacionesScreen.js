@@ -11,7 +11,7 @@ import CardDonation from '../Donations/History/CardDonation';
 class ListDonacionesScreen extends Component {
     
     state={
-        user:'dafp18@hotmail.com',
+        user:null,
         donationsFilters:[],
         donations:[],
         categories:[],
@@ -19,8 +19,18 @@ class ListDonacionesScreen extends Component {
     }
     
     componentDidMount ()  {
+        this.getUserLogged()
         this.getDonations()
         this.getCategories() 
+    }
+
+    getUserLogged = async () => {
+        try {
+            let user = await AsyncStorage.getItem('user')
+            this.setState({user})
+        } catch(e) {
+            console.log(`Error obteniendo la key user para la lista de donaciones ${e}`)
+        }   
     }
 
     getDonations = async () =>{
