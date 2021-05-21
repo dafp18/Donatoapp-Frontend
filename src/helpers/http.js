@@ -22,7 +22,7 @@ class Http {
                     method: 'POST',
                     headers: {
                       'Accept': 'application/json',
-                      'Content-Type': (resource === '/products') ? 'multipart/form-data' : 'application/json'
+                      'Content-Type': (resource === '/products' || resource === '/updateDataUser') ? 'multipart/form-data' : 'application/json'
                     },
                     body
                 }

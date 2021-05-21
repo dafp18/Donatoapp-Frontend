@@ -5,6 +5,8 @@ import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FastImage from 'react-native-fast-image'
+import ImagePicker from 'react-native-image-crop-picker';
 
 
 class ProfileScreen extends Component {
@@ -28,7 +30,12 @@ class ProfileScreen extends Component {
         iconNewPasswordError:'none',
         borderColorInpConfNewPassword:'#d9d5dc',
         iconConfNewPasswordSuccess:'none',
-        iconConfNewPasswordError:'none'
+        iconConfNewPasswordError:'none',
+        loading:true,
+        imagesDonate:[],
+        ImagesToSendApi:[],
+        enableChangeImage:false,
+        disableBtnSave:false
     }
 
 
@@ -60,22 +67,24 @@ class ProfileScreen extends Component {
             creadoUser = ''
 
         const resource = '/getDataUserLogged'
-        let body = {
-            email:this.state.userLogged
-        }
-        console.log(body)
-        const user = await Http.instance.post(resource, JSON.stringify(body))
-        console.log(user)
-        user?.map(el => {
-            idUser = el.id
-            nameUser = `${el.name} ${el.lastname}`
-            image_urlUser = el.image_url
-            addressUser = el.address
-            phoneUser = el.phone
-            rolUser = el.rol
-            creadoUser = el.created_at
-        })
-        this.setState({idUser,nameUser,image_urlUser,addressUser,phoneUser,rolUser,creadoUser})
+        setTimeout(async () => {
+            let body = {
+                email:this.state.userLogged
+            }
+            const user = await Http.instance.post(resource, JSON.stringify(body))
+            if(user){
+                user?.map(el => {
+                    idUser = el.id
+                    nameUser = `${el.name} ${el.lastname}`
+                    image_urlUser = el.image_url
+                    addressUser = el.address
+                    phoneUser = el.phone
+                    rolUser = el.rol
+                    creadoUser = el.created_at
+                })
+                this.setState({idUser,nameUser,image_urlUser,addressUser,phoneUser,rolUser,creadoUser, loading:false})
+            }
+        }, 2);
     }
 
     onChangeInput = (text, label) => {
@@ -129,6 +138,54 @@ class ProfileScreen extends Component {
             this.setState({loadingBtnChangePwd:false})
         }       
     }
+
+    reload = () => {
+        this.setState({loading:true})
+        this.getDataUser()
+    }
+
+    selectImagesGalery = () => {
+        let imagesDonate = [],
+            ImagesToSendApi = []
+        ImagePicker.openPicker({
+                        width: 300,
+                        height: 400
+                    })
+                    .then(img => {
+                        imagesDonate.push(img.path)
+                        ImagesToSendApi.push(img)
+                        this.setState({imagesDonate, ImagesToSendApi, image_urlUser:img.path, btnSave:'flex'})
+                    });
+    }
+
+    selectImageCamera = () => {
+        let imagesDonate = [],
+            ImagesToSendApi = []
+        ImagePicker.openCamera  ({
+                    width: 300,
+                    height: 400
+                }).then(img => {
+                        imagesDonate.push(img.path)
+                        ImagesToSendApi.push(img)
+                        this.setState({imagesDonate, ImagesToSendApi, image_urlUser:img.path, btnSave:'flex'})
+                });
+    }
+
+    saveChanges =  async () =>{
+        this.setState({disableBtnSave:true})
+        let frm = new FormData()
+        frm.append('id', this.state.idUser)
+        console.log(this.state.idUser)
+        this.state.ImagesToSendApi.forEach((img) =>{
+            frm.append('url_image', {type:img.mime, uri:img.path, name:'imageDonation_.jpg'})        
+        })
+        const resource = '/updateDataUser'
+        const updateUser = await Http.instance.post(resource, frm)
+        if(updateUser.Message === 'Actualizado'){
+            this.setState({disableBtnSave:false, btnSave:'none', enableChangeImage:false})
+        }        
+    }
+
     render(){
         
         return(
@@ -143,91 +200,103 @@ class ProfileScreen extends Component {
                             <Body>
                                 <Title style={styles.textHeader}>Mi cuenta</Title>
                             </Body>
+                            <Icon name='refresh-outline' type="Ionicons" style={styles.iconHeader} onPress={this.reload}/>
                         </Header>
                         
                         <Card style={styles.cardFirst}>
-                            <ScrollView>
-                                <Title style={{color:'black', marginTop:80, textAlign:'center'}} >{ this.state.nameUser } </Title>   
-                            
-                            { this.state.showFrmUser ? 
-                                                        <View>
-                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30, marginTop:30}}>
-                                                                <Icon name='mail-outline' type="Ionicons" style={{ color:"grey", fontSize:25}} />
-                                                                <Text style={{ marginLeft:15,fontSize:18}}>{ this.state.userLogged }</Text>
-                                                            </View>
-
-                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                                                <Icon name='call-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
-                                                                <Text style={styles.rowText}>{ this.state.phoneUser }</Text>
-                                                                <Icon name='create-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
-                                                            </View>
-
-                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                                                <Icon name='location-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
-                                                                <Text style={styles.rowText}>{ this.state.addressUser }</Text>
-                                                                <Icon name='create-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
-                                                            </View>
-
-                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                                                <Icon name='person-circle-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
-                                                                <Text style={{ marginLeft:15,fontSize:18}}>{this.state.rolUser}</Text>
-                                                            </View>
-                                                            
-                                                            <Button block style={[styles.btnSave],{display:this.state.btnSave}} onPress={()=>{this.props.navigation.navigate('SelectRol')}}>
-                                                                <Text>Guardar cambios</Text>                            
-                                                            </Button>
-                                                            <Button block style={styles.btn} onPress={()=>{ this.setState({showFrmUser:false})}}>
-                                                                <Text>Cambiar contraseña</Text>                            
-                                                            </Button>
-                                                        </View>
-                                                     :    
-                                                     
-                                                        <View>
-                                                            <Form style={{marginLeft:15, marginRight:15}}>                                
-                                                                <Item floatingLabel style={{marginRight:15, borderColor:this.state.borderColorInpNewPassword}}>
-                                                                    <Icon name='lock-closed-outline' type="Ionicons" color="black" size={20}/>
-                                                                    <Label style={{marginLeft:10}}>Nueva contraseña</Label>
-                                                                    <Input onChangeText={newPassword => this.onChangeInput(newPassword, 'newPassword')} secureTextEntry={true} style={{marginTop:8}}/>
-                                                                    <Icon name='checkmark-circle' style={{color:'green', display:this.state.iconNewPasswordSuccess}} />
-                                                                    <Icon name='close-circle' style={{color:'red', display:this.state.iconNewPasswordError}}/>
-                                                                </Item> 
-
-                                                                <Item floatingLabel style={{marginRight:15, borderColor:this.state.borderColorInpConfNewPassword}}>
-                                                                    <Icon name='lock-open-outline' type="Ionicons" color="black" size={20}/>
-                                                                    <Label style={{marginLeft:10}}>Confirmar nueva contraseña</Label>
-                                                                    <Input onChangeText={confirmNewPassword => this.onChangeInput(confirmNewPassword, 'confirmNewPassword')} secureTextEntry={true} style={{marginTop:8}}/>
-                                                                    <Icon name='checkmark-circle' style={{color:'green', display:this.state.iconConfNewPasswordSuccess}} />
-                                                                    <Icon name='close-circle' style={{color:'red', display:this.state.iconConfNewPasswordError}}/>                                                                           
-                                                                </Item>
-                                                            </Form>    
-                                                            <Button block style={{ marginLeft:25, marginRight:25, marginTop:35, 
-                                                                                    backgroundColor: ((this.state.newPassword === this.state.confirmNewPassword) && (this.state.newPassword !== '' && this.state.confirmNewPassword !== '')) ? '#243949' : '#667580'
-                                                                                }}  
-                                                                                onPress={this.changePassword}
-                                                                                disabled= {this.state.disableBtnChPwd}   >
-                                                                <Text style={{color:'#fff'}}>CAMBIAR CONTRASEÑA</Text>
-                                                                {   this.state.loadingBtnChangePwd && <ActivityIndicator size="large" color="#08e5d2" />  }
-                                                            </Button>
-                                                            <Button block transparent
-                                                                    style={{ marginLeft:10, marginRight:10, marginTop:20}}  
-                                                                    onPress={() => {this.setState({showFrmUser:true})}}
-                                                            >
-                                                                <Text style={{color:'#243949', borderBottomColor: "#243949", fontWeight:'bold'}}>CANCELAR</Text>
-                                                            </Button>
-                                                        </View> 
-                                                           
+                            { this.state.enableChangeImage  ?   <View style={{justifyContent:'space-evenly', flexDirection:'row', marginTop:70}}>
+                                                                    <Card style={ [styles.btnSelectImage, { borderBottomColor: '#243949'}] }>
+                                                                        <Icon active name='camera-outline' style={{fontSize:25, marginLeft:20}} />
+                                                                        <Text style={{color:'#243949', fontSize:22, marginLeft:10, marginRight:20, fontWeight:'bold'}} onPress={()=> this.selectImageCamera()} >Cámara</Text>
+                                                                    </Card>
+                                                                    <Card style={ [styles.btnSelectImage, { borderBottomColor: '#243949'}] }>
+                                                                        <Icon active name='image-outline' style={{fontSize:25, marginLeft:20}} />
+                                                                        <Text style={{color:'#243949', fontSize:22, marginLeft:10, marginRight:20, fontWeight:'bold'}} onPress={()=> this.selectImagesGalery()}>Galería</Text>
+                                                                    </Card> 
+                                                                </View> 
+                                                            :   null
                             }
-                            </ScrollView>    
+                              
+                            {   this.state.loading  ?   <ActivityIndicator size="large" color="#243949" style={{marginTop:120}} />  
+                                                    :   <ScrollView>
+                                                            <Title style={{color:'black', marginTop: this.state.enableChangeImage ? 30 : 80, textAlign:'center'}} >{ this.state.nameUser } </Title>   
+                                                            { this.state.showFrmUser ?  <View>
+                                                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30, marginTop:30}}>
+                                                                                                <Icon name='mail-outline' type="Ionicons" style={{ color:"grey", fontSize:25}} />
+                                                                                                <Text style={{ marginLeft:15,fontSize:18}}>{ this.state.userLogged }</Text>
+                                                                                            </View>
+
+                                                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
+                                                                                                <Icon name='call-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
+                                                                                                <Text style={styles.rowText}>{ this.state.phoneUser }</Text>
+                                                                                                <Icon name='create-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
+                                                                                            </View>
+
+                                                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
+                                                                                                <Icon name='location-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
+                                                                                                <Text style={styles.rowText}>{ this.state.addressUser }</Text>
+                                                                                                <Icon name='create-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
+                                                                                            </View>
+
+                                                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
+                                                                                                <Icon name='person-circle-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
+                                                                                                <Text style={{ marginLeft:15,fontSize:18}}>{this.state.rolUser}</Text>
+                                                                                            </View>
+                                                                                            
+                                                                                            <Button block style={[styles.btnSave, {display:this.state.btnSave}]} disabled={this.state.disableBtnSave} onPress={() => this.saveChanges()}>
+                                                                                                <Text>Guardar cambios</Text>
+                                                                                                {   this.state.disableBtnSave && <ActivityIndicator size="large" color="#243949" />  }                            
+                                                                                            </Button>
+                                                                                            <Button block style={styles.btnChangePwd} onPress={()=>{ this.setState({showFrmUser:false})}}>
+                                                                                                <Text>Cambiar contraseña</Text>                            
+                                                                                            </Button>
+                                                                                        </View>
+                                                                                     :  <View>
+                                                                                            <Form style={{marginLeft:15, marginRight:15}}>                                
+                                                                                                <Item floatingLabel style={{marginRight:15, borderColor:this.state.borderColorInpNewPassword}}>
+                                                                                                    <Icon name='lock-closed-outline' type="Ionicons" color="black" size={20}/>
+                                                                                                    <Label style={{marginLeft:10}}>Nueva contraseña</Label>
+                                                                                                    <Input onChangeText={newPassword => this.onChangeInput(newPassword, 'newPassword')} secureTextEntry={true} style={{marginTop:8}}/>
+                                                                                                    <Icon name='checkmark-circle' style={{color:'green', display:this.state.iconNewPasswordSuccess}} />
+                                                                                                    <Icon name='close-circle' style={{color:'red', display:this.state.iconNewPasswordError}}/>
+                                                                                                </Item> 
+
+                                                                                                <Item floatingLabel style={{marginRight:15, borderColor:this.state.borderColorInpConfNewPassword}}>
+                                                                                                    <Icon name='lock-open-outline' type="Ionicons" color="black" size={20}/>
+                                                                                                    <Label style={{marginLeft:10}}>Confirmar nueva contraseña</Label>
+                                                                                                    <Input onChangeText={confirmNewPassword => this.onChangeInput(confirmNewPassword, 'confirmNewPassword')} secureTextEntry={true} style={{marginTop:8}}/>
+                                                                                                    <Icon name='checkmark-circle' style={{color:'green', display:this.state.iconConfNewPasswordSuccess}} />
+                                                                                                    <Icon name='close-circle' style={{color:'red', display:this.state.iconConfNewPasswordError}}/>                                                                           
+                                                                                                </Item>
+                                                                                            </Form>    
+                                                                                            <Button block style={{ marginLeft:25, marginRight:25, marginTop:35, 
+                                                                                                                    backgroundColor: ((this.state.newPassword === this.state.confirmNewPassword) && (this.state.newPassword !== '' && this.state.confirmNewPassword !== '')) ? '#243949' : '#667580'
+                                                                                                                }}  
+                                                                                                                onPress={this.changePassword}
+                                                                                                                disabled= {this.state.disableBtnChPwd}   >
+                                                                                                <Text style={{color:'#fff'}}>CAMBIAR CONTRASEÑA</Text>
+                                                                                                {   this.state.loadingBtnChangePwd && <ActivityIndicator size="large" color="#08e5d2" />  }
+                                                                                            </Button>
+                                                                                            <Button block transparent
+                                                                                                    style={{ marginLeft:10, marginRight:10, marginTop:20}}  
+                                                                                                    onPress={() => {this.setState({showFrmUser:true})}}
+                                                                                            >
+                                                                                                <Text style={{color:'#243949', borderBottomColor: "#243949", fontWeight:'bold'}}>CANCELAR</Text>
+                                                                                            </Button>
+                                                                                        </View> 
+                                                            }
+                                                    </ScrollView>    
+                            }
                         </Card>
                         { this.state.image_urlUser  ?
                                                         <Card style={styles.cardImg}>
-                                                            <Image source={ {uri: this.state.image_urlUser} } style={styles.img }/>  
-                                                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg}/>
+                                                            <FastImage source={ {uri: this.state.image_urlUser} } style={styles.img }/>  
+                                                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg} onPress={() => this.setState({enableChangeImage:true})} />
                                                         </Card> 
                                                     :
                                                         <Card style={styles.cardImg}>
                                                             <Image source={require('../../assets/img/donanteRegister.png')} style={styles.img}/>    
-                                                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg}/>
+                                                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg} onPress={() => this.setState({enableChangeImage:true})}/>
                                                         </Card>
                         }
                     </View>
@@ -251,7 +320,8 @@ const styles = StyleSheet.create({
         marginLeft:40
     },
     iconHeader:{
-        marginTop:20
+        marginTop:20,
+        color:'#fff'
     },
     cardFirst:{
         marginTop:150,
@@ -291,17 +361,29 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
         width:260
     },
-    btn:{
+    btnChangePwd:{
         backgroundColor: '#243949',
         marginLeft:30,
         marginRight:30,
-        marginTop:35
+        marginTop:20
     },
     btnSave:{
         backgroundColor: '#00bfa6',
         marginLeft:30,
         marginRight:30,
-        marginTop:40
+        marginTop:30
+    },
+    btnSelectImage:{
+        justifyContent:'center',
+        alignItems:'center',
+        flexDirection:'row',
+        marginTop:20,
+        marginLeft:10,
+        marginRight:5,
+        height:45,
+        borderRadius:10,
+        borderColor:'#243949',
+        borderBottomWidth:3
     }
 });
 

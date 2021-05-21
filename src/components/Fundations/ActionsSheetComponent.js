@@ -1,7 +1,8 @@
 import React, { Component  } from 'react';
-import {View,StyleSheet,Image, Dimensions,Linking} from 'react-native';
+import {View,StyleSheet,Dimensions,Linking} from 'react-native';
 import {Text,Title, Icon} from 'native-base';
 import ActionSheet from "react-native-actions-sheet";
+import FastImage from 'react-native-fast-image'
 
 const {width} = Dimensions.get('window');
 const height = width * 0.85; 
@@ -16,7 +17,11 @@ class ActionsSheetComponent extends Component {
                                     indicatorColor="#243949"
                     >
                         <View style={{width, height}}>
-                            <Image source={{uri:this.props?.image}} style={styles.image}/>
+                            <FastImage   
+                                source=  { !this.props.image ? require('../../assets/img/donanteRegister.png') : {uri: this.props.image }}
+                                style={styles.image}
+                            />
+                            {/* <Image source={{uri:this.props?.image}} style={styles.image}/> */}
                             <Title style={{color:'#243949', marginTop:10, textAlign:'center', fontSize:25}} > {this.props?.name} </Title>
                             <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30, marginTop:15}}>
                                 <Icon name='mail-outline' type="Ionicons" style={{ color:'#243949', fontSize:25}} />

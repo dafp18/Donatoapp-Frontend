@@ -16,18 +16,17 @@ class HistoryDonationsScreen extends Component {
         donations:[],
         donationsFilters:[],
         selected: null,
-        statusName: null,
         loading:true
     }
     componentDidMount ()  {
-        this.getUserLogged()
+        this.getUserIdLogged()
         this.getDonations()
         this.getStatusDonations()
     }
 
-    getUserLogged = async () => {
+    getUserIdLogged = async () => {
         try {
-            let user = await AsyncStorage.getItem('user')
+            let user = await AsyncStorage.getItem('idUser')
             this.setState({user})
         } catch(e) {
             console.log(`Error obteniendo la key user para el historial de donaciones ${e}`)
@@ -54,10 +53,8 @@ class HistoryDonationsScreen extends Component {
         this.setState({loading:true})
         const resource = '/getProductsByUser'
         let body = {
-            user:this.state.user,
-            estado: this.state.statusName || '' 
+            userId:this.state.user,
         }
-        console.log(body)
         const donations = await Http.instance.post(resource, JSON.stringify(body))
         this.setState({donations, donationsFilters:donations, loading:false})
     }

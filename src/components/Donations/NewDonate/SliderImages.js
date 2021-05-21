@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { View, Image, ScrollView, Dimensions, Text } from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 const {width} = Dimensions.get('window');
 const height = width * 0.5; 
@@ -21,7 +22,7 @@ class SliderImages extends Component {
                                 onScroll={this.change}
                                 style={{width, height}}>
                         {   this.props.dataImages?.map((img, index) => {
-                                return <Image key={`slide_img_${index}`} source={{uri:img}} style={{width, height, resizeMode:'contain'}} />
+                                return <FastImage key={`slide_img_${index}`} source={{uri:img}} style={{width, height}} resizeMode={FastImage.resizeMode.contain} />
                             })  
                         }
                     </ScrollView>

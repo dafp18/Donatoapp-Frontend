@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Card, CardItem, Text, Body, Badge, View, Icon, Button } from "native-base";
-import {Image,StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image'
 
 class CardDonation extends Component {
     
@@ -15,7 +16,11 @@ class CardDonation extends Component {
                         </Body>
                     </CardItem>
                     <CardItem cardBody style={styles.cardBody}>
-                        <Image source={{uri: image}} style={{height: 120, width: 120, marginLeft:10}}/>
+                        <FastImage   
+                            source=  { !image ? require('../../../assets/img/imageLoading.png') : {uri: image }}
+                            style={{ width: 120, height: 120, marginLeft:10 }}
+                        />
+                        {/* <Image source={{uri: image}} style={{height: 120, width: 120, marginLeft:10}}/> */}
                         <View style={{marginLeft:10}}>
                             <Text>Estado: {state_product}</Text>
                             <Text>Creado: {created_at.substring(0,19)} </Text>
