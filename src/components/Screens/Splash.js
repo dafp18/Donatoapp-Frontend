@@ -18,7 +18,10 @@ class Splash extends Component {
         // Within your render function
         <LinearGradient colors={['#517fa4', '#243949']} style={styles.linearGradient}>
             <Title style={styles.textD}>Donatón<Title style={styles.textA}>App</Title></Title>
-            <Icon active name='home' style={styles.icon} />
+            <Image
+                style={{ height:80, width:80, marginTop:10, alignSelf:'center' }}
+                source={require('../../assets/img/LogoSinBackgroud.png')}
+            />
         </LinearGradient>
             
         

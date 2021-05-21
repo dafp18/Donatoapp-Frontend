@@ -1,9 +1,9 @@
 class Http {
     static instance = new Http()
     
-    BASE_URL = 'http://192.168.1.22:8000/api/v1'
-    BASE_URL_ = 'http://192.168.1.22:8000/api'
-    BASE_URL_IMGS = 'http://192.168.1.22:8000/imgsDonations/'
+    BASE_URL = 'http://192.168.1.18:8000/api/v1'
+    BASE_URL_ = 'http://192.168.1.18:8000/api'
+    BASE_URL_IMGS = 'http://192.168.1.18:8000/imgsDonations/'
 
     get = async (resource) => {
         try {

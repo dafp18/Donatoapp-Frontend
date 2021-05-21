@@ -42,7 +42,7 @@ class DataDonationScreen extends Component {
         frm.append('token',data.token)
         frm.append('cantImages', Number(this.state.ImagesToSendApi.length))
         this.state.ImagesToSendApi.forEach((img, index) =>{
-            frm.append(`url_image_${index+1}`, {type:img.mime, uri:img.path, name:`imageDonation_${index+1}.jpg`} )        
+            frm.append(`url_image_${index+1}`, {type:img.mime, uri:img.path, name:`imageDonation_${index+1}.jpg`})        
         })
         //frm.append('url_image', {type: this.state.ImagesToSendApi[0].mime, uri:this.state.ImagesToSendApi[0].path, name:'imageDonation.jpg' } )    
         const resource = '/products'
