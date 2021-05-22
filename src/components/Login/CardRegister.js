@@ -257,7 +257,7 @@ class CardRegister extends Component {
                         <Item floatingLabel last style={[styles.labels, {borderColor:borderColorEmail}]}>
                             <Icon active name='mail-outline' type="Ionicons" style={styles.icon}/>
                             <Label>Correo electrónico</Label>
-                            <Input onChangeText={ email => this.validateForm(email,'email')}/>
+                            <Input onChangeText={ email => this.validateForm(email,'email')} keyboardType="email-address"/>
                             <Icon name='checkmark-circle' style={{color:'green', display:iconEmailSuccess}} />
                             <Icon name='close-circle' style={{color:'red', display:iconEmailError}}/>
                         </Item>

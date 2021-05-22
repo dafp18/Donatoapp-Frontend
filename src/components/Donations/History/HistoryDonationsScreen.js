@@ -66,22 +66,33 @@ class HistoryDonationsScreen extends Component {
     onPressStatus = (id, statusName_) => {
         this.setState({selected: id});
         let donationsFilters = []
-        if(statusName_ === 'todas'){
-            donationsFilters = this.state.donations
-        }else{
-            donationsFilters = this.state.donations?.filter(d => d.state_donation === statusName_)
+        if(this.state.donations.length > 0){
+            if(statusName_ === 'todas'){
+                donationsFilters = this.state.donations
+            }else{
+                donationsFilters = this.state.donations?.filter(d => d.state_donation === statusName_)
+            }
+            this.setState({donationsFilters})
         }
-        this.setState({donationsFilters})
     }
 
-    changeStatusDonation = async (idDonation) => {
+    changeStatusDonation = async (idDonation, originState) => {
         this.setState({loading:true})
-        const resource = '/changeStatusInactiveProduct/'+idDonation
+        let resource= ''
+        if(originState === 'Activa'){
+            resource = '/changeStatusInactiveProduct/'+idDonation
+        }else{
+            resource = '/changeStatusActiveProduct/'+idDonation
+        }
         const dataUserDonante = await Http.instance.get(resource)
         if(dataUserDonante.Message === 'Actualizado'){
             this.getDonations()
         }
-    } 
+    }
+
+    goEditDonation = (idDonation) => {
+        this.props.navigation.navigate('EditDonation', idDonation)
+    }
 
     render(){
         return(
@@ -137,7 +148,8 @@ class HistoryDonationsScreen extends Component {
                                                                                     cantidad={null}
                                                                                     type={'HistorialDonaciones'}
                                                                                     state_donation={item.state_donation}
-                                                                                    functions={() => this.changeStatusDonation(item.id)}
+                                                                                    functions={() => this.changeStatusDonation(item.id, item.state_donation)}
+                                                                                    fnEditDonation= {() => this.goEditDonation(item.id)}
                                                                     />       
                                                         }}   
                                                     />

@@ -1,5 +1,5 @@
 import React, { Component  } from 'react';
-import {View,StyleSheet,Image, ScrollView,ActivityIndicator} from 'react-native';
+import {View,StyleSheet,Image, ScrollView,ActivityIndicator, TextInput} from 'react-native';
 import {Header,Card,Text,Button,Title,Body,Left, Icon, Form, Item, Label, Input} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
@@ -35,9 +35,10 @@ class ProfileScreen extends Component {
         imagesDonate:[],
         ImagesToSendApi:[],
         enableChangeImage:false,
-        disableBtnSave:false
+        disableBtnSave:false,
+        iconEdit:'flex',
+        editableInputs:false
     }
-
 
     componentDidMount () {
         this.getUserLogged()
@@ -140,7 +141,7 @@ class ProfileScreen extends Component {
     }
 
     reload = () => {
-        this.setState({loading:true})
+        this.setState({loading:true, enableChangeImage:false, btnSave:'none'})
         this.getDataUser()
     }
 
@@ -171,14 +172,26 @@ class ProfileScreen extends Component {
                 });
     }
 
+    enableEditDataUser = (typeEdit) =>{
+        if(typeEdit === 'image'){
+            this.setState({enableChangeImage:true, btnSave:'flex'})
+        }else{
+            this.setState({iconEdit:'none', btnSave:'flex', editableInputs:true})
+        }
+    }
+
     saveChanges =  async () =>{
         this.setState({disableBtnSave:true})
         let frm = new FormData()
         frm.append('id', this.state.idUser)
-        console.log(this.state.idUser)
-        this.state.ImagesToSendApi.forEach((img) =>{
-            frm.append('url_image', {type:img.mime, uri:img.path, name:'imageDonation_.jpg'})        
-        })
+        if(this.state.ImagesToSendApi.length > 0){
+            this.state.ImagesToSendApi.forEach((img) =>{
+                frm.append('url_image', {type:img.mime, uri:img.path, name:'imageDonation_.jpg'})        
+            })
+        }else{
+            frm.append('phone', this.state.phoneUser)
+            frm.append('address', this.state.addressUser)
+        }
         const resource = '/updateDataUser'
         const updateUser = await Http.instance.post(resource, frm)
         if(updateUser.Message === 'Actualizado'){
@@ -218,38 +231,51 @@ class ProfileScreen extends Component {
                             }
                               
                             {   this.state.loading  ?   <ActivityIndicator size="large" color="#243949" style={{marginTop:120}} />  
-                                                    :   <ScrollView>
+                                                    :   <View>
                                                             <Title style={{color:'black', marginTop: this.state.enableChangeImage ? 30 : 80, textAlign:'center'}} >{ this.state.nameUser } </Title>   
                                                             { this.state.showFrmUser ?  <View>
-                                                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30, marginTop:30}}>
-                                                                                                <Icon name='mail-outline' type="Ionicons" style={{ color:"grey", fontSize:25}} />
-                                                                                                <Text style={{ marginLeft:15,fontSize:18}}>{ this.state.userLogged }</Text>
-                                                                                            </View>
+                                                                                            <ScrollView>
+                                                                                                <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30, marginTop:30}}>
+                                                                                                    <Icon name='mail-outline' type="Ionicons" style={{ color:"grey", fontSize:25}} />
+                                                                                                    <Text style={{ marginLeft:15,fontSize:18}}>{ this.state.userLogged }</Text>
+                                                                                                </View>
 
-                                                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                                                                                <Icon name='call-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
-                                                                                                <Text style={styles.rowText}>{ this.state.phoneUser }</Text>
-                                                                                                <Icon name='create-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
-                                                                                            </View>
+                                                                                                <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
+                                                                                                    <Icon name='call-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
+                                                                                                    <TextInput
+                                                                                                        style={styles.rowText}
+                                                                                                        onChangeText={phoneUser => this.setState({phoneUser})}
+                                                                                                        value={this.state.phoneUser}
+                                                                                                        keyboardType="numeric"
+                                                                                                        editable={this.state.editableInputs}
+                                                                                                    />
+                                                                                                    <Icon name='create-outline' type="Ionicons" style={{color:"black", fontSize:25, display:this.state.iconEdit}} onPress={()=>this.enableEditDataUser('otherData')}/>
+                                                                                                </View>
 
-                                                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                                                                                <Icon name='location-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
-                                                                                                <Text style={styles.rowText}>{ this.state.addressUser }</Text>
-                                                                                                <Icon name='create-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
-                                                                                            </View>
+                                                                                                <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
+                                                                                                    <Icon name='location-outline' type="Ionicons" style={{color:"grey", fontSize:25}} />
+                                                                                                    <TextInput
+                                                                                                        style={styles.rowText}
+                                                                                                        onChangeText={addressUser => this.setState({addressUser})}
+                                                                                                        value={this.state.addressUser}
+                                                                                                        editable={this.state.editableInputs}
+                                                                                                    />
+                                                                                                    <Icon name='create-outline' type="Ionicons" style={{color:"black", fontSize:25, display:this.state.iconEdit}} onPress={()=>this.enableEditDataUser('otherData')} />
+                                                                                                </View>
 
-                                                                                            <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
-                                                                                                <Icon name='person-circle-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
-                                                                                                <Text style={{ marginLeft:15,fontSize:18}}>{this.state.rolUser}</Text>
-                                                                                            </View>
-                                                                                            
-                                                                                            <Button block style={[styles.btnSave, {display:this.state.btnSave}]} disabled={this.state.disableBtnSave} onPress={() => this.saveChanges()}>
-                                                                                                <Text>Guardar cambios</Text>
-                                                                                                {   this.state.disableBtnSave && <ActivityIndicator size="large" color="#243949" />  }                            
-                                                                                            </Button>
-                                                                                            <Button block style={styles.btnChangePwd} onPress={()=>{ this.setState({showFrmUser:false})}}>
-                                                                                                <Text>Cambiar contraseña</Text>                            
-                                                                                            </Button>
+                                                                                                <View style={{flexDirection:'row', paddingVertical:15, paddingHorizontal:30}}>
+                                                                                                    <Icon name='person-circle-outline' type="Ionicons" style={{color:"grey", fontSize:25}}/>
+                                                                                                    <Text style={{ marginLeft:15,fontSize:18}}>{this.state.rolUser}</Text>
+                                                                                                </View>
+                                                                                                
+                                                                                                <Button block style={[styles.btnSave, {display:this.state.btnSave}]} disabled={this.state.disableBtnSave} onPress={() => this.saveChanges()}>
+                                                                                                    <Text>Guardar cambios</Text>
+                                                                                                    {   this.state.disableBtnSave && <ActivityIndicator size="large" color="#243949" />  }                            
+                                                                                                </Button>
+                                                                                                <Button block style={styles.btnChangePwd} onPress={()=>{ this.setState({showFrmUser:false})}}>
+                                                                                                    <Text>Cambiar contraseña</Text>                            
+                                                                                                </Button>
+                                                                                            </ScrollView>
                                                                                         </View>
                                                                                      :  <View>
                                                                                             <Form style={{marginLeft:15, marginRight:15}}>                                
@@ -285,18 +311,18 @@ class ProfileScreen extends Component {
                                                                                             </Button>
                                                                                         </View> 
                                                             }
-                                                    </ScrollView>    
+                                                    </View>    
                             }
                         </Card>
                         { this.state.image_urlUser  ?
                                                         <Card style={styles.cardImg}>
                                                             <FastImage source={ {uri: this.state.image_urlUser} } style={styles.img }/>  
-                                                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg} onPress={() => this.setState({enableChangeImage:true})} />
+                                                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg} onPress={() => this.enableEditDataUser('image')}/>
                                                         </Card> 
                                                     :
                                                         <Card style={styles.cardImg}>
                                                             <Image source={require('../../assets/img/donanteRegister.png')} style={styles.img}/>    
-                                                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg} onPress={() => this.setState({enableChangeImage:true})}/>
+                                                            <Icon name='create-outline' type="Ionicons" style={styles.iconImg} onPress={() => this.enableEditDataUser('image')}/>
                                                         </Card>
                         }
                     </View>
@@ -371,7 +397,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#00bfa6',
         marginLeft:30,
         marginRight:30,
-        marginTop:30
+        marginTop:15
     },
     btnSelectImage:{
         justifyContent:'center',

@@ -107,7 +107,7 @@ class CardLogin extends Component {
                         <Item floatingLabel last>
                             <Icon name='mail-outline' type="Ionicons" />
                             <Label>Correo electrónico</Label>
-                            <Input onChangeText={email => this.validateForm(email, 'email')} />
+                            <Input onChangeText={email => this.validateForm(email, 'email')} keyboardType="email-address"/>
                         </Item>    
                     </Card>
 

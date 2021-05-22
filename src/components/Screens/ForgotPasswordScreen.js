@@ -190,7 +190,7 @@ class ForgotPasswordScreen extends Component {
                                                             :  <Item floatingLabel style={{marginRight:15}}>
                                                                     <Icon name='mail-outline' type="Ionicons" color="black" size={20}/>
                                                                     <Label style={{marginLeft:10}}>Correo electrónico</Label>
-                                                                    <Input onChangeText={email => this.onChangeInput(email, 'email')} style={{marginTop:8}} />
+                                                                    <Input onChangeText={email => this.onChangeInput(email, 'email')} style={{marginTop:8}} keyboardType="email-address"/>
                                                                 </Item> 
                                     }    
                                 </Form>

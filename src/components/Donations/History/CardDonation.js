@@ -6,7 +6,18 @@ import FastImage from 'react-native-fast-image'
 class CardDonation extends Component {
     
     render(){
-        const {id,title,image,updated_at,created_at,category,state_product,quantity,locality,type,functions,textBadge,state_donation,changeStatus} = this.props
+        const {id,title,image,updated_at,created_at,category,state_product,quantity,locality,type,functions,textBadge,state_donation,changeStatus, fnEditDonation} = this.props
+        let colorBagde = '#243949'
+        if(state_donation === 'Entregada'){
+            colorBagde = '#08e5d2'
+        }
+        if(state_donation === 'Desactivada'){
+            colorBagde = '#ff6584'
+        }
+        if(state_donation === 'En proceso'){
+            colorBagde = '#517fa4'
+        }
+        
         return(
                 <Card style={styles.cardContainer} key={`dona_000${id+1}`}>
                     <CardItem>        
@@ -14,6 +25,8 @@ class CardDonation extends Component {
                             <Text style={{ fontWeight: 'bold', fontSize:18}}>{title}</Text>
                             <Text note>Categoria: {category}</Text>
                         </Body>
+                        { state_donation === 'Activa' && <Icon active name='create-outline' style={{fontSize:25}} onPress={fnEditDonation} /> }
+                        
                     </CardItem>
                     <CardItem cardBody style={styles.cardBody}>
                         <FastImage   
@@ -27,7 +40,7 @@ class CardDonation extends Component {
                             { ((type === 'HistorialDonaciones' || type === 'DonacionesAceptadas') && state_donation === 'Entregada') ? <Text>Entregado: {updated_at?.substring(0,10)}</Text> : null }
                             <Text>Cantidad: {quantity}</Text>
                             <Text>Ubicación: {locality} </Text>
-                            {   type === 'HistorialDonaciones'  ?   <Badge style={{ backgroundColor: '#243949', height:22, marginTop:5 }}>
+                            {   type === 'HistorialDonaciones'  ?   <Badge style={{ backgroundColor: colorBagde, height:22, marginTop:5 }}>
                                                                         <Text style={{fontSize:13, color:'#fff'}}>{state_donation}</Text>
                                                                     </Badge>
                                                                 :   null
@@ -55,6 +68,14 @@ class CardDonation extends Component {
                                                                                                 :   null
                             }
 
+                            {   type === 'HistorialDonaciones' && state_donation === 'Desactivada'  ?   <Card style={ [styles.btn, { borderBottomColor: '#243949'}] }>
+                                                                                                            <Icon active name='checkmark-circle-outline' type='Ionicons' style={{fontSize:22}} />
+                                                                                                            <Text onPress={functions}
+                                                                                                                style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Activar</Text>
+                                                                                                        </Card>  
+                                                                                                    :   null
+                            }
+
                             {   type === 'DonacionesTramite'    ?   <Card style={ [styles.btnRecieve, { borderBottomColor: '#00bfa6', backgroundColor:'#08e5d2'}] }>
                                                                         <Icon active name='checkmark-circle-outline' style={{fontSize:20}} />
                                                                         <Text onPress={changeStatus}
@@ -64,7 +85,7 @@ class CardDonation extends Component {
                             }
 
                             {   type === 'DonacionesTramite'    
-                              ||type === 'DonacionesAceptadas'  ?   <Card style={ [styles.btn, { borderBottomColor: '#243949'}] }>
+                              ||type === 'DonacionesAceptadas'  ?   <Card style={ [styles.btn, { borderBottomColor: '#243949', marginTop:5}] }>
                                                                       <Icon active name='eye-outline' style={{fontSize:20}} />
                                                                         <Text onPress={functions}
                                                                               style={{color:'#243949', fontSize:18, marginLeft:5, marginRight:5, fontWeight:'bold'}}>Datos donante</Text>
@@ -94,7 +115,6 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         flexDirection:'row',
-        marginTop:20,
         marginLeft:10,
         marginRight:5,
         height:35,
@@ -106,9 +126,9 @@ const styles = StyleSheet.create({
         justifyContent:'center',
         alignItems:'center',
         flexDirection:'row',
-        marginTop:20,
         marginLeft:10,
         marginRight:5,
+        marginTop:10,
         height:35,
         borderRadius:10,
         borderColor:'#243949',

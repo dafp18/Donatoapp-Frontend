@@ -16,6 +16,7 @@ import SelectImageDonation from '../Donations/NewDonate/SelectImageDonationScree
 import selectLocation from '../Donations/NewDonate/selectLocationDonationScreen';
 import HistorialDonaciones from '../Donations/History/HistoryDonationsScreen';
 import TipsToDonate from '../Donations/TipsToDonate/TipsToDonateScreen';
+import EditDonationScreen from '../Donations/EditDonation/EditDonationScreen';
 
 import ListaDonaciones from '../Fundations/ListDonacionesScreen';
 import DetalleDonacion from '../Fundations/DatalleDonacionScreen';
@@ -96,6 +97,12 @@ const RouteStack = () => {
         <Stack.Screen
           name="TipsToDonate"
           component={TipsToDonate}
+          options={{ headerShown:false }}
+        />
+
+        <Stack.Screen
+          name="EditDonation"
+          component={EditDonationScreen}
           options={{ headerShown:false }}
         />
 

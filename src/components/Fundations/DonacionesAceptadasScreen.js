@@ -40,7 +40,7 @@ class DonacionesAceptadasScreen extends Component {
         const resource = '/getProductsAceptedAndProcessed'
         let body = {
             userTakeDonate:this.state.user,
-            estado: 2
+            estado: 3
         }
         const donations = await Http.instance.post(resource, JSON.stringify(body))
         this.setState({donations, loading:false})
