@@ -20,7 +20,6 @@ class ListDonacionesScreen extends Component {
     
     componentDidMount ()  {
         this.getUserLogged()
-        this.getDonations()
         this.getCategories() 
     }
 
@@ -48,13 +47,13 @@ class ListDonacionesScreen extends Component {
     getCategories = async () =>{
         const resource = '/categories'
         const categories = await Http.instance.get(resource)
-        console.log(categories, 'categorias')
         let obj = {
             id:20,
             name:'todas'
         }
         categories.unshift(obj)
         this.setState({categories, loading:false})
+        this.getDonations()
     }
 
     onPressHandler(id, categoryName) {

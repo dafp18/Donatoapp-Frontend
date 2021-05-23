@@ -20,14 +20,13 @@ class HistoryDonationsScreen extends Component {
     }
     componentDidMount ()  {
         this.getUserIdLogged()
-        this.getDonations()
-        this.getStatusDonations()
     }
 
     getUserIdLogged = async () => {
         try {
             let user = await AsyncStorage.getItem('idUser')
             this.setState({user})
+            this.getStatusDonations()
         } catch(e) {
             console.log(`Error obteniendo la key user para el historial de donaciones ${e}`)
         }   
@@ -42,6 +41,7 @@ class HistoryDonationsScreen extends Component {
         }
         statusDonations.unshift(obj)
         this.setState({statusDonations})
+        this.getDonations()
     }
 
     reload = () => {

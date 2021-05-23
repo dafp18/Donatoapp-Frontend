@@ -42,13 +42,13 @@ class ProfileScreen extends Component {
 
     componentDidMount () {
         this.getUserLogged()
-        this.getDataUser()
     }
 
     getUserLogged = async () => {
         try {
             let userLogged = await AsyncStorage.getItem('user')
             this.setState({userLogged})
+            this.getDataUser()
         } catch(e) {
             console.log(`Error obteniendo la key user para el profile ${e}`)
         }   

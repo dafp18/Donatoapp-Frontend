@@ -1,6 +1,6 @@
 import React,{Component,createRef} from 'react';
-import { View, StyleSheet, ScrollView, Text, FlatList, ActivityIndicator } from 'react-native';
-import { Header, Left, Button, Body, Right, Title, Icon, Thumbnail } from 'native-base';
+import { View, StyleSheet, FlatList, ActivityIndicator } from 'react-native';
+import { Header, Left, Button, Body, Title, Icon } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
@@ -24,13 +24,13 @@ class DonacionesEnTramiteScreen extends Component {
     }
     componentDidMount ()  {
         this.getUserLogged()
-        this.getDonations()
     }
 
     getUserLogged = async () => {
         try {
             let user = await AsyncStorage.getItem('user')
             this.setState({user})
+            this.getDonations()
         } catch(e) {
             console.log(`Error obteniendo la key user para las donaciones en proceso ${e}`)
         }   

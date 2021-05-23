@@ -18,7 +18,7 @@ class ActionsSheetComponent extends Component {
                     >
                         <View style={{width, height}}>
                             <FastImage   
-                                source=  { !this.props.image ? require('../../assets/img/donanteRegister.png') : {uri: this.props.image }}
+                                source=  {{uri: this.props.image }}
                                 style={styles.image}
                             />
                             {/* <Image source={{uri:this.props?.image}} style={styles.image}/> */}

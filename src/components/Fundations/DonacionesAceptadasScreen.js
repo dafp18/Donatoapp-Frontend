@@ -24,13 +24,13 @@ class DonacionesAceptadasScreen extends Component {
     }
     componentDidMount ()  {
         this.getUserLogged()
-        this.getDonations()
     }
 
     getUserLogged = async () => {
         try {
             let user = await AsyncStorage.getItem('user')
             this.setState({user})
+            this.getDonations()
         } catch(e) {
             console.log(`Error obteniendo la key user para las donaciones aceptadas ${e}`)
         }   

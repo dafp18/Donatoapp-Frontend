@@ -56,7 +56,6 @@ class CardLogin extends Component {
             device_name: "mobile"
         }
         const dataLogin = await Http.instance.post(resource, JSON.stringify(body))
-        console.log(dataLogin)
         if(dataLogin.Message === 'emailFail' || dataLogin.Message === 'passwordFail' || dataLogin.Message === 'disabled'){
             let msj = ''
             if(dataLogin.Message === 'emailFail'){ msj = "El email ingresado no existe" }
