@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { View, ActivityIndicator, ScrollView, StyleSheet, Alert} from 'react-native';
-import { Header, Content, Card, CardItem, Text, Button, Icon, Left, Body, Title } from 'native-base';
+import { Header, Card, CardItem, Text, Button, Icon, Left, Body, Title } from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
@@ -110,17 +110,18 @@ class DetalleDonacionScreen extends Component {
 
                             {  this.state.loadingData ||
                                                         <ScrollView>
-                                                            <CardItem>
+                                                            <CardItem >
                                                                 <Body>
-                                                                    <Text>{this.state.title}</Text>
+                                                                    <Text style={{fontWeight:'bold', fontSize:20}}>{this.state.title}</Text>
                                                                     <Text note>Categoria: {this.state.category}</Text>
                                                                 </Body>
                                                             </CardItem>
+
                                                             <CardItem cardBody>
                                                                 <SliderImages dataImages={this.state.imagesDonate}/>
-                                                                {/* <Image source={{uri: 'https://dafitistaticco-a.akamaihd.net/p/frenezi-4816-840539-1-zoom.jpg'}} style={{height: 200, width: null, flex: 1}}/> */}
-                                                            </CardItem>
-                                                            <CardItem>
+                                                            </CardItem>                                                          
+                                                            
+                                                            <CardItem style={{marginTop:20}}>
                                                                 <Text>{this.state.description} {this.state.observation} </Text>  
                                                             </CardItem>
                                                             <CardItem>
