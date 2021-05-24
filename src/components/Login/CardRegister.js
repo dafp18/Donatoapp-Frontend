@@ -180,7 +180,7 @@ class CardRegister extends Component {
             this.setState({loading:false})
             Alert.alert(
                 "FELICITACIONES!",
-                "Se ha registrado en DonatonApp, por favor verifique su email y confirme la cuenta.",
+                "Se ha registrado en DonatonApp, por favor verifique su correo electrónico y confirme la cuenta.",
                 [ {text: "OK", onPress: () => this.props.navigation.navigate('Login') } ],
                 {cancelable: true}
             );
