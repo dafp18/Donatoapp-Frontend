@@ -8,11 +8,11 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 const tips = [
     {id:1, title:'Ropa', image:require('../../../assets/img/imgCat_Ropa.png'), description:'Puedes donar todo tipo de prendas ya sean nuevas o usadas, asegurate que esten en buen estado, estos son algunos ejemplos: ropa de bebés, trajes, vestidos.'},
     {id:2, title:'Muebles', image:require('../../../assets/img/imgCat_Muebles.png'), description:'Puedes donar todo tipo de muebles nuevos o usados, asegurate que esten en buen estado, estos son algunos ejemplos: muebles de oficina (sillas, escritorios, gabinetes).'},
-    {id:3, title:'Juguetes', image:require('../../../assets/img/imgCat_Juguetes.png'), description:'Sabemos que con el paso del tiempo es dificíl encontrarles lugar a los juguetes de los niños, asegurate que esten en buen estado y donalos, te aeguramos que llegarán a las manos indicadas.'},
+    {id:3, title:'Juguetes', image:require('../../../assets/img/imgCat_Juguetes.png'), description:'Sabemos que con el paso del tiempo es dificíl encontrarles lugar a los juguetes de los niños, asegurate que esten en buen estado y donalos, te aseguramos que llegarán a las manos indicadas.'},
     {id:4, title:'Ortopedicos', image:require('../../../assets/img/imgCat_Ortopedicos.png'), description:'Si cuentas con una silla de ruedas que ya no usas y esta en buen estado, puedes tomar las fotos y publicarla para que alguien que la necesita pueda usarla.'},
     {id:5, title:'Libros', image:require('../../../assets/img/imgCat_Libros.png'), description:'Puedes donar todo tipo de libros ya sean nuevos o usados, asegurate que esten en buen estado.'},
     {id:6, title:'Alimentos', image:require('../../../assets/img/imgCat_Comida.png'), description:'Es importante que si vas a donar alimentos tengas en cuenta que solamente son válidos los no perecederos'},
-    {id:7, title:'Electrodomésticos', image:require('../../../assets/img/imgCat_Electrodomesticos.png'), description:'Si cuentas con electrodomésticos que ya no usas, es muy probable que en una de las fundaciones resgistradas les den uso.'}
+    {id:7, title:'Electrodomésticos', image:require('../../../assets/img/imgCat_Electrodomesticos.png'), description:'Si cuentas con electrodomésticos que ya no usas, es muy probable que en una de las fundaciones registradas les den uso.'}
 
 ]
 
