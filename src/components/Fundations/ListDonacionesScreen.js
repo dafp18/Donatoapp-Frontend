@@ -4,6 +4,7 @@ import { Header, Body, Button, Title, Right, Left, Icon} from 'native-base';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon_ from 'react-native-vector-icons/FontAwesome';
 import Http from '../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import Filters from '../Donations/History/Filters';
 import CardDonation from '../Donations/History/CardDonation';

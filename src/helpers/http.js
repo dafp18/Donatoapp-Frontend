@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 class Http {
     static instance = new Http()
     
@@ -6,8 +7,19 @@ class Http {
     BASE_URL_IMGS = 'http://192.168.1.18:8000/imgsDonations/'
 
     get = async (resource) => {
+        let token = ''
+        try { token = await AsyncStorage.getItem('token') } catch(e) { console.log(`Error obteniendo el token metodo get, file http ${e}`) }
+
         try {
-            let req = await fetch(`${this.BASE_URL}${resource}`)
+            let config={
+                method: 'GET',
+                headers:  {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${token}`
+                          }
+            }
+            let req = await fetch(`${this.BASE_URL}${resource}`, config)
             let json = await req.json()
             return json
         } catch (err) {
@@ -17,13 +29,21 @@ class Http {
     }
 
     post = async (resource, body) => {
+        let token = ''
+        try { token = await AsyncStorage.getItem('token') } catch(e) { console.log(`Error obteniendo el token metodo post file http ${e}`) }  
+
         try {
             let config={
                     method: 'POST',
-                    headers: {
-                      'Accept': 'application/json',
-                      'Content-Type': (resource === '/products' || resource === '/updateDataUser' || resource === '/updateProduct') ? 'multipart/form-data' : 'application/json'
-                    },
+                    headers: (resource === '/login')  ? {
+                                                          'Accept': 'application/json',
+                                                          'Content-Type': 'application/json'
+                                                        }
+                                                      : {
+                                                          'Accept': 'application/json',
+                                                          'Content-Type': (resource === '/products' || resource === '/updateDataUser' || resource === '/updateProduct') ? 'multipart/form-data' : 'application/json',
+                                                          'Authorization': `Bearer ${token}`
+                                                        },
                     body
                 }
             let url = (resource === '/registerNewUser' || resource === '/login' || resource === '/validateIfExistEmail' || resource === '/verifyCodeForgetPassword' || resource === '/changePassword') ? this.BASE_URL_ : this.BASE_URL       
@@ -62,7 +82,6 @@ class Http {
           throw new Error(err);
         }
     }
-
 }
 
 export default Http;
