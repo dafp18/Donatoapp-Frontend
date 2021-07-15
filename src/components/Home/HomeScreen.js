@@ -4,6 +4,8 @@ import {Header,Card,Text,Right,Button,Title,Body,ListItem,Left,List, Icon} from 
 import LinearGradient from 'react-native-linear-gradient';
 import ActionSheet from "react-native-actions-sheet";
 import Icon_ from 'react-native-vector-icons/FontAwesome';
+import Http from '../../helpers/http';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import CardHome from './CardHome';
 
@@ -16,7 +18,25 @@ const listItems = [
 class HomeScreen extends Component {
     goScreen = (screen) => {
         actionSheetRef.current?.hide();
-        this.props.navigation.navigate(screen)
+        if(screen === 'Login'){
+            this.logout()
+            this.props.navigation.navigate(screen)
+        }else{
+            this.props.navigation.navigate(screen)
+        } 
+    }
+
+    logout = async () => {
+        let idUSer = ''
+        const keys = ['idUser', 'user', 'token']
+        const resource = '/logout'
+        try {
+            idUSer = await AsyncStorage.getItem('idUser')
+            await Http.instance.get(`${resource}/${idUSer}`)   
+            await AsyncStorage.multiRemove(keys)
+        } catch(e) {
+            console.log(`error removeMultiItem: ${e}`)
+        }
     }
 
     backAction = () => {
@@ -25,11 +45,8 @@ class HomeScreen extends Component {
     }
 
     componentDidMount() {
-        this.backHandler = BackHandler.addEventListener(
-          "hardwareBackPress",
-          this.backAction
-        );
-      }
+        this.backHandler = BackHandler.addEventListener("hardwareBackPress", this.backAction );
+    }
     
     componentWillUnmount() {
         this.backHandler.remove();

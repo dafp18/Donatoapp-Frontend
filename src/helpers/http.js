@@ -2,9 +2,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 class Http {
     static instance = new Http()
     
-    BASE_URL = 'http://192.168.1.18:8000/api/v1'
-    BASE_URL_ = 'http://192.168.1.18:8000/api'
-    BASE_URL_IMGS = 'http://192.168.1.18:8000/imgsDonations/'
+    BASE_URL = 'https://donatonappco.herokuapp.com/public/api/v1'                     //'http://192.168.1.18:8000/api/v1'
+    BASE_URL_ = 'https://donatonappco.herokuapp.com/public/api'                       //'http://192.168.1.18:8000/api'
+    BASE_URL_IMGS = 'https://donatonappco.herokuapp.com/public/imgsDonations/'        //'http://192.168.1.18:8000/imgsDonations/'
 
     get = async (resource) => {
         let token = ''
@@ -19,8 +19,9 @@ class Http {
                             'Authorization': `Bearer ${token}`
                           }
             }
-            let req = await fetch(`${this.BASE_URL}${resource}`, config)
-            let json = await req.json()
+            let url = (/logout/i.test(resource)) ? this.BASE_URL_ : this.BASE_URL
+            let req = await fetch(`${url}${resource}`, config)
+            let json = (req.status == 204) ? await req : await req.json()
             return json
         } catch (err) {
             console.log("http get method err ",err)
