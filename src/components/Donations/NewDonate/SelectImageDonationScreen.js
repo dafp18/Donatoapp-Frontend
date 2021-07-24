@@ -26,10 +26,8 @@ class DataDonationScreen extends Component {
 
     finishDonate =  async () =>{
         this.setState({loadingBtnDonarAhora:true, disableBtnDonarAhora:true})
-        let data = await this.getDataToNewDonation()
-            //data.url_image = this.state.ImagesToSendApi[0]
-            //data.id_state_donation = 1
-        let frm = new FormData()
+        let data = await this.getDataToNewDonation(),
+            frm = new FormData()
         frm.append('name', data.name)
         frm.append('description',data.description)
         frm.append('quantity',data.quantity)
@@ -39,15 +37,18 @@ class DataDonationScreen extends Component {
         frm.append('id_locality',data.id_locality),
         frm.append('id_state_product',data.id_state_product)
         frm.append('id_state_donation',1)
-        frm.append('token',data.token)
         frm.append('cantImages', Number(this.state.ImagesToSendApi.length))
         this.state.ImagesToSendApi.forEach((img, index) =>{
-            frm.append(`url_image_${index+1}`, {type:img.mime, uri:img.path, name:`imageDonation_${index+1}.jpg`})        
+            frm.append(`url_image_${index+1}`, {type:img.mime, uri:img.path, name:`imageDonation_${index+1}.jpg`})    
         })
+        if(this.state.ImagesToSendApi.length === 1 ){
+            frm.append('url_image_2', {type:this.state.ImagesToSendApi[0].mime, uri:this.state.ImagesToSendApi[0].path, name:'imageDonationDuplicated_2.jpg'})    
+        }
         //frm.append('url_image', {type: this.state.ImagesToSendApi[0].mime, uri:this.state.ImagesToSendApi[0].path, name:'imageDonation.jpg' } )    
         const resource = '/products'
         //const createDonation = await Http.instance.post(resource, JSON.stringify(data))
         const createDonation = await Http.instance.post(resource, frm)
+        
         if(createDonation.Message === 'creado'){
             this.setState({loadingBtnDonarAhora:false})
             this.props.navigation.navigate('Home')

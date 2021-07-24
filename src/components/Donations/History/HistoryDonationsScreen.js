@@ -56,6 +56,7 @@ class HistoryDonationsScreen extends Component {
             userId:this.state.user,
         }
         const donations = await Http.instance.post(resource, JSON.stringify(body))
+        console.log(donations)
         this.setState({donations, donationsFilters:donations, loading:false})
     }
 

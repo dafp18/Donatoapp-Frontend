@@ -2,9 +2,13 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 class Http {
     static instance = new Http()
     
-    BASE_URL = 'https://donatonappco.herokuapp.com/public/api/v1'                     //'http://192.168.1.18:8000/api/v1'
-    BASE_URL_ = 'https://donatonappco.herokuapp.com/public/api'                       //'http://192.168.1.18:8000/api'
-    BASE_URL_IMGS = 'https://donatonappco.herokuapp.com/public/imgsDonations/'        //'http://192.168.1.18:8000/imgsDonations/'
+    BASE_URL = 'https://donatonappco.herokuapp.com/public/api/v1'                     
+    BASE_URL_ = 'https://donatonappco.herokuapp.com/public/api'                       
+    BASE_URL_IMGS = 'https://donatonappco.herokuapp.com/public/imgsDonations/'        
+
+    //BASE_URL = 'http://192.168.1.19:8000/api/v1'
+    //BASE_URL_ = 'http://192.168.1.19:8000/api'
+    //BASE_URL_IMGS = 'http://192.168.1.19:8000/imgsDonations/'
 
     get = async (resource) => {
         let token = ''

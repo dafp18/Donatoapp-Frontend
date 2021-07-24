@@ -148,6 +148,9 @@ class EditDonationScreen extends Component {
                 frm.append(`url_image_${index+1}`, {type:img.mime, uri:img.path, name:`imageDonation_${index+1}.jpg`})        
             })
         }
+        if(this.state.ImagesToSendApi.length === 1 ){
+            frm.append('url_image_2', {type:this.state.ImagesToSendApi[0].mime, uri:this.state.ImagesToSendApi[0].path, name:'imageDonationDuplicated_2.jpg'})    
+        }
         const updateDonation = await Http.instance.post(resource, frm)
         console.log(updateDonation)
         if(updateDonation.Message === 'Actualizado'){
